@@ -1,0 +1,21 @@
+Fri Aug 19 15:05:23 CEST 2022
+Version:  AGG 2.1
+
+Graph transformation by rule sequence of : GraGra
+on graph : Graph
+rule sequence: PreprocessingInit 
+Preprocessing{*} 
+
+1. subsequence: PreprocessingInit 
+PreprocessingInit 	 applied:  true
+used time: 1660914323652ms
+
+1. subsequence: PreprocessingInit 	 applied
+2. subsequence: Preprocessing{*} 
+Preprocessing 	 applied:  false
+used time: 1660914323652ms
+
+2. subsequence: Preprocessing{*} 	 applied
+Used time for graph transformation: 27223ms
+
+Graph transformation finished
