@@ -21,7 +21,7 @@ import utils.Report;
  *
  */
 public class JoinSet extends Operator {
-	
+
 	/**
 	 * Graph rewriting rule formalizing the operator
 	 */
@@ -34,22 +34,22 @@ public class JoinSet extends Operator {
 	 * Pairs of wheres <y,Y> for building PACs
 	 */
 	private Set<Pair<String>> wheres = new HashSet<Pair<String>>();
-	
+
 	/**
 	 * Name of the node to put nodes satisfying wheres and excepts in relation with
 	 */
 	private String setName;
-	
+
 	/**
 	 * Name of the property to create between the set and the node satisfying the wheres and excepts
 	 */
 	private String propName;
-	
+
 	/**
 	 * Name of the node to put in relation with setName through propName (can be left unspecified to match all)
 	 */
 	private String src;
-	
+
 	/**
 	 * Creates the operator 
 	 * @para src name of the node to put in relation with setName through propName (can be star)
@@ -65,9 +65,9 @@ public class JoinSet extends Operator {
 		this.excepts=excepts;
 		this.wheres = wheres;
 		this.src = src;
-		
+
 	}
-	
+
 	/**
 	 * Creates the operator with x unspecified (star)
 	 * @param excepts set of except pairs <x,X>, ignore nodes related to X by x for any <x,X> in except
@@ -78,9 +78,9 @@ public class JoinSet extends Operator {
 	 */
 	public JoinSet(Set<Pair<String>> excepts, Set<Pair<String>> wheres, String setName, String propName) throws InvalidArguments {
 		this(GraGraUtils.STAR, excepts, wheres, setName, propName);
-		
+
 	}
-	
+
 
 	/**
 	 * Creates the operator with default propName = js and x unspecified (star)
@@ -93,7 +93,7 @@ public class JoinSet extends Operator {
 	public JoinSet(Set<Pair<String>> excepts, Set<Pair<String>> wheres, String setName) throws InvalidArguments {
 		this(GraGraUtils.STAR,excepts, wheres, setName, "js");
 	}
-	
+
 	/**
 	 * Creates the operator without where and except clauses (will create an edge propName from any
 	 * node src to setName)
@@ -108,11 +108,11 @@ public class JoinSet extends Operator {
 
 	@Override
 	public void execute() {
-		
+
 		r.setName("tmpJS");
 		//setting set name and propName
-		
-		
+
+
 		setNodeVal(r.getLeft().getNodes(GraGraUtils.TNODE));
 		setNodeVal(r.getRight().getNodes(GraGraUtils.TNODE));
 		/**
@@ -125,96 +125,98 @@ public class JoinSet extends Operator {
 		ls = r.getRight().getNodes(GraGraUtils.TNODE);
 		GraGraUtils.setAtt(ls.get(1), "att", setName);
 		if(!src.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(ls.get(0), "att", src);
-		*/
-		
+		 */
+
 		GraGraUtils.setAtt(r.getRight().getArcs(GraGraUtils.TEDGE).get(0), "prop", propName);
-		
+
 		// recreating no duplicate NAC
 		//easiest after having set the value of X
-		
+
 		r.removeNAC(r.getNAC("NoDuplicate"));
 		r.createNACDuetoRHS();
-		
+
 		/**
 		 * Building excepts
 		 */
-		for(Pair<String> p : excepts) {
-			//creating the NAC as No Duplicate and trashing the morphism from L to NAC
-			OrdinaryMorphism nac = r.createNAC();
-			nac.setName("NAC_" +p.getFirst() + "_"+p.getSecond());
-			try {
-				//creating nodes
-				nac.getTarget().createNode(GraGraUtils.TNODE);
-				nac.getTarget().createNode(GraGraUtils.TNODE);
-				//creating edge
-				nac.getTarget().createArc(GraGraUtils.TEDGE, nac.getTarget().getNodes(GraGraUtils.TNODE).get(0), nac.getTarget().getNodes(GraGraUtils.TNODE).get(1));
-				
-				
-			} catch (TypeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(excepts!=null) {
+			for(Pair<String> p : excepts) {
+				//creating the NAC as No Duplicate and trashing the morphism from L to NAC
+				OrdinaryMorphism nac = r.createNAC();
+				nac.setName("NAC_" +p.getFirst() + "_"+p.getSecond());
+				try {
+					//creating nodes
+					nac.getTarget().createNode(GraGraUtils.TNODE);
+					nac.getTarget().createNode(GraGraUtils.TNODE);
+					//creating edge
+					nac.getTarget().createArc(GraGraUtils.TEDGE, nac.getTarget().getNodes(GraGraUtils.TNODE).get(0), nac.getTarget().getNodes(GraGraUtils.TNODE).get(1));
+
+
+				} catch (TypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				//setting xi if not *
+				if(!p.getFirst().contentEquals(GraGraUtils.STAR)) 
+					GraGraUtils.setAtt(nac.getTarget().getArcsSet().iterator().next(), "prop", p.getFirst());
+				for(GraphObject obj : nac.getTarget().getNodesSet()) {				
+					//setting map from L to the node with an outArc in NAC
+					if(obj.getNumberOfIncomingArcs()==0) nac.addMapping(r.getLeft().getNodes(GraGraUtils.TNODE).get(0), obj);
+					//setting XI if not *
+					else if(!p.getSecond().contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(obj, "att", p.getSecond());
+					else GraGraUtils.setAtt(obj, "att", null);
+
+				}
+				System.out.println("except " + p.getFirst() + " " + p.getSecond());
+
+
 			}
-			
-			//setting xi if not *
-			if(!p.getFirst().contentEquals(GraGraUtils.STAR)) 
-				GraGraUtils.setAtt(nac.getTarget().getArcsSet().iterator().next(), "prop", p.getFirst());
-			for(GraphObject obj : nac.getTarget().getNodesSet()) {				
-				//setting map from L to the node with an outArc in NAC
-				if(obj.getNumberOfIncomingArcs()==0) nac.addMapping(r.getLeft().getNodes(GraGraUtils.TNODE).get(0), obj);
-				//setting XI if not *
-				else if(!p.getSecond().contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(obj, "att", p.getSecond());
-				else GraGraUtils.setAtt(obj, "att", null);
-					
-			}
-			System.out.println("except " + p.getFirst() + " " + p.getSecond());
-			
-			
 		}
 		//removing the pattern NAC
 		r.removeNAC(r.getNAC("NJS"));
-		
+
 		/**
 		 * Building wheres
 		 */
 		r.removePAC(r.getPAC("PJS"));
-		for(Pair<String> p : wheres) {
-			//creating the PAC
-			OrdinaryMorphism pac = r.createPAC();
-			pac.setName("PAC_" +p.getFirst() + "_"+p.getSecond());
-		
-			try {
-				//creating nodes
-				pac.getTarget().createNode(GraGraUtils.TNODE);
-				pac.getTarget().createNode(GraGraUtils.TNODE);
-				//creating edge
-				pac.getTarget().createArc(GraGraUtils.TEDGE, pac.getTarget().getNodes(GraGraUtils.TNODE).get(0), pac.getTarget().getNodes(GraGraUtils.TNODE).get(1));
-				
-				
-			} catch (TypeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			
-			//setting yi if not *
-			if(!p.getFirst().contentEquals(GraGraUtils.STAR))
-				GraGraUtils.setAtt(pac.getTarget().getArcs(GraGraUtils.TEDGE).get(0), "prop", p.getFirst());
-				
-			for(GraphObject obj : pac.getTarget().getNodesSet()) {				
-				//setting map from L to the node with an outArc in PAC
-				if(obj.getNumberOfIncomingArcs()==0) pac.addMapping(r.getLeft().getNodes(GraGraUtils.TNODE).get(0), obj);
-				//setting YI if not *
-				else if(!p.getSecond().contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(obj, "att", p.getSecond());
-			}
+		if(wheres!=null) {
+			for(Pair<String> p : wheres) {
+				//creating the PAC
+				OrdinaryMorphism pac = r.createPAC();
+				pac.setName("PAC_" +p.getFirst() + "_"+p.getSecond());
 
-			System.out.println("where " + p.getFirst() + " " + p.getSecond());
-			
+				try {
+					//creating nodes
+					pac.getTarget().createNode(GraGraUtils.TNODE);
+					pac.getTarget().createNode(GraGraUtils.TNODE);
+					//creating edge
+					pac.getTarget().createArc(GraGraUtils.TEDGE, pac.getTarget().getNodes(GraGraUtils.TNODE).get(0), pac.getTarget().getNodes(GraGraUtils.TNODE).get(1));
+
+
+				} catch (TypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+
+				//setting yi if not *
+				if(!p.getFirst().contentEquals(GraGraUtils.STAR))
+					GraGraUtils.setAtt(pac.getTarget().getArcs(GraGraUtils.TEDGE).get(0), "prop", p.getFirst());
+
+				for(GraphObject obj : pac.getTarget().getNodesSet()) {				
+					//setting map from L to the node with an outArc in PAC
+					if(obj.getNumberOfIncomingArcs()==0) pac.addMapping(r.getLeft().getNodes(GraGraUtils.TNODE).get(0), obj);
+					//setting YI if not *
+					else if(!p.getSecond().contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(obj, "att", p.getSecond());
+				}
+
+				//System.out.println("where " + p.getFirst() + " " + p.getSecond());
+			}
 		}
-
 		//transforming
 		GraGraUtils.transformAll(new Report(), r, Tui.grammar);
-		
+
 	}
 	
 	/**
@@ -224,7 +226,7 @@ public class JoinSet extends Operator {
 	private void setNodeVal(List<Node> nodes) {
 		for(Node n : nodes) {
 			switch(n.getAttribute().getValueAsString(0)) {
-			case "setName":
+			case "X":
 				if(!setName.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(n, "att", setName);
 				break;
 			case "src":

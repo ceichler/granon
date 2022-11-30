@@ -44,60 +44,71 @@ public class SentimentBuilder {
 	public static String[] atts = {"emotion", "id", "date", "query", "user", "text"};
 
 	private static Graph g = Grammar.graphGrammar.getGraph();
+	//Easy access to nodes through their attribute
+	HashMap<String, Node> nodesByID = new HashMap<String, Node>();
+	HashMap<String, Node> usersByName = new HashMap<String, Node>();
+	
+	Node tweet, user;
+	Node ref=null;
+	Node person = null;
+	Node emotion = null;
+	Node neg = null;
+	Node neutral = null;
+	Node pos = null;
+	Node tweetType = null;
+	
+	public SentimentBuilder() {
+		//init the nodes map and get some nodes of interest
+				
+				String s;
+				for(Node n :  Grammar.graphGrammar.getGraph().getNodesCollection()) {
+					s=n.getAttribute().getValueAsString(0);
+					if(s.contains("personType")){
+						person = n;
+						nodesByID.put("personType", n);
+					}
+					else if(s.contains("tweetType")){
+						tweetType = n;
+						nodesByID.put("tweetType", n);
+					}
+					else if(s.contains("negative")){
+						neg = n;
+						nodesByID.put("negative", n);
+					}
+					else if(s.contains("neutral")){
+						neutral = n;
+						nodesByID.put("neutral", n);
+					}
+					else if(s.contains("positive")){
+						pos = n;
+						nodesByID.put("pos", n);
+					}
+					else if(s.contains("emotionType")){
+						emotion = n;
+						nodesByID.put("emotionType", n);
+					}
+					
+				}
+	}
 	
 	/**
  	* Parse filename and add its content to the host graph of the grammar
 	 * @throws TypeException 
  	*/
-	public static void parse(int maxTweet) throws TypeException {
-		//Easy access to nodes through their attribute
-		HashMap<String, Node> nodesByID = new HashMap<String, Node>();
-		HashMap<String, Node> usersByName = new HashMap<String, Node>();
+	public void parse(int maxTweet, int prevNbTweet) throws TypeException {
+		
 
-		//init the nodes map and get some nodes of interest
-		Node tweet, user;
-		Node ref=null;
-		Node person = null;
-		Node emotion = null;
-		Node neg = null;
-		Node neutral = null;
-		Node pos = null;
-		Node tweetType = null;
-		String s;
-		for(Node n :  Grammar.graphGrammar.getGraph().getNodesCollection()) {
-			s=n.getAttribute().getValueAsString(0);
-			if(s.contains("personType")){
-				person = n;
-				nodesByID.put("personType", n);
-			}
-			else if(s.contains("tweetType")){
-				tweetType = n;
-				nodesByID.put("tweetType", n);
-			}
-			else if(s.contains("negative")){
-				neg = n;
-				nodesByID.put("negative", n);
-			}
-			else if(s.contains("neutral")){
-				neutral = n;
-				nodesByID.put("neutral", n);
-			}
-			else if(s.contains("positive")){
-				pos = n;
-				nodesByID.put("pos", n);
-			}
-			else if(s.contains("emotionType")){
-				emotion = n;
-				nodesByID.put("emotionType", n);
-			}
-			
-		}
+		
 			
 
 		try {
 			File myObj = new File(fileName);
 			Scanner myReader = new Scanner(myObj);
 			int currentLine = 0;
+			while(myReader.hasNextLine() && currentLine < prevNbTweet) {
+				currentLine++;
+				myReader.nextLine();
+			}
 			while (myReader.hasNextLine() && currentLine<maxTweet) {
 				currentLine++;
 				// Reading line and handling data
@@ -136,6 +147,8 @@ public class SentimentBuilder {
 					GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, user, createNode(values[4], nodesByID)), "prop", "hasName");
 					//gives the user its type
 					GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, user, person), "prop", "rdf:Type");
+					//relates the user to its tweet
+					GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, user, tweet), "prop", "authored");
 				} //if user exists it already has a name
 
 				
@@ -155,6 +168,7 @@ public class SentimentBuilder {
 
 						try{
 							handle = handle.split("[^a-zA-Z0-9]")[0];
+							//creates the referenced node and put it in relation with the tweet
 							ref= createNode(handle,nodesByID);
 							GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, tweet, ref), "prop", "references");
 							//System.out.print(handle+" / ");

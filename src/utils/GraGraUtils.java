@@ -152,6 +152,7 @@ public final class GraGraUtils {
 		//creating matches with a strategy
 		Match match = Grammar.graphGrammar.createMatch(rule);
 		match.setCompletionStrategy(Grammar.graphGrammar.getMorphismCompletionStrategy());
+
 		
 		
 
@@ -204,7 +205,6 @@ public final class GraGraUtils {
 		MorphCompletionStrategy cs = Grammar.graphGrammar.getMorphismCompletionStrategy();
 		cs.setRandomisedDomain(true);
 		cs.enableParallelSearch(false);
-		
 		match.setCompletionStrategy(cs);
 		
 

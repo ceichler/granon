@@ -22,7 +22,7 @@ package utils;
 		/**
 		 * Rules for the RDFS graph grammar, referenced for easier access
 		 */
-		public static Rule copyEdge, newNode, randomTransformSrc, randomTransformTarget, deleteNode, joinSet, modifyEdge, edgeCut, edgeChord, edgeChordKeep;
+		public static Rule copyEdge, newNode, randomTransformSrc, randomTransformTarget, deleteNode, joinSet, modifyEdge, edgeCut, edgeReverse, edgeChord, edgeChordKeep;
 
 		/**
 		 * Where to load the grammar
@@ -120,6 +120,9 @@ package utils;
 						break;
 					case "EdgeCut":
 						Grammar.edgeCut = r;
+						break;
+					case "EdgeReverse":
+						Grammar.edgeReverse = r;
 						break;
 					case "EdgeChord":
 						Grammar.edgeChord = r;

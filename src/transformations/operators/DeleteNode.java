@@ -1,6 +1,7 @@
 package transformations.operators;
 
 
+import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import executable.granonui.Tui;
 import utils.GraGraUtils;
@@ -47,12 +48,15 @@ public class DeleteNode extends Operator {
 		//set X 
 		if(!arg.equals(GraGraUtils.STAR)) GraGraUtils.setAtt(r.getElementsToDelete().get(0), "att", arg);
 		//if both s and S are null no PAC for source
-		if(s == null && S == null) r.removePAC(r.getPAC("SourceSet"));
+		if(s == null && S == null) 	r.removePAC(r.getPAC("Set"));
+		
 		else {
 			if(!S.equals(GraGraUtils.STAR)) GraGraUtils.setAtt(r.getPAC("Set").getTarget().getNodes(GraGraUtils.TNODE).get(1), "att", S);
 			if(!s.equals(GraGraUtils.STAR)) GraGraUtils.setAtt(r.getPAC("Set").getTarget().getArcs(GraGraUtils.TEDGE).get(0), "prop", s);
+			System.out.println("PAC set");
 		}
 		//transforming
+
 		GraGraUtils.transformAll(new Report(), r, Tui.grammar);	
 	}
 

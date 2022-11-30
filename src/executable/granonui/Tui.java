@@ -12,7 +12,7 @@ import executable.HardCodedTests;
  */
 public class Tui {
 
-	public static Grammar grammar; // = new Grammar();
+	public static Grammar grammar;// = new Grammar();
 	private static Scanner scan = new Scanner(System.in);
 
 	/**
@@ -41,7 +41,9 @@ public class Tui {
 					//HardCodedTests.testDelMultiple();
 					//HardCodedTests.testRandom();
 					//HardCodedTests.testModifyEdgeWithX();
-					HardCodedTests.testLDP();
+					//HardCodedTests.testLDP();
+					//HardCodedTests.testAnato();
+					HardCodedTests.testEdgeReverse();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());

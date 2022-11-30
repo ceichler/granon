@@ -1,6 +1,8 @@
 package executable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import executable.granonui.Tui;
 import transformations.operators.*;
@@ -75,6 +77,10 @@ public class HardCodedTests {
 		(new EdgeCut("Paris", null, null, null, null, "type", "pi", "IntermNode", "pf")).execute();
 	}
 	
+	public static void testEdgeReverse() {
+		(new EdgeReverse("Paris", null, null, null, null, "type")).execute();
+	}
+	
 	public static void testEdgeChord2() {
 		(new EdgeChord("Paris", null,null, null, null, null, null, "pi", "pf", "type")).execute();
 	}
@@ -98,6 +104,16 @@ public class HardCodedTests {
 
 	public static void testLDP() {
 		(new LDP("type", "Person", "isA", "Name", "name", 3)).execute();
+	}
+	
+	public static void testAnato() {
+		List<String> identifiers = new ArrayList<String>();
+		List<String> qIDs  = new ArrayList<String>();
+		List<String> sensitives  = new ArrayList<String>();
+		identifiers.add("name");
+		qIDs.add("knows");
+		sensitives.add("livesIn");
+		(new Anatomization(identifiers, qIDs, sensitives)).execute();
 	}
 }
 

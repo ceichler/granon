@@ -79,7 +79,7 @@ public class LDP {
 		String clone = "clone " + internalName;
 		Operator newNode = new NewNode(clone);
 		//creating clones for bias
-		for(int i = 0; i<k; i++) newNode.execute();
+		for(int i = 0; i<k-1; i++) newNode.execute();
 		//putting them in O through o
 		(new JoinSet(clone, O, o)).execute();
 		
