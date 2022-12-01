@@ -5,10 +5,8 @@ import transformations.operators.EdgeChord;
 import transformations.operators.EdgeCopy;
 import transformations.operators.EdgeCut;
 import transformations.operators.JoinSet;
-import transformations.operators.ModifyEdge;
 import transformations.operators.NewNode;
 import transformations.operators.Operator;
-import transformations.operators.RandomTransformSrc;
 import utils.GraGraUtils;
 
 /**
@@ -88,7 +86,7 @@ public class LDP {
 		String pNew = "pNew " + internalName;
 		String pOld = "pOld " + internalName;
 		String interm = "interm " + internalName;
-		(new EdgeCut(GraGraUtils.STAR, s,S,o, O, p, p1, interm, pNew)).execute();
+		(new EdgeCut(x, s,S,o, O, p, p1, interm, pNew)).execute();
 		
 		//Creating a copy pOld of pNew
 		(new EdgeCopy(interm, null,null,null,null, pNew, pOld)).execute();

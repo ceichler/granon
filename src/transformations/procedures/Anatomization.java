@@ -10,7 +10,6 @@ import transformations.operators.EdgeCut;
 import transformations.operators.JoinSet;
 import transformations.operators.NewNode;
 import utils.GraGraUtils;
-import utils.Grammar;
 import utils.Pair;
 
 public class Anatomization {
@@ -20,20 +19,22 @@ public class Anatomization {
 		this.e = identifiers;
 		this.q = qID;
 		this.p = sensitives;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void execute() {
+		
+		
 		for(String ei : e) {			
 			(new EdgeCut(GraGraUtils.STAR, null,null,null,null, ei, "pf1", "ToBeDeleted", "pf2")).execute();
 			(new DeleteNode("ToBeDeleted")).execute();
 		}
 		
+		
 		(new NewNode("QI")).execute();
 		
 		for(String qj : q) {
 			Set<Pair<String>> where = new HashSet<Pair<String>>();
-			where.add(new Pair(qj,GraGraUtils.STAR));
+			where.add(new Pair<String>(qj,GraGraUtils.STAR));
 			(new JoinSet(null, where, "QI", "hasQI")).execute();;
 		}
 		for(String pi : p) {

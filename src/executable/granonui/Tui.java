@@ -34,8 +34,8 @@ public class Tui {
 					break;
 				case 1:
 					System.out.println("Starting hardcoded test");
-					//HardCodedTests.testPostPreprocessing();
-					HardCodedTests.testRandTransform();
+					HardCodedTests.testPostPreprocessing();
+					//HardCodedTests.testRandTransform();
 					//HardCodedTests.testCutEdge();
 					//HardCodedTests.testEdgeChord();
 					//HardCodedTests.testDelMultiple();
@@ -45,6 +45,7 @@ public class Tui {
 					//HardCodedTests.testAnato();
 					//HardCodedTests.testEdgeReverse();
 					//HardCodedTests.testCloneSet();
+					//HardCodedTests.testAnato();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());

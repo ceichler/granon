@@ -33,7 +33,7 @@ public class DeleteNode extends Operator {
 	 */
 	public DeleteNode(String arg, String s, String S) {
 		r = Grammar.deleteNode.getClone();
-		map.put("arg", arg);
+		map.put("X", arg);
 		map.put("s", s);
 		map.put("S", S);
 	}
@@ -46,7 +46,6 @@ public class DeleteNode extends Operator {
 		setNodeValue(r.getLeft().getNodes(GraGraUtils.TNODE));
 		//if both s and S are null no PAC for source
 		
-
 		handlePAC(map.get("s"), map.get("S"), "Set");
 		//transforming
 
