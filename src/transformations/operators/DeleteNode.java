@@ -45,11 +45,9 @@ public class DeleteNode extends Operator {
 		//set X
 		setNodeValue(r.getLeft().getNodes(GraGraUtils.TNODE));
 		//if both s and S are null no PAC for source
-		if(map.get("s") == null && map.get("S") == null) 	r.removePAC(r.getPAC("Set"));
-		else {
-			setArcValue(r.getPAC("Set").getTarget().getArcs(GraGraUtils.TEDGE));
-			setNodeValue(r.getPAC("Set").getTarget().getNodes(GraGraUtils.TNODE));
-		}
+		
+
+		handlePAC(map.get("s"), map.get("S"), "Set");
 		//transforming
 
 		GraGraUtils.transformAll(new Report(), r, Tui.grammar);	

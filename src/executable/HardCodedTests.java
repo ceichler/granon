@@ -56,8 +56,9 @@ public class HardCodedTests {
 		GraGraUtils.print(Tui.grammar.getHostGraph());
 	}
 	
+	//(String x, String s,String S,String t,String T,String o, String O, String pi, String pf)
 	public static void testRandTransform() {
-		(new RandomTransformSrc("type","*", "type", "city", "isA","*", "name", "newName")).execute();
+		(new RandomTransformTar("type","*", "type", "city", "isA","*", "name", "newName")).execute();
 	}
 	
 	public static void testRandTransformWithX() {
@@ -78,7 +79,7 @@ public class HardCodedTests {
 	}
 	
 	public static void testEdgeReverse() {
-		(new EdgeReverse("Paris", null, null, null, null, "type")).execute();
+		(new EdgeReverse("*", "type", "Person", "isA", "Name", "name")).execute();
 	}
 	
 	public static void testEdgeChord2() {

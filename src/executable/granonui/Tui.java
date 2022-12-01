@@ -35,12 +35,12 @@ public class Tui {
 				case 1:
 					System.out.println("Starting hardcoded test");
 					//HardCodedTests.testPostPreprocessing();
-					//HardCodedTests.testRandTransformWithX();
+					HardCodedTests.testRandTransform();
 					//HardCodedTests.testCutEdge();
-					//HardCodedTests.testEdgeChord2();
-					HardCodedTests.testDelMultiple();
+					//HardCodedTests.testEdgeChord();
+					//HardCodedTests.testDelMultiple();
 					//HardCodedTests.testRandom();
-					//HardCodedTests.testModifyEdgeWithX();
+					//HardCodedTests.testModifyEdge();
 					//HardCodedTests.testLDP();
 					//HardCodedTests.testAnato();
 					//HardCodedTests.testEdgeReverse();

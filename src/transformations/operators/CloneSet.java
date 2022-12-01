@@ -1,7 +1,6 @@
 package transformations.operators;
 
 
-import agg.xt_basis.Rule;
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -13,13 +12,6 @@ import utils.Report;
  *
  */
 public class CloneSet extends Operator {
-
-	/**
-	 * Graph rewriting rule formalizing the operator
-	 */
-	private Rule r = Grammar.cloneSet.getClone();
-
-
 	
 	
 	/**
@@ -38,6 +30,7 @@ public class CloneSet extends Operator {
 		map.put("S", S);
 		map.put("c", c);
 		map.put("C", C);
+		r = Grammar.cloneSet.getClone();
 
 	}
 
@@ -47,13 +40,8 @@ public class CloneSet extends Operator {
 		r.setName("tmpCS");
 
 		//if both s and S are null no PAC for source
-		if(map.get("s") == null && map.get("S") == null) r.removePAC(r.getPAC("SourceSet"));
-		else {
-			setArcValue(r.getPAC("SourceSet").getTarget().getArcs(GraGraUtils.TEDGE));
-			setNodeValue(r.getPAC("SourceSet").getTarget().getNodes(GraGraUtils.TNODE));
-		}
-		
-		
+		handlePAC(map.get("s"), map.get("S"), "SourceSet");
+				
 		//setting att values for R and L
 		setNodeValue(r.getLeft().getNodes(GraGraUtils.TNODE));
 		setNodeValue(r.getRight().getNodes(GraGraUtils.TNODE));

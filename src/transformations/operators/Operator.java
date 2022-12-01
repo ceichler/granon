@@ -3,7 +3,6 @@ package transformations.operators;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import agg.xt_basis.Arc;
@@ -40,10 +39,9 @@ public abstract class Operator {
 	 */
 	protected void setNodeValue(List<Node> nodes) {
 		String name;
-		System.out.println("set nodes");
 		for(Node n : nodes) {
 			name = n.getAttribute().getValueAsString(0);
-			if(map.containsKey(name) && !map.get(name).contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(n, "att", map.get(name));
+			if(map.containsKey(name) && !map.get(name).contentEquals(GraGraUtils.STAR))GraGraUtils.setAtt(n, "att", map.get(name));
 			
 		}
 	}
@@ -59,4 +57,19 @@ public abstract class Operator {
 			if(map.containsKey(name) && !map.get(name).contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(a, "prop", map.get(name));
 		}
 	}
+	
+	/**
+	 * Disable PAC if (x,X) = (null,null), else set their attributes value
+	 * @param x qualifying property
+	 * @param X qualifying node
+	 * @param name name of the PAC
+	 */
+	protected void handlePAC(String x, String X, String name) {
+		if(x == null && X == null) r.removePAC(r.getPAC(name));
+		else {
+			setArcValue(r.getPAC(name).getTarget().getArcs(GraGraUtils.TEDGE));
+			setNodeValue(r.getPAC(name).getTarget().getNodes(GraGraUtils.TNODE));
+		}
+	}
+
 }

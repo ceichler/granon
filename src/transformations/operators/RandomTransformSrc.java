@@ -1,10 +1,6 @@
 package transformations.operators;
 
 
-import java.util.List;
-import java.util.Vector;
-import agg.xt_basis.Arc;
-import agg.xt_basis.Node;
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -14,16 +10,12 @@ import utils.Report;
 * Operator for transforming all relations of type pi with value related to O by o from a node related to S by S
 * to a relation of type pf with same the target and a random source related to T by t
 * From  S<-s-x-pi->y-o->O z-t->T to T<-t-z-pf->y-o->O x-s->S 
-* Neither S, O or T can be the target of pi
+* S, O and T cannot be the target of pi
 * @author ceichler
 *
 */
 public class RandomTransformSrc extends Operator {
 	
-	/**
-	 * Argument of operator; attributes related to properties, sources, targets and objects
-	 */
-	private String x, s, S, t, T, o, O, pi, pf;
 
 	/**
 	 * transforming all relations of type pi with value related to O by o from a node x related to S by S
@@ -42,16 +34,16 @@ public class RandomTransformSrc extends Operator {
 	 * same for o, O and t, T
 	 */
 	public RandomTransformSrc(String x, String s,String S,String t,String T,String o, String O, String pi, String pf) {
-		r = Grammar.randomTransformTarget.getClone();
-		this.x = x;
-		this.s= s;
-		this.S = S;
-		this.o = o;
-		this.O = O;
-		this.t = t;
-		this.T = T;
-		this.pi = pi;
-		this.pf = pf;
+		r = Grammar.randomTransformSrc.getClone();
+		map.put("x",x);
+		map.put("s",s);
+		map.put("S",S);
+		map.put("o",o);
+		map.put("O",O);
+		map.put("pi",pi);
+		map.put("pf",pf);
+		map.put("t",t);
+		map.put("T",T);
 		if(pi.contentEquals(pf)) throw new InvalidArguments("pi and pf must be distinct");
 	}
 
@@ -77,86 +69,29 @@ public class RandomTransformSrc extends Operator {
 	public void execute() {
 		//setting attribute values
 		this.r.setName("tmpRnd");
-		setArcVal(r.getSource().getArcs(GraGraUtils.TEDGE));
-		setArcVal(r.getTarget().getArcs(GraGraUtils.TEDGE));
+		setArcValue(r.getSource().getArcs(GraGraUtils.TEDGE));
+		setArcValue(r.getTarget().getArcs(GraGraUtils.TEDGE));
 		
 		//if both s and S are null no PAC for source
-		if(s == null && S == null) r.removePAC(r.getPAC("SourceSet"));
-		else {
-			setArcVal(r.getPAC("SourceSet").getTarget().getArcs(GraGraUtils.TEDGE));
-			setNodeVal(r.getPAC("SourceSet").getTarget().getNodes(GraGraUtils.TNODE));
-		}
+		handlePAC(map.get("s"),map.get("S"), "SourceSet");
 		
 		//if both o and O are null no object PAC
-		if(o == null && O == null) r.removePAC(r.getPAC("ObjectSet"));
-		else {
-			setArcVal(r.getPAC("ObjectSet").getTarget().getArcs(GraGraUtils.TEDGE));
-			setNodeVal(r.getPAC("ObjectSet").getTarget().getNodes(GraGraUtils.TNODE));
-		}
+		handlePAC(map.get("o"),map.get("O"), "ObjectSet");
+		
 		
 		//if both t and T are null no target PAC
-		if(t == null && T == null) r.removePAC(r.getPAC("TargetSet"));
-		else {
-			setArcVal(r.getPAC("TargetSet").getTarget().getArcs(GraGraUtils.TEDGE));
-			setNodeVal(r.getPAC("TargetSet").getTarget().getNodes(GraGraUtils.TNODE));
-		}
+		handlePAC(map.get("t"),map.get("T"), "TargetSet");
+		
 		
 
 		//setting x
-		setNodeVal(r.getRight().getNodes(GraGraUtils.TNODE));
-		setNodeVal(r.getLeft().getNodes(GraGraUtils.TNODE));
+		setNodeValue(r.getRight().getNodes(GraGraUtils.TNODE));
+		setNodeValue(r.getLeft().getNodes(GraGraUtils.TNODE));
 		
+
 		//transforming
 		GraGraUtils.transformAllRand(new Report(), r, Tui.grammar);
 		
 	}
 	
-	private void setArcVal(Vector<Arc> arcs) {
-		for(Arc a : arcs) {
-			switch(a.getAttribute().getValueAsString(0)) {
-			case "pi":
-				if(!pi.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(a, "prop", pi);
-				break;
-			case "pf":
-				//removing this pf = star
-				//if(!pf.contentEquals(GraGraUtils.STAR)) 
-				GraGraUtils.setAtt(a, "prop", pf);
-				break;
-			case "s":
-				if(!s.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(a, "prop", s);
-				break;
-			case "t":
-				if(!t.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(a, "prop", t);
-				break;
-			case "o":
-				if(!o.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(a, "prop", o);
-				break;
-				
-			}
-			
-		}
-	}
-	
-	private void setNodeVal(List<Node> nodes) {
-		for(Node n : nodes) {
-			switch(n.getAttribute().getValueAsString(0)) {
-			case "S":
-				if(!S.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(n, "att", S);
-				break;
-			case "T":
-				if(!T.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(n, "att", T);
-				break;
-			case "O":
-				if(!O.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(n, "att", O);
-				break;
-			case "x":
-				if(!x.contentEquals(GraGraUtils.STAR)) GraGraUtils.setAtt(n, "att", x);
-				break;
-			default:
-				break;
-			}
-			
-		}
-	}
-
 }
