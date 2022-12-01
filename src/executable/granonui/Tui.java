@@ -38,13 +38,13 @@ public class Tui {
 					//HardCodedTests.testRandTransformWithX();
 					//HardCodedTests.testCutEdge();
 					//HardCodedTests.testEdgeChord2();
-					//HardCodedTests.testDelMultiple();
+					HardCodedTests.testDelMultiple();
 					//HardCodedTests.testRandom();
 					//HardCodedTests.testModifyEdgeWithX();
 					//HardCodedTests.testLDP();
 					//HardCodedTests.testAnato();
 					//HardCodedTests.testEdgeReverse();
-					HardCodedTests.testCloneSet();
+					//HardCodedTests.testCloneSet();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());

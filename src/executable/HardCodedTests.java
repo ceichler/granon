@@ -50,7 +50,7 @@ public class HardCodedTests {
 	}
 	
 	public static void testDelMultiple() {
-		System.out.println("Not yet implemented hardcoding Del(*)");
+		System.out.println("Not yet implemented hardcoding Del(*,type,Person)");
 		GraGraUtils.print(Tui.grammar.getHostGraph());
 		(new DeleteNode("*","type","Person")).execute();
 		GraGraUtils.print(Tui.grammar.getHostGraph());
