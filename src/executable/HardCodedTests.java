@@ -106,6 +106,11 @@ public class HardCodedTests {
 		(new LDP("type", "Person", "isA", "Name", "name", 3)).execute();
 	}
 	
+	public static void testCloneSet() {
+		(new CloneSet("*", "type", "city", "clone", "Clone")).execute();
+	}
+	
+	
 	public static void testAnato() {
 		List<String> identifiers = new ArrayList<String>();
 		List<String> qIDs  = new ArrayList<String>();

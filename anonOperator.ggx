@@ -1101,10 +1101,123 @@
             <TaggedValue Tag="layer" TagValue="0"/>
             <TaggedValue Tag="priority" TagValue="0"/>
         </Rule>
-        <Rule ID="I348" formula="true" name="DeleteNode">
-            <Parameter name="X" type="String"/>
-            <Graph ID="I350" kind="LHS" name="LeftOf_DeleteNode">
+        <Rule ID="I348" formula="true" name="CloneSet">
+            <Parameter name="src" type="String"/>
+            <Parameter name="c" type="String"/>
+            <Parameter name="C" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Graph ID="I350" kind="LHS" name="Left">
                 <Node ID="I351" type="I2">
+                    <Attribute type="I4" variable="true">
+                        <Value>
+                            <string>src</string>
+                        </Value>
+                    </Attribute>
+                    <NodeLayout X="144" Y="138"/>
+                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                </Node>
+            </Graph>
+            <Graph ID="I354" kind="RHS" name="Right">
+                <Node ID="I355" type="I2">
+                    <NodeLayout X="91" Y="149"/>
+                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                </Node>
+                <Node ID="I357" type="I2">
+                    <Attribute type="I4" variable="true">
+                        <Value>
+                            <string>C</string>
+                        </Value>
+                    </Attribute>
+                    <NodeLayout X="181" Y="98"/>
+                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                </Node>
+                <Edge ID="I360" source="I355" target="I357" type="I8">
+                    <Attribute type="I10" variable="true">
+                        <Value>
+                            <string>c</string>
+                        </Value>
+                    </Attribute>
+                    <EdgeLayout bendX="140" bendY="145" textOffsetX="0" textOffsetY="-22"/>
+                    <additionalLayout aktlength="200" force="10" preflength="200"/>
+                </Edge>
+            </Graph>
+            <Morphism name="CloneSet">
+                <Mapping image="I355" orig="I351"/>
+            </Morphism>
+            <ApplCondition>
+                <NAC>
+                    <Graph ID="I363" kind="NAC" name="NoDuplicate">
+                        <Node ID="I364" type="I2">
+                            <NodeLayout X="91" Y="149"/>
+                            <additionalLayout age="0" force="10"
+                                frozen="false" zone="50"/>
+                        </Node>
+                        <Node ID="I366" type="I2">
+                            <Attribute type="I4" variable="true">
+                                <Value>
+                                    <string>X</string>
+                                </Value>
+                            </Attribute>
+                            <NodeLayout X="181" Y="98"/>
+                            <additionalLayout age="0" force="10"
+                                frozen="false" zone="50"/>
+                        </Node>
+                        <Edge ID="I369" source="I364" target="I366" type="I8">
+                            <Attribute type="I10" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                            <EdgeLayout bendX="0" bendY="0"
+                                textOffsetX="0" textOffsetY="-22"/>
+                            <additionalLayout aktlength="200" force="10" preflength="200"/>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="NoDuplicate">
+                        <Mapping image="I364" orig="I351"/>
+                    </Morphism>
+                </NAC>
+                <PAC>
+                    <Graph ID="I372" kind="PAC" name="SourceSet">
+                        <Node ID="I373" type="I2">
+                            <NodeLayout X="144" Y="138"/>
+                            <additionalLayout age="0" force="10"
+                                frozen="false" zone="50"/>
+                        </Node>
+                        <Node ID="I375" type="I2">
+                            <Attribute type="I4" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                            <NodeLayout X="120" Y="59"/>
+                            <additionalLayout age="0" force="10"
+                                frozen="false" zone="50"/>
+                        </Node>
+                        <Edge ID="I378" source="I373" target="I375" type="I8">
+                            <Attribute type="I10" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                            <EdgeLayout bendX="0" bendY="0"
+                                textOffsetX="0" textOffsetY="-22"/>
+                            <additionalLayout aktlength="200" force="10" preflength="200"/>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I373" orig="I351"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I381" formula="true" name="DeleteNode">
+            <Parameter name="X" type="String"/>
+            <Graph ID="I383" kind="LHS" name="LeftOf_DeleteNode">
+                <Node ID="I384" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>X</string>
@@ -1114,12 +1227,12 @@
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
             </Graph>
-            <Graph ID="I354" kind="RHS" name="RightOf_DeleteNode"/>
+            <Graph ID="I387" kind="RHS" name="RightOf_DeleteNode"/>
             <Morphism comment="Formula: true" name="DeleteNode"/>
             <ApplCondition>
                 <PAC>
-                    <Graph ID="I355" kind="PAC" name="Set">
-                        <Node ID="I356" type="I2">
+                    <Graph ID="I388" kind="PAC" name="Set">
+                        <Node ID="I389" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>X</string>
@@ -1129,26 +1242,26 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I359" type="I2">
+                        <Node ID="I392" type="I2">
                             <NodeLayout X="113" Y="162"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I361" source="I356" target="I359" type="I8">
+                        <Edge ID="I394" source="I389" target="I392" type="I8">
                             <EdgeLayout bendX="0" bendY="0"
                                 textOffsetX="0" textOffsetY="-22"/>
                             <additionalLayout aktlength="200" force="10" preflength="200"/>
                         </Edge>
                     </Graph>
                     <Morphism name="Set">
-                        <Mapping image="I356" orig="I351"/>
+                        <Mapping image="I389" orig="I384"/>
                     </Morphism>
                 </PAC>
             </ApplCondition>
             <TaggedValue Tag="layer" TagValue="0"/>
             <TaggedValue Tag="priority" TagValue="0"/>
         </Rule>
-        <Rule ID="I363" formula="true" name="EdgeCut">
+        <Rule ID="I396" formula="true" name="EdgeCut">
             <Parameter name="x" type="String"/>
             <Parameter name="pi" type="String"/>
             <Parameter name="o" type="String"/>
@@ -1158,8 +1271,8 @@
             <Parameter name="pf2" type="String"/>
             <Parameter name="S" type="String"/>
             <Parameter name="s" type="String"/>
-            <Graph ID="I365" kind="LHS" name="LeftOf_EdgeCut">
-                <Node ID="I366" type="I2">
+            <Graph ID="I398" kind="LHS" name="LeftOf_EdgeCut">
+                <Node ID="I399" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1168,11 +1281,11 @@
                     <NodeLayout X="73" Y="149"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I369" type="I2">
+                <Node ID="I402" type="I2">
                     <NodeLayout X="251" Y="167"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I371" source="I366" target="I369" type="I8">
+                <Edge ID="I404" source="I399" target="I402" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi</string>
@@ -1182,12 +1295,12 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Graph ID="I374" kind="RHS" name="RightOf_EdgeCut">
-                <Node ID="I375" type="I2">
+            <Graph ID="I407" kind="RHS" name="RightOf_EdgeCut">
+                <Node ID="I408" type="I2">
                     <NodeLayout X="48" Y="121"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I377" type="I2">
+                <Node ID="I410" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>interm</string>
@@ -1196,11 +1309,11 @@
                     <NodeLayout X="227" Y="139"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I380" type="I2">
+                <Node ID="I413" type="I2">
                     <NodeLayout X="407" Y="132"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I382" source="I375" target="I377" type="I8">
+                <Edge ID="I415" source="I408" target="I410" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pf1</string>
@@ -1209,7 +1322,7 @@
                     <EdgeLayout bendX="0" bendY="0" textOffsetX="-25" textOffsetY="-47"/>
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
-                <Edge ID="I385" source="I377" target="I380" type="I8">
+                <Edge ID="I418" source="I410" target="I413" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pf2</string>
@@ -1220,13 +1333,13 @@
                 </Edge>
             </Graph>
             <Morphism comment="Formula: true" name="EdgeCut">
-                <Mapping image="I375" orig="I366"/>
-                <Mapping image="I380" orig="I369"/>
+                <Mapping image="I408" orig="I399"/>
+                <Mapping image="I413" orig="I402"/>
             </Morphism>
             <ApplCondition>
                 <PAC>
-                    <Graph ID="I388" kind="PAC" name="SourceSet">
-                        <Node ID="I389" type="I2">
+                    <Graph ID="I421" kind="PAC" name="SourceSet">
+                        <Node ID="I422" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>x</string>
@@ -1236,7 +1349,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I392" type="I2">
+                        <Node ID="I425" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>S</string>
@@ -1246,7 +1359,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I395" source="I389" target="I392" type="I8">
+                        <Edge ID="I428" source="I422" target="I425" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>s</string>
@@ -1258,17 +1371,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="SourceSet">
-                        <Mapping image="I389" orig="I366"/>
+                        <Mapping image="I422" orig="I399"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I398" kind="PAC" name="ObjectSet">
-                        <Node ID="I399" type="I2">
+                    <Graph ID="I431" kind="PAC" name="ObjectSet">
+                        <Node ID="I432" type="I2">
                             <NodeLayout X="120" Y="129"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I401" type="I2">
+                        <Node ID="I434" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>O</string>
@@ -1278,7 +1391,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I404" source="I399" target="I401" type="I8">
+                        <Edge ID="I437" source="I432" target="I434" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>o</string>
@@ -1290,22 +1403,22 @@
                         </Edge>
                     </Graph>
                     <Morphism name="ObjectSet">
-                        <Mapping image="I399" orig="I369"/>
+                        <Mapping image="I432" orig="I402"/>
                     </Morphism>
                 </PAC>
             </ApplCondition>
             <TaggedValue Tag="layer" TagValue="0"/>
             <TaggedValue Tag="priority" TagValue="0"/>
         </Rule>
-        <Rule ID="I407" formula="true" name="EdgeReverse">
+        <Rule ID="I440" formula="true" name="EdgeReverse">
             <Parameter name="x" type="String"/>
             <Parameter name="o" type="String"/>
             <Parameter name="O" type="String"/>
             <Parameter name="S" type="String"/>
             <Parameter name="s" type="String"/>
             <Parameter name="p" type="String"/>
-            <Graph ID="I409" kind="LHS" name="Left">
-                <Node ID="I410" type="I2">
+            <Graph ID="I442" kind="LHS" name="Left">
+                <Node ID="I443" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1314,11 +1427,11 @@
                     <NodeLayout X="73" Y="149"/>
                     <additionalLayout age="0" force="10" frozen="false" zone="50"/>
                 </Node>
-                <Node ID="I413" type="I2">
+                <Node ID="I446" type="I2">
                     <NodeLayout X="251" Y="167"/>
                     <additionalLayout age="0" force="10" frozen="false" zone="50"/>
                 </Node>
-                <Edge ID="I415" source="I410" target="I413" type="I8">
+                <Edge ID="I448" source="I443" target="I446" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>p</string>
@@ -1328,16 +1441,16 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Graph ID="I418" kind="RHS" name="Right">
-                <Node ID="I419" type="I2">
+            <Graph ID="I451" kind="RHS" name="Right">
+                <Node ID="I452" type="I2">
                     <NodeLayout X="48" Y="121"/>
                     <additionalLayout age="0" force="10" frozen="false" zone="50"/>
                 </Node>
-                <Node ID="I421" type="I2">
+                <Node ID="I454" type="I2">
                     <NodeLayout X="407" Y="132"/>
                     <additionalLayout age="0" force="10" frozen="false" zone="50"/>
                 </Node>
-                <Edge ID="I423" source="I421" target="I419" type="I8">
+                <Edge ID="I456" source="I454" target="I452" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>p</string>
@@ -1348,13 +1461,13 @@
                 </Edge>
             </Graph>
             <Morphism name="EdgeReverse">
-                <Mapping image="I419" orig="I410"/>
-                <Mapping image="I421" orig="I413"/>
+                <Mapping image="I452" orig="I443"/>
+                <Mapping image="I454" orig="I446"/>
             </Morphism>
             <ApplCondition>
                 <PAC>
-                    <Graph ID="I426" kind="PAC" name="SourceSet">
-                        <Node ID="I427" type="I2">
+                    <Graph ID="I459" kind="PAC" name="SourceSet">
+                        <Node ID="I460" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>x</string>
@@ -1364,7 +1477,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="false" zone="50"/>
                         </Node>
-                        <Node ID="I430" type="I2">
+                        <Node ID="I463" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>S</string>
@@ -1374,7 +1487,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="false" zone="50"/>
                         </Node>
-                        <Edge ID="I433" source="I427" target="I430" type="I8">
+                        <Edge ID="I466" source="I460" target="I463" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>s</string>
@@ -1386,17 +1499,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="SourceSet">
-                        <Mapping image="I427" orig="I410"/>
+                        <Mapping image="I460" orig="I443"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I436" kind="PAC" name="ObjectSet">
-                        <Node ID="I437" type="I2">
+                    <Graph ID="I469" kind="PAC" name="ObjectSet">
+                        <Node ID="I470" type="I2">
                             <NodeLayout X="120" Y="129"/>
                             <additionalLayout age="0" force="10"
                                 frozen="false" zone="50"/>
                         </Node>
-                        <Node ID="I439" type="I2">
+                        <Node ID="I472" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>O</string>
@@ -1406,7 +1519,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="false" zone="50"/>
                         </Node>
-                        <Edge ID="I442" source="I437" target="I439" type="I8">
+                        <Edge ID="I475" source="I470" target="I472" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>o</string>
@@ -1418,14 +1531,14 @@
                         </Edge>
                     </Graph>
                     <Morphism name="ObjectSet">
-                        <Mapping image="I437" orig="I413"/>
+                        <Mapping image="I470" orig="I446"/>
                     </Morphism>
                 </PAC>
             </ApplCondition>
             <TaggedValue Tag="layer" TagValue="0"/>
             <TaggedValue Tag="priority" TagValue="0"/>
         </Rule>
-        <Rule ID="I445" formula="true" name="EdgeChord">
+        <Rule ID="I478" formula="true" name="EdgeChord">
             <Parameter name="x" type="String"/>
             <Parameter name="pi1" type="String"/>
             <Parameter name="pi2" type="String"/>
@@ -1436,8 +1549,8 @@
             <Parameter name="s" type="String"/>
             <Parameter name="O" type="String"/>
             <Parameter name="o" type="String"/>
-            <Graph ID="I447" kind="LHS" name="LeftOf_EdgeChord">
-                <Node ID="I448" type="I2">
+            <Graph ID="I480" kind="LHS" name="LeftOf_EdgeChord">
+                <Node ID="I481" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1446,15 +1559,15 @@
                     <NodeLayout X="73" Y="149"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I451" type="I2">
+                <Node ID="I484" type="I2">
                     <NodeLayout X="204" Y="168"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I453" type="I2">
+                <Node ID="I486" type="I2">
                     <NodeLayout X="324" Y="164"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I455" source="I448" target="I451" type="I8">
+                <Edge ID="I488" source="I481" target="I484" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi1</string>
@@ -1463,7 +1576,7 @@
                     <EdgeLayout bendX="0" bendY="0" textOffsetX="-7" textOffsetY="-58"/>
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
-                <Edge ID="I458" source="I451" target="I453" type="I8">
+                <Edge ID="I491" source="I484" target="I486" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi2</string>
@@ -1473,20 +1586,20 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Graph ID="I461" kind="RHS" name="RightOf_EdgeChord">
-                <Node ID="I462" type="I2">
+            <Graph ID="I494" kind="RHS" name="RightOf_EdgeChord">
+                <Node ID="I495" type="I2">
                     <NodeLayout X="48" Y="121"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I464" type="I2">
+                <Node ID="I497" type="I2">
                     <NodeLayout X="150" Y="119"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I466" type="I2">
+                <Node ID="I499" type="I2">
                     <NodeLayout X="116" Y="201"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I468" source="I462" target="I464" type="I8">
+                <Edge ID="I501" source="I495" target="I497" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pf</string>
@@ -1497,14 +1610,14 @@
                 </Edge>
             </Graph>
             <Morphism comment="Formula: true" name="EdgeChord">
-                <Mapping image="I462" orig="I448"/>
-                <Mapping image="I464" orig="I453"/>
-                <Mapping image="I466" orig="I451"/>
+                <Mapping image="I495" orig="I481"/>
+                <Mapping image="I497" orig="I486"/>
+                <Mapping image="I499" orig="I484"/>
             </Morphism>
             <ApplCondition>
                 <PAC>
-                    <Graph ID="I471" kind="PAC" name="SourceSet">
-                        <Node ID="I472" type="I2">
+                    <Graph ID="I504" kind="PAC" name="SourceSet">
+                        <Node ID="I505" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>x</string>
@@ -1514,7 +1627,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I475" type="I2">
+                        <Node ID="I508" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>S</string>
@@ -1524,7 +1637,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I478" source="I472" target="I475" type="I8">
+                        <Edge ID="I511" source="I505" target="I508" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>s</string>
@@ -1536,17 +1649,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="SourceSet">
-                        <Mapping image="I472" orig="I448"/>
+                        <Mapping image="I505" orig="I481"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I481" kind="PAC" name="ObjectSet">
-                        <Node ID="I482" type="I2">
+                    <Graph ID="I514" kind="PAC" name="ObjectSet">
+                        <Node ID="I515" type="I2">
                             <NodeLayout X="134" Y="94"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I484" type="I2">
+                        <Node ID="I517" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>O</string>
@@ -1556,7 +1669,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I487" source="I482" target="I484" type="I8">
+                        <Edge ID="I520" source="I515" target="I517" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>o</string>
@@ -1568,17 +1681,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="ObjectSet">
-                        <Mapping image="I482" orig="I453"/>
+                        <Mapping image="I515" orig="I486"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I490" kind="PAC" name="IntermSet">
-                        <Node ID="I491" type="I2">
+                    <Graph ID="I523" kind="PAC" name="IntermSet">
+                        <Node ID="I524" type="I2">
                             <NodeLayout X="135" Y="129"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I493" type="I2">
+                        <Node ID="I526" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>I</string>
@@ -1588,7 +1701,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I496" source="I491" target="I493" type="I8">
+                        <Edge ID="I529" source="I524" target="I526" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>i</string>
@@ -1600,14 +1713,14 @@
                         </Edge>
                     </Graph>
                     <Morphism name="IntermSet">
-                        <Mapping image="I491" orig="I451"/>
+                        <Mapping image="I524" orig="I484"/>
                     </Morphism>
                 </PAC>
             </ApplCondition>
             <TaggedValue Tag="layer" TagValue="0"/>
             <TaggedValue Tag="priority" TagValue="0"/>
         </Rule>
-        <Rule ID="I499" formula="true" name="EdgeChordKeep">
+        <Rule ID="I532" formula="true" name="EdgeChordKeep">
             <Parameter name="x" type="String"/>
             <Parameter name="pi1" type="String"/>
             <Parameter name="pi2" type="String"/>
@@ -1618,8 +1731,8 @@
             <Parameter name="o" type="String"/>
             <Parameter name="I" type="String"/>
             <Parameter name="i" type="String"/>
-            <Graph ID="I501" kind="LHS" name="LeftOf_EdgeChordKeep">
-                <Node ID="I502" type="I2">
+            <Graph ID="I534" kind="LHS" name="LeftOf_EdgeChordKeep">
+                <Node ID="I535" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1628,15 +1741,15 @@
                     <NodeLayout X="73" Y="149"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I505" type="I2">
+                <Node ID="I538" type="I2">
                     <NodeLayout X="184" Y="60"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I507" type="I2">
+                <Node ID="I540" type="I2">
                     <NodeLayout X="324" Y="164"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I509" source="I502" target="I505" type="I8">
+                <Edge ID="I542" source="I535" target="I538" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi1</string>
@@ -1645,7 +1758,7 @@
                     <EdgeLayout bendX="73" bendY="90" textOffsetX="0" textOffsetY="-22"/>
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
-                <Edge ID="I512" source="I505" target="I507" type="I8">
+                <Edge ID="I545" source="I538" target="I540" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi2</string>
@@ -1655,8 +1768,8 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Graph ID="I515" kind="RHS" name="RightOf_EdgeChordKeep">
-                <Node ID="I516" type="I2">
+            <Graph ID="I548" kind="RHS" name="RightOf_EdgeChordKeep">
+                <Node ID="I549" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1665,15 +1778,15 @@
                     <NodeLayout X="73" Y="149"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I519" type="I2">
+                <Node ID="I552" type="I2">
                     <NodeLayout X="184" Y="60"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I521" type="I2">
+                <Node ID="I554" type="I2">
                     <NodeLayout X="324" Y="164"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I523" source="I516" target="I519" type="I8">
+                <Edge ID="I556" source="I549" target="I552" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi1</string>
@@ -1682,7 +1795,7 @@
                     <EdgeLayout bendX="73" bendY="90" textOffsetX="0" textOffsetY="-22"/>
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
-                <Edge ID="I526" source="I519" target="I521" type="I8">
+                <Edge ID="I559" source="I552" target="I554" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi2</string>
@@ -1691,7 +1804,7 @@
                     <EdgeLayout bendX="216" bendY="66" textOffsetX="33" textOffsetY="38"/>
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
-                <Edge ID="I529" source="I516" target="I521" type="I8">
+                <Edge ID="I562" source="I549" target="I554" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pf</string>
@@ -1702,16 +1815,16 @@
                 </Edge>
             </Graph>
             <Morphism comment="Formula: true" name="EdgeChordKeep">
-                <Mapping image="I516" orig="I502"/>
-                <Mapping image="I519" orig="I505"/>
-                <Mapping image="I521" orig="I507"/>
-                <Mapping image="I526" orig="I512"/>
-                <Mapping image="I523" orig="I509"/>
+                <Mapping image="I549" orig="I535"/>
+                <Mapping image="I552" orig="I538"/>
+                <Mapping image="I554" orig="I540"/>
+                <Mapping image="I559" orig="I545"/>
+                <Mapping image="I556" orig="I542"/>
             </Morphism>
             <ApplCondition>
                 <PAC>
-                    <Graph ID="I532" kind="PAC" name="SourceSet">
-                        <Node ID="I533" type="I2">
+                    <Graph ID="I565" kind="PAC" name="SourceSet">
+                        <Node ID="I566" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>x</string>
@@ -1721,7 +1834,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I536" type="I2">
+                        <Node ID="I569" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>S</string>
@@ -1731,7 +1844,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I539" source="I533" target="I536" type="I8">
+                        <Edge ID="I572" source="I566" target="I569" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>s</string>
@@ -1743,17 +1856,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="SourceSet">
-                        <Mapping image="I533" orig="I502"/>
+                        <Mapping image="I566" orig="I535"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I542" kind="PAC" name="ObjectSet">
-                        <Node ID="I543" type="I2">
+                    <Graph ID="I575" kind="PAC" name="ObjectSet">
+                        <Node ID="I576" type="I2">
                             <NodeLayout X="134" Y="94"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I545" type="I2">
+                        <Node ID="I578" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>O</string>
@@ -1763,7 +1876,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I548" source="I543" target="I545" type="I8">
+                        <Edge ID="I581" source="I576" target="I578" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>o</string>
@@ -1775,17 +1888,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="ObjectSet">
-                        <Mapping image="I543" orig="I507"/>
+                        <Mapping image="I576" orig="I540"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I551" kind="PAC" name="IntermSet">
-                        <Node ID="I552" type="I2">
+                    <Graph ID="I584" kind="PAC" name="IntermSet">
+                        <Node ID="I585" type="I2">
                             <NodeLayout X="135" Y="129"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I554" type="I2">
+                        <Node ID="I587" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>I</string>
@@ -1795,7 +1908,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I557" source="I552" target="I554" type="I8">
+                        <Edge ID="I590" source="I585" target="I587" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>i</string>
@@ -1807,14 +1920,14 @@
                         </Edge>
                     </Graph>
                     <Morphism name="IntermSet">
-                        <Mapping image="I552" orig="I505"/>
+                        <Mapping image="I585" orig="I538"/>
                     </Morphism>
                 </PAC>
             </ApplCondition>
             <TaggedValue Tag="layer" TagValue="0"/>
             <TaggedValue Tag="priority" TagValue="0"/>
         </Rule>
-        <Rule ID="I560" formula="true" name="EdgeCopy">
+        <Rule ID="I593" formula="true" name="EdgeCopy">
             <Parameter name="x" type="String"/>
             <Parameter name="pi" type="String"/>
             <Parameter name="o" type="String"/>
@@ -1822,8 +1935,8 @@
             <Parameter name="pf" type="String"/>
             <Parameter name="S" type="String"/>
             <Parameter name="s" type="String"/>
-            <Graph ID="I562" kind="LHS" name="LeftOf_EdgeCopy">
-                <Node ID="I563" type="I2">
+            <Graph ID="I595" kind="LHS" name="LeftOf_EdgeCopy">
+                <Node ID="I596" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1832,11 +1945,11 @@
                     <NodeLayout X="77" Y="151"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I566" type="I2">
+                <Node ID="I599" type="I2">
                     <NodeLayout X="224" Y="154"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I568" source="I563" target="I566" type="I8">
+                <Edge ID="I601" source="I596" target="I599" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi</string>
@@ -1846,8 +1959,8 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Graph ID="I571" kind="RHS" name="RightOf_EdgeCopy">
-                <Node ID="I572" type="I2">
+            <Graph ID="I604" kind="RHS" name="RightOf_EdgeCopy">
+                <Node ID="I605" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
                             <string>x</string>
@@ -1856,11 +1969,11 @@
                     <NodeLayout X="77" Y="151"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Node ID="I575" type="I2">
+                <Node ID="I608" type="I2">
                     <NodeLayout X="224" Y="154"/>
                     <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
-                <Edge ID="I577" source="I572" target="I575" type="I8">
+                <Edge ID="I610" source="I605" target="I608" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pi</string>
@@ -1870,7 +1983,7 @@
                         textOffsetX="-27" textOffsetY="-45"/>
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
-                <Edge ID="I580" source="I572" target="I575" type="I8">
+                <Edge ID="I613" source="I605" target="I608" type="I8">
                     <Attribute type="I10" variable="true">
                         <Value>
                             <string>pf</string>
@@ -1882,14 +1995,14 @@
                 </Edge>
             </Graph>
             <Morphism comment="Formula: true" name="EdgeCopy">
-                <Mapping image="I572" orig="I563"/>
-                <Mapping image="I575" orig="I566"/>
-                <Mapping image="I577" orig="I568"/>
+                <Mapping image="I605" orig="I596"/>
+                <Mapping image="I608" orig="I599"/>
+                <Mapping image="I610" orig="I601"/>
             </Morphism>
             <ApplCondition>
                 <PAC>
-                    <Graph ID="I583" kind="PAC" name="SourceSet">
-                        <Node ID="I584" type="I2">
+                    <Graph ID="I616" kind="PAC" name="SourceSet">
+                        <Node ID="I617" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>x</string>
@@ -1899,7 +2012,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I587" type="I2">
+                        <Node ID="I620" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>S</string>
@@ -1909,7 +2022,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I590" source="I584" target="I587" type="I8">
+                        <Edge ID="I623" source="I617" target="I620" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>s</string>
@@ -1921,17 +2034,17 @@
                         </Edge>
                     </Graph>
                     <Morphism name="SourceSet">
-                        <Mapping image="I584" orig="I563"/>
+                        <Mapping image="I617" orig="I596"/>
                     </Morphism>
                 </PAC>
                 <PAC>
-                    <Graph ID="I593" kind="PAC" name="ObjectSet">
-                        <Node ID="I594" type="I2">
+                    <Graph ID="I626" kind="PAC" name="ObjectSet">
+                        <Node ID="I627" type="I2">
                             <NodeLayout X="127" Y="149"/>
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Node ID="I596" type="I2">
+                        <Node ID="I629" type="I2">
                             <Attribute type="I4" variable="true">
                                 <Value>
                                     <string>O</string>
@@ -1941,7 +2054,7 @@
                             <additionalLayout age="0" force="10"
                                 frozen="true" zone="50"/>
                         </Node>
-                        <Edge ID="I599" source="I594" target="I596" type="I8">
+                        <Edge ID="I632" source="I627" target="I629" type="I8">
                             <Attribute type="I10" variable="true">
                                 <Value>
                                     <string>o</string>
@@ -1953,7 +2066,7 @@
                         </Edge>
                     </Graph>
                     <Morphism name="ObjectSet">
-                        <Mapping image="I594" orig="I566"/>
+                        <Mapping image="I627" orig="I599"/>
                     </Morphism>
                 </PAC>
             </ApplCondition>

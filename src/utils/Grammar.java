@@ -22,7 +22,7 @@ package utils;
 		/**
 		 * Rules for the RDFS graph grammar, referenced for easier access
 		 */
-		public static Rule copyEdge, newNode, randomTransformSrc, randomTransformTarget, deleteNode, joinSet, modifyEdge, edgeCut, edgeReverse, edgeChord, edgeChordKeep;
+		public static Rule copyEdge, newNode, cloneSet, randomTransformSrc, randomTransformTarget, deleteNode, joinSet, modifyEdge, edgeCut, edgeReverse, edgeChord, edgeChordKeep;
 
 		/**
 		 * Where to load the grammar
@@ -132,6 +132,9 @@ package utils;
 						break;
 					case "EdgeCopy":
 						Grammar.copyEdge = r;
+						break;
+					case "CloneSet":
+						Grammar.cloneSet = r;
 						break;
 					default:
 						System.out.println("Unknown rule while importing Graph Grammar: " + rName + " was the .ggx file modified?");

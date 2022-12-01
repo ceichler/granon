@@ -43,7 +43,8 @@ public class Tui {
 					//HardCodedTests.testModifyEdgeWithX();
 					//HardCodedTests.testLDP();
 					//HardCodedTests.testAnato();
-					HardCodedTests.testEdgeReverse();
+					//HardCodedTests.testEdgeReverse();
+					HardCodedTests.testCloneSet();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());
