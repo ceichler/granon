@@ -27,12 +27,12 @@ public class BenchSentimentLDP {
 		int prevNbTweets = 0;
 		SentimentBuilder sb = new SentimentBuilder();
 		
-			int nbT = Integer.parseInt(args[0]);
-			boolean first = Boolean.parseBoolean(args[1]);
+			int nbT = 0;//Integer.parseInt(args[0]);
+			boolean first = true;// = Boolean.parseBoolean(args[1]);
 			
 		//for(Integer nbT : nbTweets) {
 			sb.parse(nbT, 0);
-			//GraGraUtils.print(grammar.getHostGraph());
+			GraGraUtils.print(grammar.getHostGraph());
 			
 			outputFile =new File("benchLDP_sentiment_"+nbT);
 			if(first) {

@@ -67,7 +67,7 @@ public class EdgeCut extends Operator {
 		setNodeValue(r.getLeft().getNodes(GraGraUtils.TNODE));
 		
 		//transforming
-		GraGraUtils.transformAllRand(new Report(), r, Tui.grammar);
+		GraGraUtils.transformAll(new Report(), r, Tui.grammar);
 		
 	}
 

@@ -63,7 +63,7 @@ public class EdgeReverse extends Operator {
 
 
 		//transforming
-		GraGraUtils.transformAllRand(new Report(), r, Tui.grammar);
+		GraGraUtils.transformAll(new Report(), r, Tui.grammar);
 		
 	}
 	
