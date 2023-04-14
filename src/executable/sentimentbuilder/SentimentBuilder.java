@@ -56,49 +56,59 @@ public class SentimentBuilder {
 	Node neutral = null;
 	Node pos = null;
 	Node tweetType = null;
+	Node time = null;
 	
 	public SentimentBuilder() {
-		//init the nodes map and get some nodes of interest
-				
-				String s;
-				for(Node n :  Grammar.graphGrammar.getGraph().getNodesCollection()) {
-					s=n.getAttribute().getValueAsString(0);
-					if(s.contains("personType")){
-						person = n;
-						nodesByID.put("personType", n);
-					}
-					else if(s.contains("tweetType")){
-						tweetType = n;
-						nodesByID.put("tweetType", n);
-					}
-					else if(s.contains("negative")){
-						neg = n;
-						nodesByID.put("negative", n);
-					}
-					else if(s.contains("neutral")){
-						neutral = n;
-						nodesByID.put("neutral", n);
-					}
-					else if(s.contains("positive")){
-						pos = n;
-						nodesByID.put("pos", n);
-					}
-					else if(s.contains("emotionType")){
-						emotion = n;
-						nodesByID.put("emotionType", n);
-					}
-					
-				}
+		
+		Node n;
+		//constructing starting graph
+		
+		n = createNode("personType", nodesByID);
+		person = n;
+		n = createNode("tweetType", nodesByID);
+		tweetType = n;
+		n = createNode("negative", nodesByID);
+		neg = n;
+		n = createNode("neutral", nodesByID);
+		neutral = n;
+		n = createNode("positive", nodesByID);
+		pos = n;
+		n = createNode("emotionType", nodesByID);
+		emotion = n;
+		
+		try {
+			GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, pos, emotion), "prop", "rdf:Type");
+			GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, neutral, emotion), "prop", "rdf:Type");
+			GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, neg, emotion), "prop", "rdf:Type");
+		} catch (TypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+
+	/**
+	 * 
+ 	* Parse filename and add its content to the host graph of the grammar
+ 	* do not construct groups
+	 * @param maxTweet nb of line to parse
+	 * @param prevNbTweet nb of line already parsed
+	 * @throws TypeException
+	 */
+	public void parse(int maxTweet, int prevNbTweet) throws TypeException {
+		parse(maxTweet, prevNbTweet, false);
 	}
 	
 	/**
+	 * 
  	* Parse filename and add its content to the host graph of the grammar
-	 * @throws TypeException 
- 	*/
-	public void parse(int maxTweet, int prevNbTweet) throws TypeException {
-		
-
-		
+	 * @param maxTweet nb of line to parse
+	 * @param prevNbTweet nb of line already parsed
+	 * @param anato whether groups should be constructed (timewindow of 1 min)
+	 * @throws TypeException
+	 */
+	public void parse(int maxTweet, int prevNbTweet, boolean anato) throws TypeException {
 			
 
 		try {
@@ -136,11 +146,12 @@ public class SentimentBuilder {
 				GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, tweet, emotion), "prop", "hasEmotion"); 
 				
 				//creates date and relates it to the tweet
-				GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, tweet, createNode(values[2], nodesByID)), "prop", "timestamp"); 
+				time = createNode(values[2], nodesByID);
+				GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, tweet, time), "prop", "timestamp"); 
 				//if user does not exist
 				if(!usersByName.containsKey(values[4])) {
 					//create user and name
-					user = createNode("test",nodesByID);
+					user = createNode("user"+currentLine,nodesByID);
 					usersByName.put(new String(values[4]),user);
 
 					//creates name and relates user to it
@@ -181,6 +192,14 @@ public class SentimentBuilder {
 						// if error here, it means the @ was part of an emoticon or something, and has nothing behind it. So we do nothing
 					}
 				}
+				
+				//Creating groups
+				if(anato) {
+					GraGraUtils.setAtt(g.createArc(GraGraUtils.TEDGE, time, 
+						createNode(values[2].substring(0,16), nodesByID)), "prop", "inGroup"); 
+				}
+				
+				
 			}
 			
 			myReader.close();
