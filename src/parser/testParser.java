@@ -1,0 +1,12 @@
+package parser;
+
+import java.util.Scanner;
+
+public class testParser {
+    public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the command");
+		Parser.command = scan.nextLine();
+		Parser.execute();
+    }
+}
