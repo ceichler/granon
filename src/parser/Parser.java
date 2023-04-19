@@ -23,18 +23,18 @@ public class Parser {
 		put("DeleteNode", (Object[] argsArray) -> DeleteNode((String)argsArray[0]));
 		put("NewNode", (Object[] argsArray) -> NewNode((String)argsArray[0]));
 		put("EdgeReverse", (Object[] argsArray) -> EdgeReverse((String)argsArray[0]));
-        put("EdgeCut", (Object[] argsArray) -> EdgeCut((String)argsArray[0]));
-        put("EdgeCopy", (Object[] argsArray) -> EdgeCopy((String)argsArray[0]));
-        put("EdgeChord", (Object[] argsArray) -> EdgeChord((String)argsArray[0]));
-        put("EdgeChordKeep", (Object[] argsArray) -> EdgeChordKeep((String)argsArray[0]));
-        put("ModifyEdge", (Object[] argsArray) -> ModifyEdge((String)argsArray[0]));
-        put("RandomSource", (Object[] argsArray) -> RandomSource((String)argsArray[0]));
-        put("RandomTarget", (Object[] argsArray) -> RandomTarget((String)argsArray[0]));
-        put("JoinSet", (Object[] argsArray) -> JoinSet((String)argsArray[0]));
-        put("CloneSet", (Object[] argsArray) -> CloneSet((String)argsArray[0]));
-        put("LDP", (Object[] argsArray) -> LDP((String)argsArray[0]));
-        put("Anatomization", (Object[] argsArray) -> Anatomization((String)argsArray[0]));
-        put("PrePostprocessing", (Object[] argsArray)->PrePostprocessing((String)argsArray[0]));
+        	put("EdgeCut", (Object[] argsArray) -> EdgeCut((String)argsArray[0]));
+		put("EdgeCopy", (Object[] argsArray) -> EdgeCopy((String)argsArray[0]));
+		put("EdgeChord", (Object[] argsArray) -> EdgeChord((String)argsArray[0]));
+		put("EdgeChordKeep", (Object[] argsArray) -> EdgeChordKeep((String)argsArray[0]));
+		put("ModifyEdge", (Object[] argsArray) -> ModifyEdge((String)argsArray[0]));
+		put("RandomSource", (Object[] argsArray) -> RandomSource((String)argsArray[0]));
+		put("RandomTarget", (Object[] argsArray) -> RandomTarget((String)argsArray[0]));
+		put("JoinSet", (Object[] argsArray) -> JoinSet((String)argsArray[0]));
+		put("CloneSet", (Object[] argsArray) -> CloneSet((String)argsArray[0]));
+		put("LDP", (Object[] argsArray) -> LDP((String)argsArray[0]));
+		put("Anatomization", (Object[] argsArray) -> Anatomization((String)argsArray[0]));
+		put("PrePostprocessing", (Object[] argsArray)->PrePostprocessing((String)argsArray[0]));
 	}};
 	
 
