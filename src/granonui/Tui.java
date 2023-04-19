@@ -2,6 +2,8 @@ package granonui;
 
 
 import java.util.Scanner;
+
+import parser.Parser;
 import utils.GraGraUtils;
 import utils.Grammar;
 
@@ -30,15 +32,10 @@ public class Tui {
 					quit = true;
 					break;
 				case 1:
-					System.out.println("Starting hardcoded test");
-					//HardCodedTests.testPostPreprocessing();
-					//HardCodedTests.testRandTransformWithX();
-					//HardCodedTests.testCutEdge();
-					//HardCodedTests.testEdgeChord2();
-					//HardCodedTests.testDelMultiple();
-					//HardCodedTests.testRandom();
-					//HardCodedTests.testModifyEdgeWithX();
-					HardCodedTests.testLDP();
+					System.out.println("Enter your command");
+					scan.nextLine(); // read the "\n" of last nextInt()
+					Parser.command = scan.nextLine();
+					Parser.execute();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());

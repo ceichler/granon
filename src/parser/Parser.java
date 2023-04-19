@@ -3,6 +3,9 @@ package parser;
 
 import java.util.regex.*;
 
+import transformations.operators.*;
+import transformations.procedures.*;
+
 import java.util.*;
 import java.util.function.Function;
 
@@ -31,6 +34,7 @@ public class Parser {
         put("CloneSet", (Object[] argsArray) -> CloneSet((String)argsArray[0]));
         put("LDP", (Object[] argsArray) -> LDP((String)argsArray[0]));
         put("Anatomization", (Object[] argsArray) -> Anatomization((String)argsArray[0]));
+        put("PrePostprocessing", (Object[] argsArray)->PrePostprocessing((String)argsArray[0]));
 	}};
 	
 
@@ -49,175 +53,91 @@ public class Parser {
 		    result.add(output[i]);
 		}
 		return result;
-	}
-	
-	
-	
+	}	
 	
 	// This function is designed to assist in obtaining the necessary parameters for creating a DeleteNode object
 	// Syntax: DeleteNode((S_att,p,O_att)) | DeleteNode (S_att,p,O_att)
 	// E.g DeleteNode(("id105",*,*)) , DeleteNode("id105",*,*) 
 	// The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command. 
     public static int DeleteNode(String rePattern) {    	
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att]}
-    	String temp;
+    	
+    	HashMap<String,ArrayList<String>> result = (new funcDeleteNode(command)).getToken(rePattern);
+    	if (result.equals(null)) {
+    		return -1;
+    	}
+    	(new DeleteNode(result.get("S").get(0),result.get("S").get(1),result.get("S").get(2))).execute();
     	
     	
-    	// Version with equals sign  character
-    	// e.g DeleteNode(("id105",*,*))
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "DeleteNode\\s*\\((.*)\\)";
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    temp = matcher.group(1);
-    		    result.put("S", handleSet(temp));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
-    	}
-    	// version with equal sign character
-    	// e.g DeleteNode(X = ("id105",*,*))
-    	else {
-    	}
 		return 0;
     			
     }
-    
-    
+        
     // Syntax: 	NewNode(S_att) | NewNode S_att
     // e.g 		NewNode("id108") | NewNode "id108"
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int NewNode(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	
-    	// Version with equals sign  character
-    	if (!command.contains("=")) { 
-   
-	    	if (rePattern == null) {
-	        	if (command.contains("(") || command.contains(")")) {
-	        		pattern =  "NewNode\\s*\\(\"(.*)\"\\)";
-	        		
-	        	}else {
-	        		pattern =  "NewNode\\s*\"(.*)\"";
-	        	}
-	    	}else {
-	    		pattern = rePattern;
-	    	}    	
-	    	
-			Pattern regex = Pattern.compile(pattern);
-			Matcher matcher = regex.matcher(command);
-			
-			if (matcher.find()) {
-			    // result[0] = matcher.group(1).trim();
-			    result.put("X", handleSet(matcher.group(1).trim()));
-			    System.out.println(result);
-			} else {
-				System.err.println("Syntax error!");
-			}
-		
+    	HashMap<String,ArrayList<String>> result = (new funcNewNode(command)).getToken(rePattern);
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equals sign
-    	else {
-
-    	}
+    	(new NewNode(result.get("X").get(0))).execute();
 		return 0;		
     	
     }
     
     
     // Syntax:  EdgeReverse((x,s,S_att),p,(*,o,O_att))
-    // e.g 		EdgeReverse(("id110","name","Johnson"),"livesIn",(*,"type","City"))
+    // e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,"inGroup","France"))
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeReverse(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att]} 
-    	// prepare for necessary upgrades when there is an equal sign character in request
-  	
-    	// Version with equals sign  character
-    	// e.g EdgeReverse(("id110","name","Johnson"),"livesIn",(*,"type","City"))
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "EdgeReverse\\s*\\(\\s*\\((.*)\\)\\s*,\\s*(.*)\\s*,\\s*\\((.*)\\)\\s*\\)";
-        		// \\s* to ignore spaces
-        		// without \\s*  "EdgeReverse\\(\\((.*)\\),(.*),\\((.*)\\)\)"
-        		// (.*) to match the necessary elements (this this case we have 3 elements S,p and O)
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {   
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("p", handleSet(matcher.group(2)));
-    		    result.put("O", handleSet(matcher.group(3)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
+    	HashMap<String,ArrayList<String>> result = (new funcEdgeReverse(command)).getToken(rePattern);
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equal sign character
-    	// e.g DeleteNode(X = ("id105",*,*))
-    	// The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
-    	else {
-    	}
+    	
+    	(new EdgeReverse(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("p").get(0)
+    			)
+    	).execute();
+    	// (new EdgeReverse("*","type","Person","inGroup","France","livesIn")).execute();
+    	
 		return 0;
     			
     }
     
 	// Syntax:  EdgeCut(S,p,O,pi,M_att,po)
-	// e.g  	EdgeCut (("id110",*,*),"livesIn",(*,"type","City"),"inIntem","intem","outIntem")
+	// e.g  	EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeCut(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"pi":[pi],"M_att":[M_att],"po":[po]} 
-    	// prepare for necessary upgrades when there is an equal sign character in request
-
-    	// Version with equals sign  character
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "EdgeCut\\s*\\(\\s*\\((.*)\\)\\s*,\\s*(.*)\\s*,\\s*\\((.*)\\)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*,\\s*(.*)\\s*\\)" ;
-        		// \\s* to ignore spaces
-        		// without \\s*  ""
-        		// (.*) to match the necessary elements (this this case we have 3 elements S,p and O)
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("p", handleSet(matcher.group(2)));
-    		    result.put("O", handleSet(matcher.group(3)));
-    		    result.put("pi", handleSet(matcher.group(4)));
-    		    result.put("M_att", handleSet(matcher.group(5)));
-    		    result.put("po", handleSet(matcher.group(6)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
+    	
+    	HashMap<String,ArrayList<String>> result = (new funcEdgeCut(command)).getToken(rePattern);
+    	
+    	// EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
+    	// (new EdgeCut("Paris", null, null, null, null, "type", "pi", "IntermNode", "pf")).execute();
+    	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"pi":[pi],"M_att":[M_att],"po":[po]}
+    	// EdgeCut(String x, String s,String S,String o, String O, String pi, String pf1, String interm, String pf2)
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equal sign character
-    	// e.g EdgeCut (S=("id110",*,*),p="livesIn",O=(*,"type","City"),pi="inIntem",M_att="intem",po="outIntem")
-    	// The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
-    	else {
-    	}
+    	(new EdgeCut(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("p").get(0),
+    			result.get("pi").get(0),
+    			result.get("M_att").get(0),
+    			result.get("po").get(0)
+    			)
+    	).execute();
+    	
+    	
 		return 0;
     }
     
@@ -225,139 +145,103 @@ public class Parser {
     // e.g 		EdgeCopy (("id555",*,*),"knows",(*,"type","person"),"cousin")
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeCopy(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"p_n":[p_n]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "EdgeCopy\\s*\\(\\s*\\((.*)\\)\\s*,\\s*(.*)\\s*,\\s*\\((.*)\\)\\s*,\\s*(.*)\\s*\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("p", handleSet(matcher.group(2)));
-    		    result.put("O", handleSet(matcher.group(3)));
-    		    result.put("p_n", handleSet(matcher.group(4)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
+    	// result = {"S":[x,s,S_att],"pi":[p],"O":[*,o,O_att],"pf":[pf]}
+    	// pf copy, cannot be *
+    	HashMap<String,ArrayList<String>> result = (new funcEdgeCopy(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	// EdgeCopy(String x, String s,String S,String o, String O, String pi, String pf)
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equal sign character
-    	else {
-    	}
+    	(new EdgeCopy(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("pi").get(0),
+    			result.get("pf").get(0)
+    	)).execute();
 		return 0;   	
     }
     
     
     // Syntax: 	 EdgeChord(S, pi , M, po , O, p)
-    // e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,"type","City"),"inGroup",(*,null,null),"livesIn")
+    // e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,null,null),"inGroup",(*,null,null),"livesIn")
+    // (new EdgeChord("*", "type","Person", null, null, null, null, "livesIn", "inGroup", "livesIn")).execute();
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeChord(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"pi":[pi],"M":[*,m,M_att],"po":[po],"O":[*,o,O_att],"p":[p]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "EdgeChord\\s*\\(\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,(.*)\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("pi", handleSet(matcher.group(2)));
-    		    result.put("M", handleSet(matcher.group(3)));
-    		    result.put("po", handleSet(matcher.group(4)));
-    		    result.put("O", handleSet(matcher.group(5)));
-    		    result.put("p", handleSet(matcher.group(6)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
+    	// result = {"S":[x,s,S_att],"pi":[pi],"M":[*,m,M_att],"po":[po],"O":[*,o,O_att],"pf":[pf]} 
+    	HashMap<String,ArrayList<String>> result = (new funcEdgeChord(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equal sign character
-    	else {
-    	}
+    	(new EdgeChord(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("M").get(1),
+    			result.get("M").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("pi").get(0),
+    			result.get("po").get(0),
+    			result.get("pf").get(0)
+    	)).execute();
+    	// EdgeChord((*,"type","Person"),"name",(*,null,null),"isA",(*,null,null),hasA)
+    	// (new EdgeChord("*", "type","Person", null, null, null, null, "name", "isA", "hasA")).execute();
 		return 0;
     	
     }
 
     
-    // Syntax: 	 EdgeChordKeep(S, pI , M, pO , O, p)
-    // e.g		 EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","City"),"inGroup",(*,null,null),"livesIn")    
+    // Syntax: 	 EdgeChordKeep(S, pI , M, pO , O, p) // p est pf dans le code
+    // e.g		 EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,null,null),"livesIn")    
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeChordKeep(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"pi":[pi],"M":[*,m,M_att],"po":[po],"O":[*,o,O_att],"p":[p]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "EdgeChordKeep\\s*\\(\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,(.*)\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("pi", handleSet(matcher.group(2)));
-    		    result.put("M", handleSet(matcher.group(3)));
-    		    result.put("po", handleSet(matcher.group(4)));
-    		    result.put("O", handleSet(matcher.group(5)));
-    		    result.put("p", handleSet(matcher.group(6)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
+    	// result = {"S":[x,s,S_att],"pi":[pi],"M":[*,m,M_att],"po":[po],"O":[*,o,O_att],"pf":[pf]} 
+    	HashMap<String,ArrayList<String>> result = (new funcEdgeChordKeep(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equal sign character
-    	else {
-    	}
+    	(new EdgeChordKeep(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("M").get(1),
+    			result.get("M").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("pi").get(0),
+    			result.get("po").get(0),
+    			result.get("pf").get(0)
+    	)).execute();
 		return 0;
     	
     }
     
     // Syntax: 	ModifyEdge(S,O,pi,pf)
-    // e.g		ModifyEdge((*,"type","Person"),(*,"type","City"), "livesIn", "worksIn")
+    // e.g		ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn")
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int ModifyEdge(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"O":[*,o,O_att],"pi":[pi],"pf":[pf]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "ModifyEdge\\s*\\(\\s*\\((.*)\\)\\s*,\\s*\\((.*)\\)\\s*,(.*),(.*)\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("O", handleSet(matcher.group(2)));
-    		    result.put("pi", handleSet(matcher.group(3)));
-    		    result.put("pf", handleSet(matcher.group(4)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
+    	// result = {"S":[x,s,S_att],"O":[*,o,O_att],"pi":[pi],"pf":[pf]}
+    	HashMap<String,ArrayList<String>> result = (new funcModifyEdge(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	if (result.equals(null)) {
+    		return -1;
     	}
-    	// version with equal sign character
-    	else {
-    	}
+    	// ModifyEdge(String x, String s,String S,String o, String O, String pi, String pf)
+    	(new ModifyEdge(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("pi").get(0),
+    			result.get("pf").get(0)    			
+    	)).execute();
 		return 0;
     	
     }
@@ -366,32 +250,24 @@ public class Parser {
     // e.g		RandomSource((*,"type","City"),"inGroup",(*,null,null),(*,"type","City"))
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int RandomSource(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"p":[pi],"O":[*,o,O_att],"T":[*,t,T_att]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "RandomSource\\s*\\(\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,\\s*\\((.*)\\)\\s*\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    		    result.put("S", handleSet(matcher.group(1)));
-    		    result.put("p", handleSet(matcher.group(2)));
-    		    result.put("O", handleSet(matcher.group(3)));
-    		    result.put("T", handleSet(matcher.group(4)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
-    	}
-    	// version with equal sign character
-    	else {
-    	}
+    	// call function RandomSrc
+    	HashMap<String,ArrayList<String>> result = (new funcRandomSource(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");   	
+    	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"T":[*,t,T_att]}
+    	// RandomSrc(String x, String s, String S, String t, String T, String o, String O, String p)
+    	(new RandomSrc(
+    	
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("T").get(1),
+    			result.get("T").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("p").get(0)
+    			
+    	)).execute();
+    	
 		return 0;
     	
     }
@@ -401,32 +277,24 @@ public class Parser {
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int RandomTarget(String rePattern) {
     	// call function RandomTar
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-    	// result = {"S":[x,s,S_att],"p":[pi],"O":[*,o,O_att],"T":[*,t,T_att]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "RandomTarget\\s*\\(\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,\\s*\\((.*)\\)\\s*\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    			result.put("S", handleSet(matcher.group(1)));
-    		    result.put("p", handleSet(matcher.group(2)));
-    		    result.put("O", handleSet(matcher.group(3)));
-    		    result.put("T", handleSet(matcher.group(4)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
-    	}
-    	// version with equal sign character
-    	else {
-    	}
+    	// RandomTar(String x, String s, String S, String t, String T, String o, String O, String p)
+    	// // result = {"S":[x,s,S_att],"p":[pi],"O":[*,o,O_att],"T":[*,t,T_att]} 
+    	HashMap<String,ArrayList<String>> result = (new funcRandomTarget(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	
+    	(new RandomTar(
+    			
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("T").get(1),
+    			result.get("T").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("p").get(0)
+    			
+    	)).execute();
+    	
 		return 0;
     	
     	
@@ -435,58 +303,9 @@ public class Parser {
     // e.g 		JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"livesIn","Paris")} except {(*,"knows","Johnson")}
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int JoinSet(String rePattern) {
-    	Pattern joinSetPattern = Pattern.compile("(JoinSet)\\s*\\((.*?)\\)");
-		Matcher joinSetMatcher = joinSetPattern.matcher(command);
-
-		String joinSetKey = "";
-		List<String> joinSetValues = new ArrayList<>();
-		if (joinSetMatcher.find()) {
-		    joinSetKey = joinSetMatcher.group(1);
-		    String joinSetValuesString = joinSetMatcher.group(2).replace("\"", "");
-		    String[] joinSetValuesArray = joinSetValuesString.split(",");
-		    joinSetValues = Arrays.asList(joinSetValuesArray);
-		}
-
-		// Extract where and its values
-		Pattern wherePattern = Pattern.compile("(where)\\s*\\{(.*?)\\}");
-		Matcher whereMatcher = wherePattern.matcher(command);
-
-		String whereKey = "";
-		List<String> whereValues = new ArrayList<>();
-		if (whereMatcher.find()) {
-		    whereKey = whereMatcher.group(1);
-		    String whereValuesString = whereMatcher.group(2).replace("(", "").replace(")", "").replace("\"", ""); 
-		    whereValues = Arrays.asList(whereValuesString.split(","));
-		}
-
-		// Extract except and its values
-		Pattern exceptPattern = Pattern.compile("(except)\\s*\\{(.*?)\\}");
-		Matcher exceptMatcher = exceptPattern.matcher(command);
-
-		String exceptKey = "";
-		List<String> exceptValues = new ArrayList<>();
-		if (exceptMatcher.find()) {
-		    exceptKey = exceptMatcher.group(1);
-		    String exceptValuesString = exceptMatcher.group(2).replace("(", "").replace(")", "").replace("\"", "");
-		    exceptValues = Arrays.asList(exceptValuesString.split(","));
-		}
-
-		// Create the HashMap
-		HashMap<String, List<String>> hashMap = new HashMap<>();
-		hashMap.put(joinSetKey, joinSetValues);
-		hashMap.put(whereKey, whereValues);
-		hashMap.put(exceptKey, exceptValues);
-
-		
-		System.out.println(hashMap);
-		
-//		for (List<String> li : hashMap.values()) {
-//			System.out.println(li);
-//		}
-//		
-//		for (String st : hashMap.get("except")) {
-//			System.out.println(st);
-//		}	
+    	HashMap<String,ArrayList<String>> result = (new funcJoinSet(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.err.println("this operator is under development");
 		return 0;    	
 		
     }
@@ -496,32 +315,19 @@ public class Parser {
     // e.g 		CloneSet(("*", "type", "city"), "clone", "Clone")
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int CloneSet(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
     	// result = {"S":[x,s,S_att],"c":[c],"C_att":[C_att]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "CloneSet\\s*\\(\\s*\\((.*)\\)\\s*,(.*),(.*)\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-        	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-
-    		if (matcher.find()) {
-    			result.put("S", handleSet(matcher.group(1)));
-    		    result.put("c", handleSet(matcher.group(2)));
-    		    result.put("C_att", handleSet(matcher.group(3)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
-    	}
-    	// PVP,PVB
-    	// version with equal sign character
-    	else {
-    	}
+    	HashMap<String,ArrayList<String>> result = (new funcCloneSet(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	
+    	// CloneSet(String src, String s, String S, String c, String C)
+    	(new CloneSet(
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("c").get(0),
+    			result.get("C_att").get(0)
+    	)).execute();
+    	
 		return 0;
     	
     }
@@ -530,31 +336,24 @@ public class Parser {
     //e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),3)
     // LDP("type", "Person", "isA", "Name", "name", 3)
     public static int LDP(String rePattern) {
-    	String pattern;
-    	HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
     	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O],"k":[k]} 
-    	if (!command.contains("=")) {
-    		if (rePattern == null) { 
-        		pattern =  "LDP\\s*\\(\\s*\\((.*)\\)\\s*,(.*),\\s*\\((.*)\\)\\s*,(.*)\\)" ;
-        	}else {
-        		pattern = rePattern;
-        	}    	
-    		Pattern regex = Pattern.compile(pattern);
-    		Matcher matcher = regex.matcher(command);		
-    		if (matcher.find()) {
-    			result.put("S", handleSet(matcher.group(1)));
-    		    result.put("p", handleSet(matcher.group(2)));
-    		    result.put("O", handleSet(matcher.group(3)));
-    		    result.put("k", handleSet(matcher.group(4)));
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
-    	}
-    	// PVP,PVB
-    	// version with equal sign character
-    	else {
-    	}
+    	HashMap<String,ArrayList<String>> result = (new funcLDP(command)).getToken(rePattern);
+    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	
+    	// LDP(String x, String s, String S, String o, String O, String p, int k)
+    	(new LDP(
+    			
+    			result.get("S").get(0),
+    			result.get("S").get(1),
+    			result.get("S").get(2),
+    			result.get("O").get(1),
+    			result.get("O").get(2),
+    			result.get("p").get(0),
+    			Integer.parseInt(result.get("k").get(0))
+    			
+    			
+    	)).execute();
+    	
 		return 0;
     	
     }
@@ -576,11 +375,7 @@ public class Parser {
     	
     }
     
-    
-    
-    
-    
-    
+ 
     public static int execute() {
     	
     	command = command.trim();
@@ -604,6 +399,7 @@ public class Parser {
             }
             catch(Exception e){
             	System.err.println("operator does not exist");
+            	e.printStackTrace();
             }
         } else {
         	System.err.println("Empty command !");

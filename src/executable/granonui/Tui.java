@@ -6,6 +6,7 @@ import java.util.Scanner;
 import utils.GraGraUtils;
 import utils.Grammar;
 import executable.HardCodedTests;
+import parser.Parser;
 
 /**
  * @author ceichler
@@ -33,19 +34,10 @@ public class Tui {
 					quit = true;
 					break;
 				case 1:
-					System.out.println("Starting hardcoded test");
-					//HardCodedTests.testPostPreprocessing();
-					//HardCodedTests.testRandTransform();
-					//HardCodedTests.testCutEdge();
-					//HardCodedTests.testEdgeChord();
-					//HardCodedTests.testDelMultiple();
-					//HardCodedTests.testRandom();
-					//HardCodedTests.testModifyEdge();
-					//HardCodedTests.testLDP();
-					//HardCodedTests.testAnato();
-					//HardCodedTests.testEdgeReverse();
-					//HardCodedTests.testCloneSet();
-					HardCodedTests.testAnato();
+					System.out.println("Enter your command");
+					scan.nextLine(); // read the "\n" of last nextInt()
+					Parser.command = scan.nextLine();
+					Parser.execute();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());
