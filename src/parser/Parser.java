@@ -90,8 +90,8 @@ public class Parser {
     }
     
     
-    // Syntax:  EdgeReverse((x,s,S_att),p,(*,o,O_att))
-    // e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,"inGroup","France"))
+//     Syntax:  EdgeReverse((x,s,S_att),p,(*,o,O_att))
+//     e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,"inGroup","France"))
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeReverse(String rePattern) {
     	HashMap<String,ArrayList<String>> result = (new funcEdgeReverse(command)).getToken(rePattern);
@@ -305,7 +305,7 @@ public class Parser {
     	
     }
     // Syntax:  JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
-    // e.g 		JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"livesIn","Paris")} except {(*,"knows","Johnson")}
+    // e.g 		JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int JoinSet(String rePattern) {
     	// result = {JoinSet=[hasQI, QI], where=[Y1,Y2,Y3,...], except=[X1,X2,X3,...]}

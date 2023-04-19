@@ -45,10 +45,6 @@ public class funcCloneSet extends funcOperators {
     		result.get(i).replaceAll(s -> s.equals("null") ? null : s);
     	}
     	
-    	if (!result.get("O").get(0).equals("*")) {
-    		System.err.println("O must be (*,o,O_att) !");
-    		return null;
-    	}
     	return result;
 	}
 
