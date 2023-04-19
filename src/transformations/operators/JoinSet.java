@@ -167,7 +167,7 @@ public class JoinSet extends Operator {
 					else GraGraUtils.setAtt(obj, "att", null);
 
 				}
-				System.out.println("except " + p.getFirst() + " " + p.getSecond());
+				System.out.println("[in JoinSet] except " + p.getFirst() + " " + p.getSecond());
 
 
 			}

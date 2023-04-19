@@ -5,6 +5,7 @@ import java.util.regex.*;
 
 import transformations.operators.*;
 import transformations.procedures.*;
+import utils.Pair;
 
 import java.util.*;
 import java.util.function.Function;
@@ -34,6 +35,7 @@ public class Parser {
 		put("CloneSet", (Object[] argsArray) -> CloneSet((String)argsArray[0]));
 		put("LDP", (Object[] argsArray) -> LDP((String)argsArray[0]));
 		put("Anatomization", (Object[] argsArray) -> Anatomization((String)argsArray[0]));
+		put("Anato", (Object[] argsArray) -> Anatomization((String)argsArray[0]));
 		put("PrePostprocessing", (Object[] argsArray)->PrePostprocessing((String)argsArray[0]));
 	}};
 	
@@ -62,6 +64,7 @@ public class Parser {
     public static int DeleteNode(String rePattern) {    	
     	
     	HashMap<String,ArrayList<String>> result = (new funcDeleteNode(command)).getToken(rePattern);
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	if (result.equals(null)) {
     		return -1;
     	}
@@ -77,6 +80,7 @@ public class Parser {
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int NewNode(String rePattern) {
     	HashMap<String,ArrayList<String>> result = (new funcNewNode(command)).getToken(rePattern);
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	if (result.equals(null)) {
     		return -1;
     	}
@@ -91,6 +95,7 @@ public class Parser {
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeReverse(String rePattern) {
     	HashMap<String,ArrayList<String>> result = (new funcEdgeReverse(command)).getToken(rePattern);
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	if (result.equals(null)) {
     		return -1;
     	}
@@ -116,7 +121,7 @@ public class Parser {
     public static int EdgeCut(String rePattern) {
     	
     	HashMap<String,ArrayList<String>> result = (new funcEdgeCut(command)).getToken(rePattern);
-    	
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	// EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
     	// (new EdgeCut("Paris", null, null, null, null, "type", "pi", "IntermNode", "pf")).execute();
     	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"pi":[pi],"M_att":[M_att],"po":[po]}
@@ -148,7 +153,7 @@ public class Parser {
     	// result = {"S":[x,s,S_att],"pi":[p],"O":[*,o,O_att],"pf":[pf]}
     	// pf copy, cannot be *
     	HashMap<String,ArrayList<String>> result = (new funcEdgeCopy(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	// EdgeCopy(String x, String s,String S,String o, String O, String pi, String pf)
     	if (result.equals(null)) {
     		return -1;
@@ -173,7 +178,7 @@ public class Parser {
     public static int EdgeChord(String rePattern) {
     	// result = {"S":[x,s,S_att],"pi":[pi],"M":[*,m,M_att],"po":[po],"O":[*,o,O_att],"pf":[pf]} 
     	HashMap<String,ArrayList<String>> result = (new funcEdgeChord(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	if (result.equals(null)) {
     		return -1;
     	}
@@ -202,7 +207,7 @@ public class Parser {
     public static int EdgeChordKeep(String rePattern) {
     	// result = {"S":[x,s,S_att],"pi":[pi],"M":[*,m,M_att],"po":[po],"O":[*,o,O_att],"pf":[pf]} 
     	HashMap<String,ArrayList<String>> result = (new funcEdgeChordKeep(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	if (result.equals(null)) {
     		return -1;
     	}
@@ -228,7 +233,7 @@ public class Parser {
     public static int ModifyEdge(String rePattern) {
     	// result = {"S":[x,s,S_att],"O":[*,o,O_att],"pi":[pi],"pf":[pf]}
     	HashMap<String,ArrayList<String>> result = (new funcModifyEdge(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	if (result.equals(null)) {
     		return -1;
     	}
@@ -252,7 +257,7 @@ public class Parser {
     public static int RandomSource(String rePattern) {
     	// call function RandomSrc
     	HashMap<String,ArrayList<String>> result = (new funcRandomSource(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");   	
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");   	
     	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"T":[*,t,T_att]}
     	// RandomSrc(String x, String s, String S, String t, String T, String o, String O, String p)
     	(new RandomSrc(
@@ -280,7 +285,7 @@ public class Parser {
     	// RandomTar(String x, String s, String S, String t, String T, String o, String O, String p)
     	// // result = {"S":[x,s,S_att],"p":[pi],"O":[*,o,O_att],"T":[*,t,T_att]} 
     	HashMap<String,ArrayList<String>> result = (new funcRandomTarget(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	
     	(new RandomTar(
     			
@@ -303,9 +308,58 @@ public class Parser {
     // e.g 		JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"livesIn","Paris")} except {(*,"knows","Johnson")}
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int JoinSet(String rePattern) {
+    	// result = {JoinSet=[hasQI, QI], where=[Y1,Y2,Y3,...], except=[X1,X2,X3,...]}
+    	// {JoinSet=[hasQI, QI], where=[*, type, Person, *, livesIn, Paris], except=[*, knows, Johnson]}
     	HashMap<String,ArrayList<String>> result = (new funcJoinSet(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
-    	System.err.println("this operator is under development");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
+    	
+    	
+		HashSet<Pair<String>> excepts = new HashSet<Pair<String>>();
+		if (result.get("except").size() >= 3) {
+			for (int i = 0; i < result.get("except").size();i+=3 ) {
+				if (!result.get("except").get(i).equals("*")) {
+					System.err.println(" Node in except must be represented by (*,x,X_att)");
+					return -1;
+				}
+				excepts.add(new Pair<String>(result.get("except").get(i+1), result.get("except").get(i+2)));
+			}
+		}
+		
+		HashSet<Pair<String>> wheres = new HashSet<Pair<String>>();
+		if (result.get("where").size() >= 3) {
+			for (int i = 0; i < result.get("where").size();i+=3 ) {
+				if (!result.get("where").get(i).equals("*")) {
+					System.err.println(" Node in where must be represented by (*,x,X_att)");
+					return -1;
+				}
+				wheres.add(new Pair<String>(result.get("where").get(i+1), result.get("where").get(i+2)));
+			}
+		}
+    	
+//    	for (Pair<String> a: wheres) {
+//    		System.out.println(a.getFirst());
+//
+//    		System.out.println(a.getSecond());
+//    	}
+//    	for (Pair<String> a: excepts) {
+//    		System.out.println(a.getFirst());
+//
+//    		System.out.println(a.getSecond());
+//    	}
+    	
+    	// JoinSet(String src, Set<Pair<String>> excepts, Set<Pair<String>> wheres, String setName, String propName)
+    	// JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"livesIn","Paris")} except {(*,"knows","Johnson")}
+		// JoinSet(Set<Pair<String>> excepts, Set<Pair<String>> wheres, String setName, String propName)
+		/** Creating a new set with setName **/
+		(new NewNode(result.get("JoinSet").get(1))).execute();
+		(new JoinSet(
+				excepts,
+				wheres,
+				result.get("JoinSet").get(1),
+				result.get("JoinSet").get(0)
+				
+		)).execute();
+    	// JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
 		return 0;    	
 		
     }
@@ -317,7 +371,7 @@ public class Parser {
     public static int CloneSet(String rePattern) {
     	// result = {"S":[x,s,S_att],"c":[c],"C_att":[C_att]} 
     	HashMap<String,ArrayList<String>> result = (new funcCloneSet(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	
     	// CloneSet(String src, String s, String S, String c, String C)
     	(new CloneSet(
@@ -338,7 +392,7 @@ public class Parser {
     public static int LDP(String rePattern) {
     	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O],"k":[k]} 
     	HashMap<String,ArrayList<String>> result = (new funcLDP(command)).getToken(rePattern);
-    	System.out.println("\u001B[33m"+result+"\u001B[0m");
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
     	
     	// LDP(String x, String s, String S, String o, String O, String p, int k)
     	(new LDP(
@@ -367,10 +421,20 @@ public class Parser {
     
     
     // Syntax:
-    // e.g
+    // e.g		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
     // 
     public static int Anatomization(String rePattern) {
-    	System.err.println("this operator is under development");
+    	HashMap<String,ArrayList<String>> result = (new funcAnato(command)).getToken(rePattern);
+    	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
+    	
+    	// public Anatomization(List<String> identifiers, List<String> qID, List<String> sensitives)
+    	// {idn=[], sens=[], qID=[]}
+    	(new Anatomization(
+    			result.get("idn"),
+    			result.get("qID"),
+    			result.get("sens")
+    			
+    	)).execute();
     	return 0;
     	
     }
@@ -392,10 +456,10 @@ public class Parser {
     	 	
         if (words.length > 0) {
             call_func = words[0];
-            System.out.println("Call_func = " + call_func);
+            System.out.println("[in Parser] Call_func = " + call_func);
             Object[] functionArgs = {null};
             try {
-            operators.get(call_func).apply(functionArgs);
+            	operators.get(call_func).apply(functionArgs);
             }
             catch(Exception e){
             	System.err.println("operator does not exist");

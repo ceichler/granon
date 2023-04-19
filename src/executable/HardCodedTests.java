@@ -29,6 +29,7 @@ public class HardCodedTests {
 		//where.add(new Pair("*","*"));
 		//where.add(new Pair("livesInA", "*"));
 		where.add(new Pair<String>("*", "Stuart"));
+		
 		Prepostprocessing pp = new Prepostprocessing(excepts, where);
 		try {
 			pp.doPreprocessing();

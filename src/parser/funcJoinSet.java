@@ -54,20 +54,20 @@ public class funcJoinSet extends funcOperators {
 
 		// Create the HashMap
 		HashMap<String, ArrayList<String>> hashMap = new HashMap<>();
-		hashMap.put(joinSetKey, (ArrayList<String>) joinSetValues);
-		hashMap.put(whereKey, (ArrayList<String>) whereValues);
-		hashMap.put(exceptKey, (ArrayList<String>) exceptValues);
+		hashMap.put(joinSetKey,  new ArrayList<>(joinSetValues));
+		hashMap.put(whereKey, new ArrayList<>(whereValues));
+		hashMap.put(exceptKey, new ArrayList<>(exceptValues));
 
 		
-		System.out.println(hashMap);
-		
-		for (List<String> li : hashMap.values()) {
-			System.out.println(li);
-		}
-		
-		for (String st : hashMap.get("except")) {
-			System.out.println(st);
-		}
+//		System.out.println(hashMap);
+//		
+//		for (List<String> li : hashMap.values()) {
+//			System.out.println(li);
+//		}
+//		
+//		for (String st : hashMap.get("except")) {
+//			System.out.println(st);
+//		}
 		
 		return hashMap;
 		
