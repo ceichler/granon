@@ -16,48 +16,54 @@ public class funcJoinSet extends funcOperators {
 
 	@Override
 	public HashMap<String, ArrayList<String>> getToken(String rePattern) {
-		Pattern joinSetPattern = Pattern.compile("(JoinSet)\\s*\\((.*?)\\)");
-		Matcher joinSetMatcher = joinSetPattern.matcher(command);
-
-		String joinSetKey = "";
-		List<String> joinSetValues = new ArrayList<>();
-		if (joinSetMatcher.find()) {
-		    joinSetKey = joinSetMatcher.group(1);
-		    String joinSetValuesString = joinSetMatcher.group(2).replace("\"", "");
-		    String[] joinSetValuesArray = joinSetValuesString.split(",");
-		    joinSetValues = Arrays.asList(joinSetValuesArray);
-		}
-
-		// Extract where and its values
-		Pattern wherePattern = Pattern.compile("(where)\\s*\\{(.*?)\\}");
-		Matcher whereMatcher = wherePattern.matcher(command);
-
-		String whereKey = "";
-		List<String> whereValues = new ArrayList<>();
-		if (whereMatcher.find()) {
-		    whereKey = whereMatcher.group(1);
-		    String whereValuesString = whereMatcher.group(2).replace("(", "").replace(")", "").replace("\"", ""); 
-		    whereValues = Arrays.asList(whereValuesString.split(","));
-		}
-
-		// Extract except and its values
-		Pattern exceptPattern = Pattern.compile("(except)\\s*\\{(.*?)\\}");
-		Matcher exceptMatcher = exceptPattern.matcher(command);
-
-		String exceptKey = "";
-		List<String> exceptValues = new ArrayList<>();
-		if (exceptMatcher.find()) {
-		    exceptKey = exceptMatcher.group(1);
-		    String exceptValuesString = exceptMatcher.group(2).replace("(", "").replace(")", "").replace("\"", "");
-		    exceptValues = Arrays.asList(exceptValuesString.split(","));
-		}
-
-		// Create the HashMap
 		HashMap<String, ArrayList<String>> hashMap = new HashMap<>();
-		hashMap.put(joinSetKey,  new ArrayList<>(joinSetValues));
-		hashMap.put(whereKey, new ArrayList<>(whereValues));
-		hashMap.put(exceptKey, new ArrayList<>(exceptValues));
+		if (!command.contains("=")) {
+		
+			Pattern joinSetPattern = Pattern.compile("(JoinSet)\\s*\\((.*?)\\)");
+			Matcher joinSetMatcher = joinSetPattern.matcher(command);
+	
+			String joinSetKey = "";
+			List<String> joinSetValues = new ArrayList<>();
+			if (joinSetMatcher.find()) {
+			    joinSetKey = joinSetMatcher.group(1);
+			    String joinSetValuesString = joinSetMatcher.group(2).replace("\"", "");
+			    String[] joinSetValuesArray = joinSetValuesString.split(",");
+			    joinSetValues = Arrays.asList(joinSetValuesArray);
+			}
+	
+			// Extract where and its values
+			Pattern wherePattern = Pattern.compile("(where)\\s*\\{(.*?)\\}");
+			Matcher whereMatcher = wherePattern.matcher(command);
+	
+			String whereKey = "";
+			List<String> whereValues = new ArrayList<>();
+			if (whereMatcher.find()) {
+			    whereKey = whereMatcher.group(1);
+			    String whereValuesString = whereMatcher.group(2).replace("(", "").replace(")", "").replace("\"", ""); 
+			    whereValues = Arrays.asList(whereValuesString.split(","));
+			}
+	
+			// Extract except and its values
+			Pattern exceptPattern = Pattern.compile("(except)\\s*\\{(.*?)\\}");
+			Matcher exceptMatcher = exceptPattern.matcher(command);
+	
+			String exceptKey = "";
+			List<String> exceptValues = new ArrayList<>();
+			if (exceptMatcher.find()) {
+			    exceptKey = exceptMatcher.group(1);
+			    String exceptValuesString = exceptMatcher.group(2).replace("(", "").replace(")", "").replace("\"", "");
+			    exceptValues = Arrays.asList(exceptValuesString.split(","));
+			}
+	
+			// Create the HashMap
+			hashMap.put(joinSetKey,  new ArrayList<>(joinSetValues));
+			hashMap.put(whereKey, new ArrayList<>(whereValues));
+			hashMap.put(exceptKey, new ArrayList<>(exceptValues));
 
+		}
+		
+		// Keyword arguments
+		// result = Parser.handleKeywordArgs(command);
 		
 //		System.out.println(hashMap);
 //		

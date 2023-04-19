@@ -41,21 +41,62 @@ public class Parser {
 	
 
 	// "(\"id105\",*,*)" ---> "id105","*","*"
-	public static ArrayList<String> handleSet(String str) {
-		String input = str.trim();
-		ArrayList<String> result =new ArrayList<String>();
-		if (input.startsWith("(") && input.endsWith(")")) {
-		    input = input.substring(1, input.length() - 1);
-		}
-		// String input = str.substring(1, str.length() - 1);
-		String[] output = input.split(",");
-		for (int i = 0; i < output.length; i++) {
-		    output[i] = output[i].replaceAll("\"", "");
-		    output[i] = output[i].trim();
-		    result.add(output[i]);
-		}
+//	public static ArrayList<String> handleSet(String str) {
+//		String input = str.trim();
+//		ArrayList<String> result =new ArrayList<String>();
+//		if (input.startsWith("(") && input.endsWith(")")) {
+//		    input = input.substring(1, input.length() - 1);
+//		}
+//		// String input = str.substring(1, str.length() - 1);
+//		String[] output = input.split(",");
+//		for (int i = 0; i < output.length; i++) {
+//		    output[i] = output[i].replaceAll("\"", "");
+//		    output[i] = output[i].trim();
+//		    result.add(output[i]);
+//		}
+//		return result;
+//	}	
+//	
+	public static ArrayList<String> handleSet(String input){
+		ArrayList<String> parameters = new ArrayList<String>();
+	    input = input.trim(); // Remove any leading/trailing whitespace
+	    if (input.endsWith(",")) {
+	        input = input.substring(0, input.length() - 1);
+	    }
+	    if (input.startsWith("(") && input.endsWith(")")) { // Check if input has parentheses
+	        input = input.substring(1, input.length()-1); // Remove parentheses
+	        if (!input.isEmpty()) { // Check if input is not empty
+	            String[] params = input.split(","); // Split input by comma
+	            for (String param : params) {
+	                parameters.add(param.trim().replaceAll("^\"|\"$", "")); // Remove any leading/trailing quotes and add parameter to ArrayList
+	            }
+	        }
+	    } else { // If input doesn't have parentheses, split by comma and add parameters to ArrayList
+	        String[] params = input.split(",");
+	        for (String param : params) {
+	            parameters.add(param.trim().replace("\"", ""));
+	        }
+	    }
+	    return parameters;
+	}
+	
+	public static HashMap<String,ArrayList<String>> handleKeywordArgs(String comd) {
+		HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
+		comd = comd.replace(" ", "");
+		String pattern = "(\\w+)\\s*=\\s*(.*?)\\s*(?:(?=\\w+\\s*=)|\\)$)";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(comd);
+
+
+        // Store the parameter key-value pairs in a HashMap
+        while (matcher.find()) {
+            result.put(matcher.group(1),Parser.handleSet(matcher.group(2)));
+        }
+
+        // Print the parameters
+        System.out.println(result);
 		return result;
-	}	
+	}
 	
 	// This function is designed to assist in obtaining the necessary parameters for creating a DeleteNode object
 	// Syntax: DeleteNode((S_att,p,O_att)) | DeleteNode (S_att,p,O_att)
@@ -146,11 +187,11 @@ public class Parser {
 		return 0;
     }
     
-    // Syntax:	EdgeCopy(S, p, O, p')
+    // Syntax:	EdgeCopy(S, pi, O, pf)
     // e.g 		EdgeCopy (("id555",*,*),"knows",(*,"type","person"),"cousin")
     // The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     public static int EdgeCopy(String rePattern) {
-    	// result = {"S":[x,s,S_att],"pi":[p],"O":[*,o,O_att],"pf":[pf]}
+    	// result = {"S":[x,s,S_att],"pi":[pi],"O":[*,o,O_att],"pf":[pf]}
     	// pf copy, cannot be *
     	HashMap<String,ArrayList<String>> result = (new funcEdgeCopy(command)).getToken(rePattern);
     	System.out.println("[in Parser] \u001B[33m"+result+"\u001B[0m");
@@ -351,7 +392,7 @@ public class Parser {
     	// JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"livesIn","Paris")} except {(*,"knows","Johnson")}
 		// JoinSet(Set<Pair<String>> excepts, Set<Pair<String>> wheres, String setName, String propName)
 		/** Creating a new set with setName **/
-		(new NewNode(result.get("JoinSet").get(1))).execute();
+		// (new NewNode(result.get("JoinSet").get(1))).execute();
 		(new JoinSet(
 				excepts,
 				wheres,

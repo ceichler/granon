@@ -38,6 +38,7 @@ public class funcRandomTarget extends funcOperators{
     	}
     	// version with equal sign character
     	else {
+    		result = Parser.handleKeywordArgs(command);
     	}
     	// built-in function contains only o and O_att so the required syntax is of the form (*,o,O)
     	if (!result.get("O").get(0).equals("*")) {

@@ -45,6 +45,7 @@ public class funcNewNode extends funcOperators{
     	}
     	// version with equals sign
     	else {
+    		result = Parser.handleKeywordArgs(command);
 
     	}
     	

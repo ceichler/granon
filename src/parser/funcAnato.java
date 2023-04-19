@@ -41,6 +41,8 @@ public class funcAnato extends funcOperators {
     	// PVP,PVB
     	// version with equal sign character
     	else {
+    		command = command.replace("{", "").replace("}", "");
+    		result = Parser.handleKeywordArgs(command);
     	}
     	return result;
     	

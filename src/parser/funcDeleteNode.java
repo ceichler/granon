@@ -41,6 +41,7 @@ public class funcDeleteNode extends funcOperators{
     	// version with equal sign character
     	// e.g DeleteNode(X = ("id105",*,*))
     	else {
+    		result = Parser.handleKeywordArgs(command);
     	}
     	
     	for (int i=0;i<3;i++) {

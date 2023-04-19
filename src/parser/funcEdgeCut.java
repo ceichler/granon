@@ -48,6 +48,7 @@ public class funcEdgeCut extends funcOperators {
     	// e.g EdgeCut (S=("id110",*,*),p="livesIn",O=(*,"type","City"),pi="inIntem",M_att="intem",po="outIntem")
     	// The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     	else {
+    		result = Parser.handleKeywordArgs(command);
     	}
     	
     	// Replace all String "null" by null

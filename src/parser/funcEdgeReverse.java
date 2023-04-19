@@ -45,6 +45,7 @@ public class funcEdgeReverse extends funcOperators{
     	// e.g DeleteNode(X = ("id105",*,*))
     	// The rePattern parameter allows us to use our own regular expression pattern to match and extract substrings from the command.
     	else {
+    		result = Parser.handleKeywordArgs(command);
     	}
     	
     	// built-in function contains only o and O_att so the required syntax is of the form (*,o,O)

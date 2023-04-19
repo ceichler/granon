@@ -39,6 +39,7 @@ public class funcCloneSet extends funcOperators {
     	// PVP,PVB
     	// version with equal sign character
     	else {
+    		result = Parser.handleKeywordArgs(command);
     	}
     	// Replace all String "null" by null
     	for (String i : result.keySet()) {
