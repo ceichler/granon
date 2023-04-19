@@ -1,0 +1,54 @@
+Syntax: 	DeleteNode((S_att,p,O_att)) | DeleteNode (S_att,p,O_att)
+E.g 		DeleteNode(("id105",*,*)) , DeleteNode("id105",*,*)
+
+
+Syntax: 	NewNode(S_att) | NewNode S_att
+e.g 		NewNode("id108") | NewNode "id108"
+
+
+Syntax:  	EdgeReverse((x,s,S_att),p,(*,o,O_att))
+e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,"inGroup","France"))
+
+
+Syntax:  	EdgeCut(S,p,O,pi,M_att,po)
+e.g  		EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
+
+
+Syntax:	EdgeCopy(S, p, O, p')
+e.g 		EdgeCopy (("id555",*,*),"knows",(*,"type","person"),"cousin")
+
+
+Syntax: 	 EdgeChord(S, pi , M, po , O, p)
+e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,null,null),"inGroup",(*,null,null),"livesIn")
+
+
+Syntax: 	 EdgeChordKeep(S, pI , M, pO , O, p) // p est pf dans le code
+e.g		 EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,null,null),"livesIn")   
+
+
+Syntax: 	ModifyEdge(S,O,pi,pf)
+e.g		ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn")
+
+
+Syntax:  	RandomSource(S, p, O, T )
+e.g		RandomSource((*,"type","City"),"inGroup",(*,null,null),(*,"type","City"))
+
+
+Syntax:	RandomTarget(S, p, O, T)
+e.g		RandomTarget((*,"type","Person"),"name",(*,"isA","Name"),(*,"isA","Name"))
+
+
+Syntax:  	JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
+e.g 		JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
+
+
+Syntax:  	CloneSet (S,c,C_att)
+e.g 		CloneSet(("*", "type", "city"), "clone", "Clone")
+
+
+Syntax:	LDP(S,p,O,k)
+e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),3)
+
+
+Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
+e.g		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
