@@ -5,11 +5,33 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * class for analyzing the EdgeReverse command
+ * 
+ * @author 
+ *
+ */
+
+
 public class funcEdgeReverse extends funcOperators{
+	
+	
+	/**
+	 * create the object with specific command to parse
+	 * @param command 
+	 */
 	
 	public funcEdgeReverse(String command) {
 		super(command);
 	}
+	
+	/**
+	 * analyzing the {@link #command} then return the tokens
+	 * @param rePattern custom regex for analyzing the command. (null by defaut)
+	 * @return a HashMap contains all the tokens for executing the operator
+	 * 			- return syntax: {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att]} 
+	 * 			- Example:	
+	 */
 
 	@Override
 	public HashMap<String, ArrayList<String>> getToken(String rePattern) {

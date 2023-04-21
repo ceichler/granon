@@ -7,6 +7,7 @@ import utils.GraGraUtils;
 import utils.Grammar;
 import executable.HardCodedTests;
 import parser.Parser;
+import progFileReader.ProgRunner;
 
 /**
  * @author ceichler
@@ -58,7 +59,13 @@ public class Tui {
 					break;
 				case 6:
 					System.out.println("please enter a filename\n");
-					
+				case 7:
+					// System.out.println("Running prog");
+					System.out.println("Loading...please enter a filepath | Enter for default \n");
+					scan.nextLine();
+					input = scan.nextLine();
+					if (input.isEmpty()) {ProgRunner.execProg();}
+					else {ProgRunner.execProg(input);}
 					break;
 				default:
 					System.out.println("Unknown command, please enter an integer between 0 and 9");
@@ -72,7 +79,8 @@ public class Tui {
 				"3 : save current graph \n" +
 				"4 : load a graph grammar \n" +
 				"5 : reset graph \n" +
-				"6 : load a graph NON FONCTIONNEL \n"
+				"6 : load a graph NON FONCTIONNEL \n"+
+				"7 : execute a  program file"
 		);
 		return scan.nextInt();
 	}

@@ -5,13 +5,40 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class funcRandomSource extends funcOperators {
 
+
+/**
+ * class for analyzing the RandomSource command
+ * 
+ * @author 
+ *
+ */
+
+
+public class funcRandomSource extends funcOperators {
+	// result = {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"T":[*,t,T_att]}
+	// Syntax:  RandomSource(S, p, O, T )
+    // e.g		RandomSource((*,"type","City"),"inGroup",(*,null,null),(*,"type","City"))
+	
+	/**
+	 * create the object for analyzing RandomSource command with specific command
+	 * @param command
+	 */
 	public funcRandomSource(String command) {
 		super(command);
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * extracts the information in the command of the form "RandomSource(S, p, O, T )" 
+	 * 
+	 * @param rePattern a regular expression pattern to match and extract substrings from the command
+	 * @returns a HashMap of the form 
+	 * 			- syntax: {"S":[x,s,S_att],"p":[p],"O":[*,o,O_att],"T":[*,t,T_att]}
+	 * 			- Example: 
+	 *
+	 */
+	
 	@Override
 	public HashMap<String, ArrayList<String>> getToken(String rePattern) {
 		String pattern;
@@ -32,7 +59,7 @@ public class funcRandomSource extends funcOperators {
     		    result.put("p", Parser.handleSet(matcher.group(2)));
     		    result.put("O", Parser.handleSet(matcher.group(3)));
     		    result.put("T", Parser.handleSet(matcher.group(4)));
-    		    System.out.println(result);
+    		    // System.out.println(result);
     		} else {
     			System.err.println("Syntax error!");
     		}

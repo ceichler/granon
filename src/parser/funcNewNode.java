@@ -5,14 +5,30 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * class to parse the command operator NewNode
+ * @author khai
+ *
+ */
+
 public class funcNewNode extends funcOperators{
 	
-	
+	/**
+	 * create the object with specific command to parse
+	 * @param command
+	 */
 	public funcNewNode(String command) {
 		super(command);
 	}
 	
-	
+	/**
+	 * analyzing the {@link #command} then return the token
+	 * @param rePattern custom regex for analyzing the command. (null by defaut)
+	 * @return a HashMap contains all the tokens for executing the operator
+	 * 			- return syntax: {"X"=[att_of_new_node]}
+	 * 			- Example:  {"X"=["NewNode"]}
+	 */
 	@Override
 	public HashMap<String,ArrayList<String>> getToken(String rePattern) {
     	String pattern;

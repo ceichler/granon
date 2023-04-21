@@ -5,13 +5,36 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * class for analyzing the EdgeCopy command
+ * 
+ * @author 
+ *
+ */
+
+
 public class funcEdgeCopy extends funcOperators {
 
+	/**
+	 * create the object with specific command to parse
+	 * @param command 
+	 */
+
+	
 	public funcEdgeCopy(String command) {
 		super(command);
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * analyzing the {@link #command} then return the tokens
+	 * @param rePattern custom regex for analyzing the command. (null by defaut)
+	 * @return a HashMap contains all the tokens for executing the operator
+	 * 			- return syntax: {"S":[x,s,S_att],"pi":[pi],"O":[*,o,O_att],"pf":[pf]} 
+	 * 			- Example:	
+	 */
+	
 	@Override
 	public HashMap<String, ArrayList<String>> getToken(String rePattern) {
 		String pattern;

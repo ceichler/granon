@@ -31,7 +31,7 @@ public class funcRandomTarget extends funcOperators{
     		    result.put("p", Parser.handleSet(matcher.group(2)));
     		    result.put("O", Parser.handleSet(matcher.group(3)));
     		    result.put("T", Parser.handleSet(matcher.group(4)));
-    		    System.out.println(result);
+    		    // System.out.println(result);
     		} else {
     			System.err.println("Syntax error!");
     		}
