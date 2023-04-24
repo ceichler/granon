@@ -31,7 +31,7 @@ public class BenchSentimentLDP {
 		Tui.grammar = grammar;
 		
 		//number of iteration for the XP with fixed parameters
-		int nbIter = 10;
+		int nbIter = 5;
 		//Start and end date of time of XP
 		long start, end;
 		//File to write XP measurements
@@ -42,18 +42,19 @@ public class BenchSentimentLDP {
 		SentimentBuilder sb = new SentimentBuilder();
 		
 		
-		int nbT = 0;//Integer.parseInt(args[0]);
-		boolean first = true;// = Boolean.parseBoolean(args[1]);
+		int nbT = Integer.parseInt(args[0]);
+		boolean first = Boolean.parseBoolean(args[1]);
 			
 		sb.parse(nbT, 0);
 		//GraGraUtils.print(grammar.getHostGraph());
 			
 			outputFile =new File("benchLDP_sentiment_"+nbT);
+			System.out.println("output file = " + outputFile);
 			if(first) {
 				prepareFile(nbT, grammar.getHostGraph().getNodesCount(), grammar.getHostGraph().getArcsCount(), outputFile);
 			}
 			
-			//for(int i=0;i<nbIter;i++) {
+			for(int i=0;i<nbIter;i++) {
 				start=System.currentTimeMillis();
 				(new LDP("rdf:Type", "tweetType", "rdf:Type", "emotionType", "hasEmotion", 2)).execute();
 				end=System.currentTimeMillis();
@@ -68,7 +69,7 @@ public class BenchSentimentLDP {
 				}
 				System.out.println("one run done");
 				//GraGraUtils.print(grammar.getHostGraph());
-			//}
+			}
 			//prevNbTweets = nbT;
 		//}
 	}

@@ -42,8 +42,8 @@ public class BenchSentimentAnato {
 		SentimentBuilder sb = new SentimentBuilder();
 		
 		//nb of line to parse
-		int nbT = 40;//Integer.parseInt(args[0]);
-		boolean first = true;// Boolean.parseBoolean(args[1]);
+		int nbT = Integer.parseInt(args[0]);
+		boolean first =  Boolean.parseBoolean(args[1]);
 			
 		sb.parse(nbT, 0, true);
 		//GraGraUtils.print(grammar.getHostGraph());
@@ -73,7 +73,7 @@ public class BenchSentimentAnato {
 				catch(Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("one run done");
+				//System.out.println("one run done");
 				//GraGraUtils.print(grammar.getHostGraph());
 			//}
 			
