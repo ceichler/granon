@@ -24,7 +24,8 @@ e.g 		EdgeCopy (("id555",*,*),"knows",(*,"type","person"),"cousin")
 
 
 Syntax: 	 EdgeChord(S, pi , M, po , O, pf)
-e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,null,null),"inGroup",(*,null,null),"livesIn")
+e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),"livesIn")
+		 EdgeChord ((*,"type","Person"),"name",(*,null,null),"isA",(*,null,null),"hasA")
 e.g		 EdgeChord (S=(*,"type","Person"),pi="livesIn",M=(*,null,null),po="inGroup",O=(*,null,null),pf="livesIn")
 
 Syntax: 	 EdgeChordKeep(S, pI , M, pO , O, pf) 
@@ -57,11 +58,22 @@ e.g 		CloneSet(("*", "type", "city"), "clone", "Clone")
 
 
 Syntax:	LDP(S,p,O,k)
-e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),3)
+e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),"3")
 		LDP(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),k=3)
 
 
 Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
 e.g		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
 		Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

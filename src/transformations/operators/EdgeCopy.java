@@ -1,6 +1,8 @@
 package transformations.operators;
 
 
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -55,6 +57,18 @@ public class EdgeCopy extends Operator {
 	 */
 	public EdgeCopy(String s,String S,String o, String O, String pi, String pf) {
 		this(GraGraUtils.STAR, s, S, o, O, pi, pf);
+	}
+	
+	/**
+	 * 
+	 * Creating the operator creating a copy pf of all relations of type and node predefine pre-determined
+	 * @param map contains all needed parameters
+	 */
+	
+	
+	public EdgeCopy(HashMap<String,String> map) {
+		r = Grammar.copyEdge.getClone();
+		this.map = map;
 	}
 
 	@Override

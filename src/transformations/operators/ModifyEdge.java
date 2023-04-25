@@ -1,6 +1,8 @@
 package transformations.operators;
 
 
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -57,6 +59,16 @@ public class ModifyEdge extends Operator {
 	 */
 	public ModifyEdge(String s,String S,String o, String O, String pi, String pf) {
 		this(GraGraUtils.STAR, s, S, o, O, pi, pf);
+	}
+	
+	
+	/**
+	 * Create operator for tranforming all relations pre-determined
+	 * @param map contains all needed arguments
+	 */
+	public ModifyEdge(HashMap<String,String> map) {
+		r = Grammar.modifyEdge.getClone();
+		this.map = map;
 	}
 
 	@Override

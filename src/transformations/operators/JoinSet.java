@@ -1,5 +1,7 @@
 package transformations.operators;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,7 +83,6 @@ public class JoinSet extends Operator {
 
 	}
 
-
 	/**
 	 * Creates the operator with default propName = js and x unspecified (star)
 	 * @param excepts set of except pairs <x,X>, ignore nodes related to X by x for any <x,X> in except
@@ -105,7 +106,56 @@ public class JoinSet extends Operator {
 	public JoinSet(String src, String setName, String propName) throws InvalidArguments {
 		this(src,new HashSet<Pair<String>>(), new HashSet<Pair<String>>(), setName, propName);
 	}
+	
+	
+	
+	
+	/**
+	 * Creates the operator with default propName = js and x unspecified (star)
+	 * @param map contains all needed arguments
+	 */
 
+	public JoinSet(HashMap<String,ArrayList<String>> map) {
+		/**
+    	 *  excepts = {Pair<String>(X1_x,X1_att),Pair<String>(X2_x,X2_att),...}
+    	 */
+		HashSet<Pair<String>> excepts = new HashSet<Pair<String>>();
+		if (map.get("except").size() >= 3) {
+			for (int i = 0; i < map.get("except").size();i+=3 ) {
+				if (!map.get("except").get(i).equals("*")) {
+					System.err.println(" Node in except must be represented by (*,x,X_att)");
+				}
+				excepts.add(new Pair<String>(map.get("except").get(i+1), map.get("except").get(i+2)));
+			}
+		}
+		
+		/**
+		 *  wheres = {Pair<String>(Y1_x,Y1_att),Pair<String>(Y2_x,Y2_att),...}
+		 */
+		HashSet<Pair<String>> wheres = new HashSet<Pair<String>>();
+		if (map.get("where").size() >= 3) {
+			for (int i = 0; i < map.get("where").size();i+=3 ) {
+				if (!map.get("where").get(i).equals("*")) {
+					System.err.println(" Node in where must be represented by (*,x,X_att)");
+				}
+				wheres.add(new Pair<String>(map.get("where").get(i+1), map.get("where").get(i+2)));
+			}
+		}
+		
+		
+		this.setName=map.get("JoinSet").get(1);
+		this.propName =map.get("JoinSet").get(0);
+		this.excepts=excepts;
+		this.wheres = wheres;
+		this.src = GraGraUtils.STAR;
+		
+	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public void execute() {
 

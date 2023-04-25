@@ -1,6 +1,8 @@
 package transformations.operators;
 
 
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -38,7 +40,16 @@ public class EdgeReverse extends Operator {
 		map.put("O",O);
 		map.put("p",p);
 	}
+	
+	/**
+	 * reverse all relation pre-determined
+	 * @param map contains all needed arguments
+	 */
 
+	public EdgeReverse(HashMap<String,String> map) {
+		r = Grammar.edgeReverse.getClone();
+		this.map = map;
+	}
 	
 	@Override
 	public void execute() {

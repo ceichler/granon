@@ -1,5 +1,7 @@
 package transformations.procedures;
 
+import java.util.HashMap;
+
 import transformations.operators.DeleteNode;
 import transformations.operators.EdgeChord;
 import transformations.operators.EdgeCopy;
@@ -69,6 +71,16 @@ public class LDP {
 	public LDP(String s, String S, String o, String O, String p, int k)  {
 		this(GraGraUtils.STAR,s,S,o,O,p,k);
 	}
+	
+	/**
+	 * Constructing the class
+	 * @param map contains all needed arguments
+	 */
+	public LDP(HashMap<String,String> map) {
+		this(map.get("x"),map.get("s"),map.get("S"),map.get("o"),map.get("O"),map.get("p"),Integer.parseInt(map.get("k")));
+	}
+	
+	
 
 	/**
 	 * Execute the random transformation of sources, uses RandomTransform and ModifyEdge

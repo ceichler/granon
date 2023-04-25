@@ -1,6 +1,8 @@
 package transformations.operators;
 
 
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -45,6 +47,15 @@ public class EdgeCut extends Operator {
 		map.put("interm", interm);
 	}
 
+	/**
+	 * transform all relations pre-determined
+	 * @param map contains all needed arguments
+	 */
+	
+	public EdgeCut(HashMap<String,String> map) {
+		r = Grammar.edgeCut.getClone();
+		this.map = map;
+	}
 	
 	@Override
 	public void execute() {

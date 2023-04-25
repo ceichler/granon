@@ -1,5 +1,7 @@
 package transformations.procedures;
 
+import java.util.HashMap;
+
 import transformations.operators.ModifyEdge;
 import transformations.operators.RandomTransformTar;
 import utils.GraGraUtils;
@@ -63,6 +65,14 @@ public class RandomTar {
 	 */
 	public RandomTar(String s, String S, String t, String T, String o, String O, String p) {
 		this(GraGraUtils.STAR,s,S,t,T,o,O,p);
+	}
+	
+	/**
+	 * Constructing the class, init attribute
+	 * @param map contains all needed arguments
+	 */
+	public RandomTar(HashMap<String,String> map) {
+		this(map.get("x"),map.get("s"),map.get("S"),map.get("t"),map.get("T"),map.get("o"),map.get("O"),map.get("p"));
 	}
 	
 	/**

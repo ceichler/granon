@@ -1,6 +1,8 @@
 package transformations.operators;
 
 
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -65,6 +67,17 @@ public class RandomTransformSrc extends Operator {
 	public RandomTransformSrc(String s,String S,String t,String T,String o, String O, String pi, String pf) {
 		this(GraGraUtils.STAR, s, S, t, T,o,O,pi,pf);
 	}
+	
+	/**
+	 * transforming all relations of type pre-determined
+	 * @param map contains all needed arguments
+	 */
+	
+	public RandomTransformSrc(HashMap<String,String> map) {
+		r = Grammar.randomTransformSrc.getClone();
+		this.map =map;
+	}
+	
 	@Override
 	public void execute() {
 		//setting attribute values

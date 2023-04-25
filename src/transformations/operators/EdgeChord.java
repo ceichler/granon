@@ -2,6 +2,10 @@ package transformations.operators;
 
 
 
+import java.util.HashMap;
+
+import javax.xml.bind.annotation.XmlElementDecl;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -47,8 +51,21 @@ public class EdgeChord extends Operator {
 		map.put("pi1",pi1);
 		map.put("pi2",pi2);
 		map.put("pf",pf);
+		System.out.println(map);
+		System.out.println("[in constructer] \u001B[33m"+ map + "\u001B[0m");
 	}
 
+	/**
+	 * transforming all paths pi1 pi2 with value related to O by o from a node x related to S by S with an intermediary node related to I by i
+	 * to a of type pf having the same source and target.
+	 * @param map contains all needed parameters
+	 */
+	
+	public EdgeChord(HashMap<String,String> map) {
+		r = Grammar.edgeChord.getClone();
+		this.map = map;
+		System.out.println("[in constructer] \u001B[33m"+ map + "\u001B[0m");
+	}
 	
 	@Override
 	public void execute() {

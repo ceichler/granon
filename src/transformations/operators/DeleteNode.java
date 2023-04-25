@@ -1,6 +1,8 @@
 package transformations.operators;
 
 
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -36,6 +38,15 @@ public class DeleteNode extends Operator {
 		map.put("X", arg);
 		map.put("s", s);
 		map.put("S", S);
+	}
+	
+	/**
+	 * Initializing the operator
+	 * @param map contains all needed parameters
+	 */
+	public DeleteNode(HashMap<String,String> map) {
+		r = Grammar.deleteNode.getClone();
+		this.map = map;
 	}
 
 	@Override
