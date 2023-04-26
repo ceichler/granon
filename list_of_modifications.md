@@ -15,3 +15,8 @@ I choose to write an additional function instead of replace all code in the func
 ***Adding new constructors for procedures***
 
 ***Finish the Parser for Anatomization***
+
+## Mercredi 26 avril 2023
+
+***Implement the interface CheckArgs***
+***Finished the class SyntaxException***

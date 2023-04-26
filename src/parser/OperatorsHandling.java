@@ -11,22 +11,22 @@ import java.util.HashMap;
  */
 
 
-public abstract class OperatorsHandling {
+public abstract class OperatorsHandling implements CheckArgs{
 	/**
 	 * the provided command
 	 */
-	public String command;
+	String command;
 	/**
 	 * 
 	 * the HashMap contain all key for identifying the command's arguments 
 	 * 
 	 */
 	
-	public HashMap<String,String[]> listKeys = new HashMap<String, String[]>(){{
+	public static final HashMap<String,String[]> listKeys = new HashMap<String, String[]>(){{
 	// operateurs
-	put("DeleteNode",			new String[]{"S",						"S=X,s,S"});
-	put("NewNode",				new String[]{"S_att",					"S_att=X"});
-	put("EdgeReverse",			new String[]{"S,p,O",					"S=X,s,S","O=o_x,o,O"});
+	put("DeleteNode",			new String[]{"X",						"X=X,s,S"});
+	put("NewNode",				new String[]{"X_att",					"X_att=X"});
+	put("EdgeReverse",			new String[]{"S,p,O",					"S=x,s,S","O=o_x,o,O"});
 	put("EdgeCut",				new String[]{"S,pi,O,pf1,interm,pf2",	"S=x,s,S","O=o_x,o,O"});
 	put("EdgeCopy",				new String[]{"S,pi,O,pf",				"S=x,s,S","O=o_x,o,O"});
 	put("EdgeChord",			new String[]{"S,pi1,I,pi2,O,pf",		"S=x,s,S","I=i_x,i,I","O=o_x,o,O"});
@@ -57,8 +57,9 @@ public abstract class OperatorsHandling {
 	/**
 	 * function that parses the command and returns the tokens after analyzing the command
 	 * @return HashMap contains all token inside the command
+	 * @throws SyntaxException 
 	 */
-	public abstract HashMap<String,ArrayList<String>> getToken();
+	public abstract HashMap<String,ArrayList<String>> getToken() throws SyntaxException;
 
 	/**
 	 * function that create the Params for execute the opreators

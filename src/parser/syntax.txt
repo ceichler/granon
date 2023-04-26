@@ -68,12 +68,20 @@ e.g		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
 		
 		
 		
+Test Exception
+
+		
+	LDP((*,"type","Person"),*,(*,"isA","Name"),"3")  // must test for 3
+		
+	ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)
+	
+	
+	EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),*)
+	
+	RandomTarget((*,"type","Person"),null,(*,"isA","Name"),(*,"isA","Name"))
 		
 		
-		
-		
-		
-		
-		
+	DeleteNode((null,*,*))	
+	
 		
 		

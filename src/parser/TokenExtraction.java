@@ -29,9 +29,10 @@ public class TokenExtraction extends OperatorsHandling{
 	 *  This function is used to determine the operator included in the command
 	 * @param input the command with the opertor
 	 * @return the operator's name
+	 * @throws SyntaxException 
 	 */
 	
-	private static String getOperator(String input) {
+	private String getOperator(String input) throws SyntaxException {
 		String[] operator;
         int index = input.indexOf("(");
         if (index >= 0) {        	
@@ -42,19 +43,26 @@ public class TokenExtraction extends OperatorsHandling{
         }
     	 	
         if (operator.length > 0) {
-        	return operator[0].trim();
+        	operator[0] = operator[0].trim();
+        	if (!OperatorsHandling.listKeys.containsKey(operator[0])) {
+        		throw new SyntaxException(1,operator[0]);
+        	}
+        	return operator[0];
         }
-		return null;
+        throw new SyntaxException(0,"\n");
 	}
 
+	
+	
 	/**
 	 *  this function analyze the command and return the HashMap contain all useful token for executing command
 	 *  @return a HashMap with useful Token
 	 *  	- the HashMap contain  the operator's name and it's arguments
 	 *  	- Example: {p=[livesIn], S=[*, type, Person], operator=[EdgeReverse], O=[*, inGroup, France]}
+	 * @throws SyntaxException 
 	 */	
 	@Override
-	public HashMap<String, ArrayList<String>> getToken() {
+	public HashMap<String, ArrayList<String>> getToken() throws SyntaxException {
 		HashMap<String, ArrayList<String>>  result = new HashMap<String, ArrayList<String>> ();
 				
 		// Get operator's name
@@ -63,7 +71,7 @@ public class TokenExtraction extends OperatorsHandling{
 		if (!op.equals("JoinSet") && !op.equals("Anatomization")){
 			
 			// Get the keys list of the operator
-			String[] list_keys = super.listKeys.get(op)[0].split(",");
+			String[] list_keys = OperatorsHandling.listKeys.get(op)[0].split(",");
 			
 			// put the string containing operator's name into HashMap
 			// we will use it to call the "real" function for rewriting on the graph database
@@ -75,7 +83,7 @@ public class TokenExtraction extends OperatorsHandling{
 			if (!command.contains("=")) {
 				
 				// We use this regex for matching all Parameters inside the command
-				String regex = "(\\([^\\\\)]+\\))|(\\\"[^\\\"]+\\\")";
+				String regex = "(\\([^\\\\)\\\\(]+\\))|(\\\"[^\\\"]+\\\")|(\\*)|(null)";
 		        Pattern pattern = Pattern.compile(regex);
 		        Matcher matcher = pattern.matcher(command);
 		        
@@ -85,7 +93,7 @@ public class TokenExtraction extends OperatorsHandling{
 		            String paramsStr = matcher.group(0);
 		            // remove unnecessary characters
 		            paramsStr = paramsStr.replace("(", "").replace(")", "").replace("\"", "");
-		            System.out.println("\u001B[36m"+paramsStr+"\u001B[0m");
+		            // System.out.println("\u001B[36m"+paramsStr+"\u001B[0m");
 		            String[] afterSplit = paramsStr.split(",");         
 		            ArrayList<String> temp = new ArrayList<String>(Arrays.asList(afterSplit));
 		            for (int i = 0;i < temp.size();i++) {
@@ -148,15 +156,14 @@ public class TokenExtraction extends OperatorsHandling{
     				result.put(keys[count], element);
     				count++;
     			}
-    		    System.out.println(result);
-    		} else {
-    			System.err.println("Syntax error!");
-    		}
-			
+//    		    System.out.println(result);
+    		} 
 		}
         
         return result;
     }
+	
+	
 	/**
 	 * genrate le HashMap for executing the operator
 	 * @param tokens after analyzing the command
@@ -176,10 +183,16 @@ public class TokenExtraction extends OperatorsHandling{
 			String[] split_element = listKeys.get(tokens.get("operator").get(0))[i].split("=");
 			convertParams.put(split_element[0], split_element[1].split(","));
 		}
-		System.out.println(convertParams.keySet());
 		for (String element:convertParams.keySet()) {
-			// convert from "S"=[x,s,S] to "x"=x,"s"=s,"S"=S
+			// convert from "S"=[x,s,S] to "x"=x,"s"=s,"S"=S  <!-- When the checkArgs is finished, we can merge this thing with "O" -->
 			if (element.equals("S")) {
+				execMap.put(convertParams.get(element)[0],tokens.get(element).get(0));
+				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
+				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
+				tokens.remove(element);
+			} 
+			// convert from "X"=[X,s,S] to "X"=x,"s"=s,"S"=S
+			else if (element.equals("X")) {
 				execMap.put(convertParams.get(element)[0],tokens.get(element).get(0));
 				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
 				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
@@ -190,12 +203,14 @@ public class TokenExtraction extends OperatorsHandling{
 				execMap.put(convertParams.get(element)[0],tokens.get(element).get(0));
 				tokens.remove(element);
 			}
-			// convert from "O"=[*,o,O] to "o"=o,"O"=O
+			// convert from "O"=[*,o,O] to "o"=o,"O"=O 
+			// <!-- When checkArgs is finished, we can also push the first element of O into O_x and let the checkArgs drop them for us, for mergin the S -->
 			else {
-				if (!tokens.get(element).get(0).equals("*")) {
-					System.out.println("Invalid Parameter "+ element + " must be [*,"+tokens.get(element).get(1)+","+tokens.get(element).get(2)+"] !");
-					return null;
-				}
+//				// This thing will be pushed in SyntaxException after the checkArgs is finished
+//				if (!tokens.get(element).get(0).equals("*")) {
+//					System.out.println("Invalid Parameter "+ element + " must be [*,"+tokens.get(element).get(1)+","+tokens.get(element).get(2)+"] !");
+//					return null;
+//				}
 				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
 				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
 				tokens.remove(element);
@@ -206,10 +221,72 @@ public class TokenExtraction extends OperatorsHandling{
 			execMap.put(i,tokens.get(i).get(0));
 		}
 
-		System.out.println(execMap);
+		// System.out.println(execMap);
 		execMap.remove("operator");
 		return execMap;
 		
 	}
+	
+	@Override
+	public void checkSet(String setFormCode, ArrayList<String> setVal) throws SyntaxException {
+		if (setVal.size()!=3) {
+			throw new SyntaxException(7,"The number of elements in the Set must be 3");
+		}
+		ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(setFormCode);
+		for (int i =0; i<setForm.size();i++) {
+			if(setForm.get(i)==null) {continue;}
+			if (setVal.get(i) == null && setForm.get(i)!=null) {
+				throw new SyntaxException(7,setFormCode + "["+i+ "] null is not allowed");
+			}else if (setVal.get(i).equals("*") && setForm.get(i).equals("Str")) {
+				throw new SyntaxException(7,setFormCode + "["+i+ "]  * is not allowed");
+			}else if (setForm.get(i).equals("**") && !setVal.get(i).equals("*")) {
+				throw new SyntaxException(7,setFormCode + "["+i+ "]  must be *");
+			}
+		}
+	}
+
+	@Override
+	public void checkArgs(final HashMap<String, ArrayList<String>> map) throws SyntaxException{
+		HashMap<String, ArrayList<String>> localMap = new HashMap<String, ArrayList<String>>();
+		localMap.putAll(map);
+		String op = new String(localMap.get("operator").get(0));
+		localMap.remove("operator");
+		// setForm: example "S","*","Set","Str"
+		ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(op);
+		// listKeys: list of param's names eg: [S,pi,O,pf]
+		String[] listKeys = OperatorsHandling.listKeys.get(op)[0].split(",");
+		if (setForm.size()!=localMap.size()) {
+			throw new SyntaxException(2);
+		}
+		
+		for (int i=0;i<listKeys.length;i++) {
+			if (localMap.get(listKeys[i]).size() == 3) {
+				if (listKeys[i].equals("S")) {
+					checkSet("S",localMap.get(listKeys[i]));
+				}else {
+					checkSet("Set",localMap.get(listKeys[i]));
+				}
+			} else {
+				if(setForm.get(i)==null) {continue;}
+				if(setForm.get(i).equals("Num")) {
+					try {
+						Integer.parseInt(localMap.get(listKeys[i]).get(0));
+					}catch (NumberFormatException e){
+						throw new SyntaxException("k must be a number");
+					}
+				}
+				if (localMap.get(listKeys[i]).get(0) == null && setForm.get(i)!=null) {
+					throw new SyntaxException(4,listKeys[i] + " cannot be null");
+				}else if (localMap.get(listKeys[i]).get(0) == null && setForm.get(i)==null){
+					continue;
+				}else if(localMap.get(listKeys[i]).get(0).equals("*") && setForm.get(i).equals("Str")) {
+					throw new SyntaxException(4,listKeys[i]+ " cannot be *");
+				}
+			}
+			
+		}
+		
+	}
+
 	
 }

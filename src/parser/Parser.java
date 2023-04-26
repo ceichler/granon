@@ -34,13 +34,21 @@ public class Parser {
     	
     	command = command.trim();
     	OperatorsHandling tokenHd = new TokenExtraction(command);
-    	HashMap<String, ArrayList<String>>  result = tokenHd.getToken();
-    	System.out.println(" [result] " + result);
+    	HashMap<String, ArrayList<String>> result = null;
+		try {
+			result = tokenHd.getToken();
+			tokenHd.checkArgs(result);
+		} catch (SyntaxException e) {
+			// System.out.println(e.toString());
+			e.printStackTrace();
+			return -1;
+		}
+    	System.out.println("\u001B[36m [result] " + result +"\u001B[0m");
     	HashMap <String,String> execMap = null;
     	if (!result.get("operator").get(0).equals("JoinSet") && !result.get("operator").get(0).equals("Anatomization")) {
     		execMap = tokenHd.generateExecutableMap(result);
     	}   	
-    	System.out.println(" [execMap] " + execMap);
+    	System.out.println("\u001B[36m [execMap] " + execMap + "\u001B[0m");
     	switch (result.get("operator").get(0)) {
     		case "NewNode":
     			System.out.println("NewNode");
@@ -92,13 +100,6 @@ public class Parser {
     		case "Anatomization":
     			System.out.println("Anatomization");
     			(new Anatomization(result.get("idn"),result.get("qID"),result.get("sens"))).execute();
-//    			List<String> identifiers = new ArrayList<String>();
-//    			List<String> qIDs  = new ArrayList<String>();
-//    			List<String> sensitives  = new ArrayList<String>();
-//    			identifiers.add("name");
-//    			qIDs.add("knows");
-//    			sensitives.add("livesIn");
-//    			(new Anatomization(identifiers, qIDs, sensitives)).execute();
     			break;
     		case "JoinSet":
     			System.out.println("JoinSet");
