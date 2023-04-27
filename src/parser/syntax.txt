@@ -50,6 +50,7 @@ e.g		RandomTarget((*,"type","Person"),"name",(*,"isA","Name"),(*,"isA","Name"))
 
 Syntax:  	JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
 e.g 		JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
+		JoinSet ("hasQI","QI") where {(*,*,"Stuart"),(*,"livesIn","Paris")} except {(*,"knows",*)}
 
 
 Syntax:  	CloneSet (S,c,C_att)
@@ -63,15 +64,16 @@ e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),"3")
 
 
 Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
-e.g		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
+e.g		Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
+Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
 		Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
 		
 		
 		
 Test Exception
 
-		
-	LDP((*,"type","Person"),*,(*,"isA","Name"),"3")  // must test for 3
+	LDP((*,"type","Person"),"name",(*,"isA","Name"),"k")	
+	LDP((*,"type","Person"),*,(*,"isA","Name"),"3") 
 		
 	ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)
 	
@@ -82,6 +84,15 @@ Test Exception
 		
 		
 	DeleteNode((null,*,*))	
+	
+	
+	
+	JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+	except\\s*\\{\\s*\\((.+?)\\)\\s*\\}|where\\s*\\{\\s*\\((.+?)\\)\\s*\\}|JoinSet\\s*\\((.+?)\\)
+	
+	JoinSet ("hasQI","QI") where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+	Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
+	
 	
 		
 		

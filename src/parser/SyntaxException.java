@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class SyntaxException extends Exception {
 	
-	private static HashMap<Integer, String> list_exceptions = new HashMap<Integer,String>(){{
+	private static HashMap<Integer, String> listExceptions = new HashMap<Integer,String>(){{
 		put(0,"Cannot get operator from command");
 		put(1,"Operator not found");
 		put(2,"insufficient number of arguments");
@@ -16,11 +16,11 @@ public class SyntaxException extends Exception {
 	}};
 	
 	public SyntaxException(int exception_code,String msg) {
-		super(list_exceptions.get(exception_code) + " [!]Message: " + msg);
+		super(listExceptions.get(exception_code) + " [!]Message: " + msg);
 	}
 	
 	public SyntaxException(int exception_code) {
-		super(list_exceptions.get(exception_code));
+		super(listExceptions.get(exception_code));
 	}
 	
 	public SyntaxException() {

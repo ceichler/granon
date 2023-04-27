@@ -19,4 +19,12 @@ I choose to write an additional function instead of replace all code in the func
 ## Mercredi 26 avril 2023
 
 ***Implement the interface CheckArgs***
+
 ***Finished the class SyntaxException***
+
+## Jeudi 27 avril 2023
+
+***Finished the CheckArgs and it's implement for JoinSet and Anatomization***
+
+***need to test more for JoinSet***
+

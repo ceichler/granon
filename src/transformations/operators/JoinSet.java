@@ -112,6 +112,7 @@ public class JoinSet extends Operator {
 	
 	/**
 	 * Creates the operator with default propName = js and x unspecified (star)
+	 * map has the form like {JoinSet=[hasQI, QI], where=[*, *, Stuart], except=[*, knows, *], operator=[JoinSet]}
 	 * @param map contains all needed arguments
 	 */
 

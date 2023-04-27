@@ -1,14 +1,9 @@
 package parser;
 
 
-import java.util.regex.*;
-
 import transformations.operators.*;
 import transformations.procedures.*;
-import utils.Pair;
-
 import java.util.*;
-import java.util.function.Function;
 
 
 /**
@@ -39,7 +34,6 @@ public class Parser {
 			result = tokenHd.getToken();
 			tokenHd.checkArgs(result);
 		} catch (SyntaxException e) {
-			// System.out.println(e.toString());
 			e.printStackTrace();
 			return -1;
 		}
@@ -102,8 +96,8 @@ public class Parser {
     			(new Anatomization(result.get("idn"),result.get("qID"),result.get("sens"))).execute();
     			break;
     		case "JoinSet":
-    			System.out.println("JoinSet");
-    			(new NewNode(result.get("JoinSet").get(1))).execute();
+    			// (new NewNode(result.get("JoinSet").get(1))).execute();
+    			// {JoinSet=[hasQI, QI], where=[*, *, Stuart], except=[*, knows, *], operator=[JoinSet]}
     			(new JoinSet(result)).execute();
     			break;
     		default:

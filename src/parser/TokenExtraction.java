@@ -56,9 +56,9 @@ public class TokenExtraction extends OperatorsHandling{
 	
 	/**
 	 *  this function analyze the command and return the HashMap contain all useful token for executing command
-	 *  @return a HashMap with useful Token
-	 *  	- the HashMap contain  the operator's name and it's arguments
-	 *  	- Example: {p=[livesIn], S=[*, type, Person], operator=[EdgeReverse], O=[*, inGroup, France]}
+	 *  @return a HashMap with useful Token <br>
+	 *  	- the HashMap contain  the operator's name and it's arguments <br>
+	 *  	- Example: {p=[livesIn], S=[*, type, Person], operator=[EdgeReverse], O=[*, inGroup, France]} <br>
 	 * @throws SyntaxException 
 	 */	
 	@Override
@@ -109,32 +109,64 @@ public class TokenExtraction extends OperatorsHandling{
 			else {
 				
 			}
-		}else if (op.equals("JoinSet")) {
+		}
+		/**
+		 * 
+		 * for analyzing Joinset syntax <br>
+		 * e.g. <br>
+		 * JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")} <br>
+		 * result = {JoinSet=[hasQI, QI], where=[*, type, Person, *, knows, *], except=[*, liveIn, Paris], operator=[JoinSet]} <br>
+		 * 
+		 */
+		else if (op.equals("JoinSet")) {
 			result.put(
 					"operator", new ArrayList<String>() {{add(op);}}
 			);
-			String regex = "except\\s*\\{\\s*\\((.+?)\\)\\s*\\}|where\\s*\\{\\s*\\((.+?)\\)\\s*\\}|JoinSet\\s*\\((.+?)\\)";
-	        
+			String regex = "JoinSet\\s*\\((.+?)\\)";      
 	        Pattern pattern = Pattern.compile(regex);
 	        Matcher matcher = pattern.matcher(command);
 	        
+	        // this is the code for creating first part of HashMap {JoinSet=[x,X]}
+	        if (matcher.find()) {	   
+	        	// System.out.println(matcher.group(1));
+	            String[] afterSplit = matcher.group(1).split(",");
+	            for (int i =0; i<afterSplit.length;i++) {
+	            	afterSplit[i] = afterSplit[i].replace("\"", "").trim();     
+	            }
+	            result.put(op, new ArrayList<String>(Arrays.asList(afterSplit)));
+	        }
+	        // this is the code to add the rest of HashMap: {where=[X1,X2,X3,...] where = [Y1,Y2,Y3,...]}
+			regex = "where\\s*\\{(\\(.*?\\))\\}|except\\s*\\{(\\(.*?\\))\\}";      
+	        pattern = Pattern.compile(regex);
+	        matcher = pattern.matcher(command);
+	        
 	        while (matcher.find()) {
-	            // System.out.println("Full match: " + matcher.group(0));
-	            
-	            for (int i = 1; i <= matcher.groupCount(); i++) {
-	                // System.out.println("Group " + i + ": " + matcher.group(i));
+	        	for (int i = 1; i <= matcher.groupCount(); i++) {
+	        		ArrayList<String> listCondition = new ArrayList<String>();
 	                if (matcher.group(i)==null) {continue;}
+	                // System.out.println("Group matcher " + matcher.group(i));
 	                String[] elements = matcher.group(i).split(",");
 	                for (int j=0;j<elements.length;j++) {
-	                	elements[j] = elements[j].replace("\"","");
+	                	elements[j] = elements[j].replace("\"","").replace("(", "").replace(")", "");
+	                	listCondition.add(elements[j]);
 	                }
-	                result.put(matcher.group(0).split(" ")[0], new ArrayList<String>(Arrays.asList(elements)));
-	            }
-	            
+	                // matcher.group(0).split("[^a-zA-Z]+")[0]) for getting the where or except keyword to make is the key of hashmap
+	                // listCondition is an ArrayList contains the PAC or NAC
+	                result.put(matcher.group(0).split("[^a-zA-Z]+")[0], listCondition);
+	        	}
 	        }
 	        
 	        
-		}else if(op.equals("Anatomization")) {
+	        
+	        
+		}
+		/**
+		 * for analyzing Anatomization syntax <br>
+		 * e.g. <br>
+		 * Command: Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} ) <br>
+		 * result = {idn=[name], sens=[livesIn], qID=[knows, type], operator=[Anatomization]} <br>
+		 */
+		else if(op.equals("Anatomization")) {
 			result.put(
 					"operator", new ArrayList<String>() {{add(op);}}
 			);
@@ -204,13 +236,7 @@ public class TokenExtraction extends OperatorsHandling{
 				tokens.remove(element);
 			}
 			// convert from "O"=[*,o,O] to "o"=o,"O"=O 
-			// <!-- When checkArgs is finished, we can also push the first element of O into O_x and let the checkArgs drop them for us, for mergin the S -->
 			else {
-//				// This thing will be pushed in SyntaxException after the checkArgs is finished
-//				if (!tokens.get(element).get(0).equals("*")) {
-//					System.out.println("Invalid Parameter "+ element + " must be [*,"+tokens.get(element).get(1)+","+tokens.get(element).get(2)+"] !");
-//					return null;
-//				}
 				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
 				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
 				tokens.remove(element);
@@ -229,17 +255,26 @@ public class TokenExtraction extends OperatorsHandling{
 	
 	@Override
 	public void checkSet(String setFormCode, ArrayList<String> setVal) throws SyntaxException {
+		// The number of elements in a Set is extractly 3
 		if (setVal.size()!=3) {
 			throw new SyntaxException(7,"The number of elements in the Set must be 3");
 		}
+		// We has two setFormCode, they are "S and "Set". "S" for set's form (x,s,S) and "Set" for set's form (*,o,O)
 		ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(setFormCode);
+		
+		
 		for (int i =0; i<setForm.size();i++) {
 			if(setForm.get(i)==null) {continue;}
 			if (setVal.get(i) == null && setForm.get(i)!=null) {
+				// if we have null in the command but the form is not null ==> invalid syntax. E.g Command: (*,null,*), form: (*,*,*) ==> invalid
 				throw new SyntaxException(7,setFormCode + "["+i+ "] null is not allowed");
-			}else if (setVal.get(i).equals("*") && setForm.get(i).equals("Str")) {
+			}
+			// if we have * in the command but the form is "Str" ==> invalid syntax. E.g Command: (*,null,*), form: (Str,null,*) ==> invalid
+			else if (setVal.get(i).equals("*") && setForm.get(i).equals("Str")) {
 				throw new SyntaxException(7,setFormCode + "["+i+ "]  * is not allowed");
-			}else if (setForm.get(i).equals("**") && !setVal.get(i).equals("*")) {
+			}
+			// this is special case for "Set" setFormCode. e.g Command: ("id105",null,null), form: ("**",null,null) ==> invalid 
+			else if (setForm.get(i).equals("**") && !setVal.get(i).equals("*")) {
 				throw new SyntaxException(7,setFormCode + "["+i+ "]  must be *");
 			}
 		}
@@ -251,6 +286,43 @@ public class TokenExtraction extends OperatorsHandling{
 		localMap.putAll(map);
 		String op = new String(localMap.get("operator").get(0));
 		localMap.remove("operator");
+		// Special check for JoinSet and Anatomization
+		if (op.equals("JoinSet")) {
+			ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(op);
+			// check if JoinSet("Str","Str")
+			// To test Exception: JoinSet (*,"QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+			// JoinSet ("hasQI",*) where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+			if (localMap.get("JoinSet").get(0).equals("*") || localMap.get("JoinSet").get(1).equals("*") || localMap.get("JoinSet").get(0) == null || localMap.get("JoinSet").get(1) == null) {
+				throw new SyntaxException(5," [JoinSet] must define the joined Node/Edge");
+			}
+			// to test this exception: JoinSet ("hasQI","QI") where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+			for (int i = 0; i<localMap.get("where").size();i+=3) {
+				ArrayList<String> whereSet = new ArrayList<String>(Arrays.asList(localMap.get("where").get(i),localMap.get("where").get(i+1),localMap.get("where").get(i+2)));
+				checkSet("Set",whereSet);
+			}
+			// to test this exception: JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"knows",*)} except {("id150","liveIn","Paris")}
+			for (int i = 0; i<localMap.get("except").size();i+=3) {
+				ArrayList<String> whereSet = new ArrayList<String>(Arrays.asList(localMap.get("except").get(i),localMap.get("except").get(i+1),localMap.get("except").get(i+2)));
+				checkSet("Set",whereSet);
+			}
+			// return when the JoinSet which passed the SyntaxException
+			return;
+			
+		}
+		else if (op.equals("Anatomization")) {
+			
+			for (String key:localMap.keySet()) {
+				for (int i = 0; i<localMap.get(key).size();i++) {
+					if (localMap.get(key).get(i).equals("*") || localMap.get(key).get(i) == null) {
+						throw new SyntaxException(5,"an Edge must be defined by a String (neither * nor null)!");
+					}
+				}
+			}
+			
+			// return the Anatomization that passed the SyntaxException
+			return;
+		}
+		
 		// setForm: example "S","*","Set","Str"
 		ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(op);
 		// listKeys: list of param's names eg: [S,pi,O,pf]

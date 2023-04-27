@@ -59,7 +59,8 @@ public interface CheckArgs {
 		// CloneSet(S,c,C_att)
 		put("CloneSet", 			new ArrayList<>(Arrays.asList("S","Str","Str")));
 		// Need a specific definition
-		put("JoinSet",				new ArrayList<>(Arrays.asList()));
+		// JoinSet([0],[1]) where [2] except [3]
+		put("JoinSet",				new ArrayList<>(Arrays.asList("Str","Str","Set","Set"))); 
 		
 		
 		/**
@@ -73,7 +74,8 @@ public interface CheckArgs {
 //		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Str"))); // this is very special, k must be a number (in development)
 		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Num")));
 		// Need a specific definition
-		put("Anatomization", 		new ArrayList<>(Arrays.asList()));
+		// {idn = ["Str","Str",...],sens = ["Str","Str",...],qID = ["Str","Str",...]}
+		put("Anatomization", 		new ArrayList<>(Arrays.asList("Str","Str","Str")));
 		
 		
 	}};

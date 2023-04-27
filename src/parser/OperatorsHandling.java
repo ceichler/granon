@@ -35,14 +35,14 @@ public abstract class OperatorsHandling implements CheckArgs{
 	put("RandomTransformSource",new String[]{"S,pi,O,T,pf",				"S=x,s,S","O=o_x,o,O","T=t_x,x,T"});
 	put("RandomTransformTarget",new String[]{"S,pi,O,T,pf",				"S=x,s,S","O=o_x,o,O","T=t_x,t,T"});
 	put("CloneSet", 			new String[]{"S,c,C_att",				"S=src,s,S","C_att=C"});	
-	put("JoinSet",				new String[]{"",						""});	// in development | no need this thing
+	put("JoinSet",				new String[]{"JoinSet,where,except",						""});	// for description only, no need this thing in the code
 	
 	
 	// Procedure
 	put("RandomSource", 		new String[]{"S,p,O,T",					"S=x,s,S","O=o_x,o,O","T=t_x,t,T"});
 	put("RandomTarget", 		new String[]{"S,p,O,T",					"S=x,s,S","O=o_x,o,O","T=t_x,t,T"});
 	put("LDP",					new String[]{"S,p,O,k",					"S=x,s,S","O=o_x,o,O"});
-	put("Anatomization", 		new String[]{"idn,qID,sens",			""});
+	put("Anatomization", 		new String[]{"idn,qID,sens",			""}); // for description only, no need this thing in the code
 	
 }};
 
