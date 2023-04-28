@@ -13,6 +13,7 @@ public class SyntaxException extends Exception {
 		put(5,"Invalid parameter value");
 		put(6,"Null params map");
 		put(7,"Invalid Set form");
+		put(8,"Invalid");
 	}};
 	
 	public SyntaxException(int exception_code,String msg) {

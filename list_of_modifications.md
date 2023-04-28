@@ -26,5 +26,9 @@ I choose to write an additional function instead of replace all code in the func
 
 ***Finished the CheckArgs and it's implement for JoinSet and Anatomization***
 
-***need to test more for JoinSet***
+need to test more for JoinSet
+
+## Vendredi 28 avril 2023
+
+try to add some specific constrains
 

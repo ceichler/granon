@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 
 
-public abstract class OperatorsHandling implements CheckArgs{
+public abstract class OperatorsHandling{
 	/**
 	 * the provided command
 	 */

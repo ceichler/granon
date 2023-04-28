@@ -87,11 +87,23 @@ Test Exception
 	
 	
 	
-	JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+	JoinSet (null,"QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
 	except\\s*\\{\\s*\\((.+?)\\)\\s*\\}|where\\s*\\{\\s*\\((.+?)\\)\\s*\\}|JoinSet\\s*\\((.+?)\\)
 	
-	JoinSet ("hasQI","QI") where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+	JoinSet ("hasQI",*) where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
 	Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
+	
+	
+	
+	
+Specific contraints
+	EdgeChord ((*,"type","Person"),"livesIn",(*,*,"London"),"inGroup",(*,"type",*),"livesIn")
+	
+	ModifyEdge((*,"type","Person"),(*,*,"London"), "livesIn", "worksIn")
+	
+	EdgeCut (("Paris",null,null),"type",(*,*,"Person"),"pi","IntermNode","pf")
+	
+	EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))
 	
 	
 		
