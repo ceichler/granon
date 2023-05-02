@@ -154,20 +154,15 @@ public class CheckSyntax implements CheckArgs{
 		
 	}
 	
-	
-	
-	
-	
-	
-	
+		
 	
 	
 	// In development
 	/**
 	 * 
 	 * This method is used to get all destination's "att" of an prop in provided Graph
-	 * @param graph graph contains the Edge to get info
-	 * @param prop  the "prop" of Edge to get it's  destinations
+	 * @param graph current graph
+	 * @param prop  the Edge's "prop" 
 	 */
 	public ArrayList<String> getEdgeDst(Graph graph, String prop) {
 		ArrayList<String> dstsName = new ArrayList<String>();
@@ -185,7 +180,9 @@ public class CheckSyntax implements CheckArgs{
 	}
 
 	/**
-	 * 
+	 * This method will check for all specific constraint and throw a SyntaxException if any constraint violated
+	 * @param map the map which contains al the arguments from user's command
+	 * @throws SyntaxException 
 	 * 
 	 */
 	@Override
@@ -206,6 +203,9 @@ public class CheckSyntax implements CheckArgs{
 		ArrayList<String> listConstraints = CheckArgs.specificConstraints.get(op);
 		
 		
+		System.out.println("[List Constraints]" + listConstraints.toString());
+		
+		
 		// check for edge contrains, each 3 elements represented the contrains
 		// 1st element = type of constrains
 		// 2nd element = main object
@@ -224,6 +224,7 @@ public class CheckSyntax implements CheckArgs{
 					throw new SyntaxException("Something went wrong");
 				}
 				
+				System.out.println("[Dst]" + dstNames.toString());
 				
 				// get the list of node's "att" that cannot be target of provided edge
 				String[] listRelatedObjectKey = listConstraints.get(i+2).split(",");

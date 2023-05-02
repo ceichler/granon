@@ -71,7 +71,7 @@ public interface CheckArgs {
 		// RandomTarget(S,p,O,T)    // like RandomTransformTarget(S,pi,O,T,pf) but pf was defined 
 		put("RandomTarget", 		new ArrayList<>(Arrays.asList("S","*","Set","Set")));
 		// LDP(S,p,O,k)				//p cannot be * because LDP use p as pf in EdgeChord
-//		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Str"))); // this is very special, k must be a number (in development)
+		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Str"))); // this is very special, k must be a number (in development)
 		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Num")));
 		// Need a specific definition
 		// {idn = ["Str","Str",...],sens = ["Str","Str",...],qID = ["Str","Str",...]}
@@ -85,7 +85,9 @@ public interface CheckArgs {
 	 * 
 	 * 
 	 * idea for the specific Constraints
-	 * 
+	 * specificConstraints contains all the specific contraints of operators and procedures <br>
+	 * Structure: <br>
+	 * - "Operator's name" = ArrayList<>("Type constraint","main object","related object",...)
 	 */
 	public static final HashMap<String, ArrayList<String>> specificConstraints = new HashMap<String, ArrayList<String>>(){{
 		// EdgeReverse ---> Neither S nor O can be the target of p

@@ -1,61 +1,22 @@
 package parser;
 
+import java.lang.reflect.Constructor;
+import java.util.*;
 
 import transformations.operators.*;
 import transformations.procedures.*;
-import java.util.*;
 
 
-/**
- * This class defines a parser to analyze and execute the command
- *
- * @author cnguyen
- */
-
-public class Parser {
-	
-	/**
-	 * 
-	 * the command to execute
-	 */
-	public static String command;
-	
-	/**
-	 * the checker for command's syntax
-	 */
-	private static CheckSyntax syntaxChecker = new CheckSyntax();
-	
-	
-	/**
-	 * execute the command
-	 * @return 0 if success, -1 otherwise
-	 */
-    public static int execute() {
-    	
-    	command = command.trim();
-    	/**
-    	 * 
-    	 */
-    	OperatorsHandling tokenHd = new TokenExtraction(command);
-    	HashMap<String, ArrayList<String>> result = null;
-    	
-    	
-		try {
-			result = tokenHd.getToken();
-			syntaxChecker.checkArgs(result);
-		} catch (SyntaxException e) {
-			e.printStackTrace();
-			return -1;
-		}
+public class CreateOperatorObject {
+	public static Object createObject(OperatorsHandling tokenHd,HashMap<String,ArrayList<String>> result) throws SyntaxException {
 		
+		Object returnedObject;
 		
-    	System.out.println("\u001B[36m [result] " + result +"\u001B[0m");
     	HashMap <String,String> execMap = null;
     	if (!result.get("operator").get(0).equals("JoinSet") && !result.get("operator").get(0).equals("Anatomization")) {
     		execMap = tokenHd.generateExecutableMap(result);
     	}   	
-    	
-    	System.out.println("\u001B[36m [operator] " + result.get("operator").get(0) + "\u001B[0m");
+
     	System.out.println("\u001B[36m [execMap] " + execMap + "\u001B[0m");
     	
     	
@@ -65,20 +26,19 @@ public class Parser {
     	
     		case "NewNode":
     			System.out.println("NewNode");
-    			(new NewNode(execMap)).execute();
+    			returnedObject = (new NewNode(execMap));
     			break;
-    			
-    			
+	
     		case "DeleteNode":
     			System.out.println("DeleteNode");
-    			(new DeleteNode(execMap)).execute();
+    			returnedObject = (new DeleteNode(execMap));
     			
     			
     			
     		case "EdgeReverse":
     			// Neither S nor O can be the target of pi
     			System.out.println("EdgeReverse");
-    			(new EdgeReverse(execMap)).execute();
+    			returnedObject = (new EdgeReverse(execMap));
     			break;
     			
     			
@@ -86,7 +46,7 @@ public class Parser {
     		case "EdgeCut":
     			// Neither S nor O can be the target of pi
     			System.out.println("EdgeCut");
-    			(new EdgeCut(execMap)).execute();
+    			returnedObject = (new EdgeCut(execMap));
     			break;
     			
     			
@@ -94,88 +54,112 @@ public class Parser {
     		case "EdgeCopy":
     			// Neither S nor O can be target of pi
     			System.out.println("EdgeCopy");
-    			(new EdgeCopy(execMap)).execute();
+    			returnedObject = (new EdgeCopy(execMap));
     			break;
     			
     			
     		case "EdgeChord":
     			// Neither S nor O nor I can be the target of pi1 or pi2
     			System.out.println("EdgeChord");
-    			 (new EdgeChord(execMap)).execute();
+    			returnedObject = (new EdgeChord(execMap));
     			break;
     			
     			
     		case "EdgeChordKeep":
     			// Neither S nor O nor I can be the target of pi1 or pi2
     			System.out.println("EdgeChordKeep");
-    			(new EdgeChordKeep(execMap)).execute();
+    			returnedObject = (new EdgeChordKeep(execMap));
     			break;
     			
     			
     		case "ModifyEdge":
     			// Neither S nor O can be target of pi
     			System.out.println("ModifyEdge");
-    			(new ModifyEdge(execMap)).execute();
+    			returnedObject = (new ModifyEdge(execMap));
     			break;
     			
     			
     		case "RandomTransformSource":
     			// S, O and T cannot be the target of pi
     			System.out.println("RandomSource");
-    			(new RandomTransformSrc(execMap)).execute();
+    			returnedObject = (new RandomTransformSrc(execMap));
     			break;
     			
     			
     		case "RandomTransformTarget":
     			// Neither S, O or T can be the target of pi
     			System.out.println("RandomTarget");
-    			(new RandomTransformTar(execMap)).execute();
+    			returnedObject = (new RandomTransformTar(execMap));
     			break;	
     			
     			
     		case "RandomSource":
     			System.out.println("RandomSource");
-    			(new RandomSrc(execMap)).execute();
+    			returnedObject = (new RandomSrc(execMap));
     			break;
     			
     			
     		case "RandomTarget":
     			System.out.println("RandomTarget");
-    			(new RandomTar(execMap)).execute();
+    			returnedObject = (new RandomTar(execMap));
     			break;
     			
     			
     		case "CloneSet":
-    			(new CloneSet(execMap)).execute();
+    			returnedObject = (new CloneSet(execMap));
     			System.out.println("CloneSet");
     			break;
     			
     			
     		case "LDP":
     			System.out.println("LDP");
-    			(new LDP(execMap)).execute();
+    			returnedObject = (new LDP(execMap));
     			break;
     			
     			
     		case "Anatomization":
     			System.out.println("Anatomization");
-    			(new Anatomization(result.get("idn"),result.get("qID"),result.get("sens"))).execute();
+    			returnedObject = (new Anatomization(result.get("idn"),result.get("qID"),result.get("sens")));
     			break;
     			
     			
     		case "JoinSet":
-    			// (new NewNode(result.get("JoinSet").get(1))).execute();
+    			// (new NewNode(result.get("JoinSet").get(1)));
     			// {JoinSet=[hasQI, QI], where=[*, *, Stuart], except=[*, knows, *], operator=[JoinSet]}
-    			(new JoinSet(result)).execute();
+    			returnedObject = (new JoinSet(result));
     			break;
     			
     			
     		default:
     			System.err.println("undefined operator");
-    			break;
-    			
-    			
+    			throw new SyntaxException(1);			  			
     	}
-    	return 0;
-    }
+		return returnedObject;
+	}
+	
+	public static <T> T createObject(String className, HashMap<String, Class<?>> classMap, Object... args) throws Exception {
+	    Class<?> clazz = classMap.get(className);
+	    if (clazz == null) {
+	        throw new IllegalArgumentException("Class not found for name: " + className);
+	    }
+	    Constructor<?> constructor = clazz.getConstructor(getParameterTypes(args));
+	    return (T) constructor.newInstance(args);
+	}
+
+	private static Class<?>[] getParameterTypes(Object... args) {
+	    Class<?>[] parameterTypes = new Class[args.length];
+	    for (int i = 0; i < args.length; i++) {
+	        parameterTypes[i] = args[i].getClass();
+	    }
+	    return parameterTypes;
+	}
+
+	
+	public static void main(String[] args) throws Exception {
+		HashMap<String, Class<?>> classMap = new HashMap<>();
+		classMap.put("MyClass", NewNode.class);
+		NewNode instance = createObject("MyClass", classMap, "ce");
+
+	}
+	
 }

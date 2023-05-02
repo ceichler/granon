@@ -19,7 +19,7 @@ e.g  		EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
 
 
 Syntax:	EdgeCopy(S, pi, O, pf)
-e.g 		EdgeCopy (("id555",*,*),"knows",(*,"type","person"),"cousin")
+e.g 		EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
 		EdgeCopy (S=("id555",*,*),pi="knows",O=(*,"type","person"),pf="cousin")
 
 
@@ -70,17 +70,22 @@ Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
 		
 		
 		
+	
+		
 Test Exception
 
 	LDP((*,"type","Person"),"name",(*,"isA","Name"),"k")	
 	LDP((*,"type","Person"),*,(*,"isA","Name"),"3") 
 		
-	ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)
+	ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)   /// pf=*
 	
 	
-	EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),*)
+	EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),*)   /// pf=*
 	
-	RandomTarget((*,"type","Person"),null,(*,"isA","Name"),(*,"isA","Name"))
+	
+	EdgeChord ((*,"type","Person"),null,(*,"type","city"),"inGroup",(*,"type",*),*)    /// pi1==null
+	
+	RandomTarget((*,"type","Person"),null,(*,"isA","Name"),(*,"isA","Name"))       /// p == null
 		
 		
 	DeleteNode((null,*,*))	
@@ -97,14 +102,16 @@ Test Exception
 	
 	
 Specific contraints
-	EdgeChord ((*,"type","Person"),"livesIn",(*,*,"London"),"inGroup",(*,"type",*),"livesIn")
+
+	ModifyEdge((*,"type","Person"),(*,*,"Johnson"), "name", "nom")				/// name's johnson
+
+	EdgeChord ((*,"type","Person"),"livesIn",(*,*,"London"),"inGroup",(*,"type",*),"livesIn")    /// cannot be London for liveIn
 	
-	ModifyEdge((*,"type","Person"),(*,*,"London"), "livesIn", "worksIn")
+	EdgeCut (("Paris",null,null),"type",(*,*,"Person"),"pi","IntermNode","pf")                      //// The type's target cannot be Person
 	
-	EdgeCut (("Paris",null,null),"type",(*,*,"Person"),"pi","IntermNode","pf")
-	
-	EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))
+	EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))                                 //// The inGroup's target cannot be France
 	
 	
-		
+		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"France"),"livesIn")             //// inGroup France
+		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"Europe not France"),"livesIn")  //// inGroup Europe not France
 		
