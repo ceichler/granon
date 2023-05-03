@@ -71,7 +71,7 @@ public class TokenExtraction extends OperatorsHandling{
 		if (!op.equals("JoinSet") && !op.equals("Anatomization")){
 			
 			// Get the keys list of the operator
-			String[] list_keys = OperatorsHandling.listKeys.get(op)[0].split(",");
+			String[] list_keys = OperatorsHandling.listKeys.get(op);
 			
 			// put the string containing operator's name into HashMap
 			// we will use it to call the "real" function for rewriting on the graph database
@@ -188,7 +188,6 @@ public class TokenExtraction extends OperatorsHandling{
     				result.put(keys[count], element);
     				count++;
     			}
-//    		    System.out.println(result);
     		} 
 		}
         
@@ -202,53 +201,55 @@ public class TokenExtraction extends OperatorsHandling{
 	 * @return map of params can be passed directly to the constructor of the operators' class
 	 */
 	@Override
-	public HashMap<String,String> generateExecutableMap(final HashMap<String,ArrayList<String>> tokenS) {
+	public HashMap<String,String> generateExecutableMap(final HashMap<String,ArrayList<String>> result) {
 		
 		HashMap<String,ArrayList<String>> tokens = new HashMap<String,ArrayList<String>>();
-		tokens.putAll(tokenS);
+		tokens.putAll(result);
 		
 		HashMap<String,String> execMap = new HashMap<String,String>();
 		
-		HashMap<String, String[]> convertParams = new HashMap<String, String[]>();
-		// we dont get i=0 because keyLists.get("operator")[0] has already been used to split into tokens
-		for (int i=1;i<listKeys.get(tokens.get("operator").get(0)).length;i++) {
-			//Example: listKeys.get(tokens.get("operator").get(0))[i] = "S=x,s,S"
-			String[] split_element = listKeys.get(tokens.get("operator").get(0))[i].split("=");
-			convertParams.put(split_element[0], split_element[1].split(","));
-		}
-		for (String element:convertParams.keySet()) {
-			// convert from "S"=[x,s,S] to "x"=x,"s"=s,"S"=S  <!-- When the checkArgs is finished, we can merge this thing with "O" -->
-			if (element.equals("S")) {
-				execMap.put(convertParams.get(element)[0],tokens.get(element).get(0));
-				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
-				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
-				tokens.remove(element);
-			} 
-			// convert from "X"=[X,s,S] to "X"=x,"s"=s,"S"=S
-			else if (element.equals("X")) {
-				execMap.put(convertParams.get(element)[0],tokens.get(element).get(0));
-				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
-				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
-				tokens.remove(element);
-			}
-			// convert from "C_att"=[C_att] to "C"=C_att
-			else if(element.contains("att")){
-				execMap.put(convertParams.get(element)[0],tokens.get(element).get(0));
-				tokens.remove(element);
-			}
-			// convert from "O"=[*,o,O] to "o"=o,"O"=O 
-			else {
-				execMap.put(convertParams.get(element)[1],tokens.get(element).get(1));
-				execMap.put(convertParams.get(element)[2],tokens.get(element).get(2));
-				tokens.remove(element);
-			}
-		}
 		
-		for (String i:tokens.keySet()) {
-			execMap.put(i,tokens.get(i).get(0));
+		
+		// loop through the map (which is obtained after analyzing user's command)
+		// e.g: tokens = {p=[livesIn], S=[*, type, Person], operator=[EdgeReverse], O=[*, null, null]}
+		for (String key:tokens.keySet()) {
+			// check if listKeys contain the actual key or not (if yes => we must transform it into executable map)
+			if (listKeys.containsKey(key)) {
+				
+				// getting the Set convert parameters
+				String[] split_element = listKeys.get(key);
+				
+
+
+				
+				if (key.contains("_att")) {
+					execMap.put(split_element[0],tokens.get(key).get(0));
+					continue;
+				}
+					
+				// if the Set has type "*",o,O we don't put the first arg into execMap
+				if (split_element[0].equals("*")) {
+					execMap.put(split_element[1], tokens.get(key).get(1));
+					execMap.put(split_element[2], tokens.get(key).get(2));
+				}
+				// if the Set has type x,s,S we put all into the execMap
+				else {
+					execMap.put(split_element[0], tokens.get(key).get(0));
+					execMap.put(split_element[1], tokens.get(key).get(1));
+					execMap.put(split_element[2], tokens.get(key).get(2));
+				}
+				
+				
+			}
+			// if not we can put it directly into the exeuctable map
+			else {
+				// example tokens.get("p").get(0) = livesIn
+				execMap.put(key,tokens.get(key).get(0));
+			}
 		}
 
-		// System.out.println(execMap);
+		
+		// we dont need the operator's name in the executable map
 		execMap.remove("operator");
 		return execMap;
 		

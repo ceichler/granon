@@ -9,8 +9,8 @@ e.g 		NewNode("id108") | NewNode "id108"
 
 
 Syntax:  	EdgeReverse((x,s,S_att),p,(*,o,O_att))
-e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,"inGroup","France"))
-		EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,"inGroup","France"))
+e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,null,null))
+		EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,null,null))
 
 
 Syntax:  	EdgeCut(S,p,O,pi,M_att,po)

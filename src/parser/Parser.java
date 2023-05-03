@@ -47,8 +47,7 @@ public class Parser {
 			e.printStackTrace();
 			return -1;
 		}
-		
-		
+			
     	System.out.println("\u001B[36m [result] " + result +"\u001B[0m");
     	HashMap <String,String> execMap = null;
     	if (!result.get("operator").get(0).equals("JoinSet") && !result.get("operator").get(0).equals("Anatomization")) {
@@ -57,8 +56,6 @@ public class Parser {
     	
     	System.out.println("\u001B[36m [operator] " + result.get("operator").get(0) + "\u001B[0m");
     	System.out.println("\u001B[36m [execMap] " + execMap + "\u001B[0m");
-    	
-    	
     	
     	switch (result.get("operator").get(0)) {
     	

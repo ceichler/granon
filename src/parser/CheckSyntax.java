@@ -116,9 +116,10 @@ public class CheckSyntax implements CheckArgs{
 			// if a, ArrayList of correspoinding key has 3 String inside ==> it must be a Set.
 			// e.g: map = {S=[x,s,S], O=[*,o,O],...} map.get("S).size() = [x,s,S].size() = 3
 			if (localMap.get(listKeys[i]).size() == 3) {
-				if (listKeys[i].equals("S")) {
+				if (setForm.get(i).equals("S")) {
 					checkSet("S",localMap.get(listKeys[i]));
 				}else {
+					System.out.println(localMap);
 					checkSet("Set",localMap.get(listKeys[i]));
 				}
 			} 
@@ -150,102 +151,14 @@ public class CheckSyntax implements CheckArgs{
 			}
 			
 		}
-		this.checkEdgeContraints(map);
+		(new SpecificConstraints(map)).checkTarget();
 		
 	}
 	
 		
+
 	
-	
-	// In development
-	/**
-	 * 
-	 * This method is used to get all destination's "att" of an prop in provided Graph
-	 * @param graph current graph
-	 * @param prop  the Edge's "prop" 
-	 */
-	public ArrayList<String> getEdgeDst(Graph graph, String prop) {
-		ArrayList<String> dstsName = new ArrayList<String>();
-		for (Arc a : graph.getArcsSet()) {
-			// Get arc "prop"
-			String arcProp = a.getAttribute().getValueAsString(1).replace("\"", "");
-			if (arcProp.equals(prop)) {
-				// Get source node and destination node
-				Node dst = (Node) a.getTarget();
-				String dstName = dst.getAttribute().getValueAsString(1).replace("\"", "");
-				dstsName.add(dstName);
-			}
-		}
-		return dstsName;
-	}
 
-	/**
-	 * This method will check for all specific constraint and throw a SyntaxException if any constraint violated
-	 * @param map the map which contains al the arguments from user's command
-	 * @throws SyntaxException 
-	 * 
-	 */
-	@Override
-	public void checkEdgeContraints(HashMap<String, ArrayList<String>> map) throws SyntaxException {
-		
-		// get the current graph
-		Graph graph = Tui.grammar.getHostGraph();
-		
-		
-		//get the operator's name
-		String op = new String(map.get("operator").get(0));
-		// System.out.println("\u001B[32m"+op+"\u001B[0m");
-		
-		// if the current operator has no specific contrains ---> return  
-		if (!CheckArgs.specificConstraints.containsKey(op)) {return;}
 
-		// get the contrains list of the current operator
-		ArrayList<String> listConstraints = CheckArgs.specificConstraints.get(op);
-		
-		
-		System.out.println("[List Constraints]" + listConstraints.toString());
-		
-		
-		// check for edge contrains, each 3 elements represented the contrains
-		// 1st element = type of constrains
-		// 2nd element = main object
-		// 3rt element = related objects
-		for (int i=0 ; i < listConstraints.size(); i+= 3) {
-
-			if (listConstraints.get(i).equals("NotTarget")) {
-				
-				// get the edge's prop
-				String edgeToCheck = map.get(listConstraints.get(i+1)).get(0);
-				
-				// Get the destination of the provied edge
-				ArrayList<String> dstNames = getEdgeDst(graph, edgeToCheck);
-				if (dstNames==null) {
-					System.out.println(edgeToCheck);
-					throw new SyntaxException("Something went wrong");
-				}
-				
-				System.out.println("[Dst]" + dstNames.toString());
-				
-				// get the list of node's "att" that cannot be target of provided edge
-				String[] listRelatedObjectKey = listConstraints.get(i+2).split(",");
-				
-				
-				// map has the form {"O"=[*,o,O], "S"=[x,s,S], T=[*,t,T],....}
-				for (String relatedObjectKey : listRelatedObjectKey) {
-					
-					String objectAtt = map.get(relatedObjectKey).get(2);
-					if (dstNames.contains(objectAtt)) {
-						String error = "The "+edgeToCheck+"'s target cannot be "+objectAtt;
-						throw new SyntaxException(8, error);
-					}
-				
-				
-				}
-				
-			}
-		}
-		
-		
-	}
 
 }

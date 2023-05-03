@@ -24,26 +24,38 @@ public abstract class OperatorsHandling{
 	
 	public static final HashMap<String,String[]> listKeys = new HashMap<String, String[]>(){{
 	// operateurs
-	put("DeleteNode",			new String[]{"X",						"X=X,s,S"});
-	put("NewNode",				new String[]{"X_att",					"X_att=X"});
-	put("EdgeReverse",			new String[]{"S,p,O",					"S=x,s,S","O=o_x,o,O"});
-	put("EdgeCut",				new String[]{"S,pi,O,pf1,interm,pf2",	"S=x,s,S","O=o_x,o,O"});
-	put("EdgeCopy",				new String[]{"S,pi,O,pf",				"S=x,s,S","O=o_x,o,O"});
-	put("EdgeChord",			new String[]{"S,pi1,I,pi2,O,pf",		"S=x,s,S","I=i_x,i,I","O=o_x,o,O"});
-	put("EdgeChordKeep",		new String[]{"S,pi1,I,pi2,O,pf",		"S=x,s,S","I=i_x,i,I","O=o_x,o,O"});
-	put("ModifyEdge",			new String[]{"S,O,pi,pf",				"S=x,s,S","O=o_x,o,O"});
-	put("RandomTransformSource",new String[]{"S,pi,O,T,pf",				"S=x,s,S","O=o_x,o,O","T=t_x,x,T"});
-	put("RandomTransformTarget",new String[]{"S,pi,O,T,pf",				"S=x,s,S","O=o_x,o,O","T=t_x,t,T"});
-	put("CloneSet", 			new String[]{"S,c,C_att",				"S=src,s,S","C_att=C"});	
-	put("JoinSet",				new String[]{"JoinSet,where,except",						""});	// for description only, no need this thing in the code
+	put("DeleteNode",			new String[]{"X"});
+	put("NewNode",				new String[]{"X_att"});
+	put("EdgeReverse",			new String[]{"S","p","O"});
+	put("EdgeCut",				new String[]{"S","pi","O","pf1","interm","pf2"});
+	put("EdgeCopy",				new String[]{"S","pi","O","pf"});
+	put("EdgeChord",			new String[]{"S","pi1","I","pi2","O","pf"});
+	put("EdgeChordKeep",		new String[]{"S","pi1","I","pi2","O","pf"});
+	put("ModifyEdge",			new String[]{"S","O","pi","pf"});
+	put("RandomTransformSource",new String[]{"S","pi","O","T","pf"});
+	put("RandomTransformTarget",new String[]{"S","pi","O","T","pf"});
+	put("CloneSet", 			new String[]{"S","c","C_att"});	
+	put("JoinSet",				new String[]{"JoinSet","where","except"});	// for description only, no need this thing in the code
 	
 	
-	// Procedure
-	put("RandomSource", 		new String[]{"S,p,O,T",					"S=x,s,S","O=o_x,o,O","T=t_x,t,T"});
-	put("RandomTarget", 		new String[]{"S,p,O,T",					"S=x,s,S","O=o_x,o,O","T=t_x,t,T"});
-	put("LDP",					new String[]{"S,p,O,k",					"S=x,s,S","O=o_x,o,O"});
-	put("Anatomization", 		new String[]{"idn,qID,sens",			""}); // for description only, no need this thing in the code
+	// Procedures
+	put("RandomSource", 		new String[]{"S","p","O","T"});
+	put("RandomTarget", 		new String[]{"S","p","O","T"});
+	put("LDP",					new String[]{"S","p","O","k"});
+	put("Anatomization", 		new String[]{"idn","qID","sens"}); // for description only, no need this thing in the code
 	
+	
+	// Sets
+	put("S",					new String[]{"x","s","S"});
+	put("X",					new String[]{"X","s","S"});
+	put("O",					new String[]{"*","o","O"});
+	put("T",					new String[]{"*","t","T"});
+	put("I",					new String[]{"*","i","I"});
+	
+	
+	//Specific _att
+	put("X_att",				new String[] {"X"});
+	put("C_att",				new String[] {"C"});
 }};
 
 	

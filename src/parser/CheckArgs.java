@@ -71,41 +71,12 @@ public interface CheckArgs {
 		// RandomTarget(S,p,O,T)    // like RandomTransformTarget(S,pi,O,T,pf) but pf was defined 
 		put("RandomTarget", 		new ArrayList<>(Arrays.asList("S","*","Set","Set")));
 		// LDP(S,p,O,k)				//p cannot be * because LDP use p as pf in EdgeChord
-		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Str"))); // this is very special, k must be a number (in development)
+		// put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Str"))); // this is very special, k must be a number (in development)
 		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Num")));
 		// Need a specific definition
 		// {idn = ["Str","Str",...],sens = ["Str","Str",...],qID = ["Str","Str",...]}
 		put("Anatomization", 		new ArrayList<>(Arrays.asList("Str","Str","Str")));
 		
-		
-	}};
-	
-	
-	/**
-	 * 
-	 * 
-	 * idea for the specific Constraints
-	 * specificConstraints contains all the specific contraints of operators and procedures <br>
-	 * Structure: <br>
-	 * - "Operator's name" = ArrayList<>("Type constraint","main object","related object",...)
-	 */
-	public static final HashMap<String, ArrayList<String>> specificConstraints = new HashMap<String, ArrayList<String>>(){{
-		// EdgeReverse ---> Neither S nor O can be the target of p
-		put("EdgeReverse",new ArrayList<>(Arrays.asList("NotTarget","p","S,O")));
-		// EdgeCut ---> Neither S nor O can be the target of pi
-		put("EdgeCut",new ArrayList<>(Arrays.asList("NotTarget","pi","S,O")));
-		// EdgeCopy --> Neither S nor O can be target of pi
-		put("EdgeCopy",new ArrayList<>(Arrays.asList("NotTarget","pi","S,O")));
-		// EdgeChord ---> Neither S nor O nor I can be the target of pi1 or pi2
-		put("EdgeChord",new ArrayList<>(Arrays.asList("NotTarget","pi1","S,O,I","NotTarget","pi2","S,O,I")));
-		// EdgeChordKeep ---> Neither S nor O nor I can be the target of pi1 or pi2
-		put("EdgeChordKeep",new ArrayList<>(Arrays.asList("NotTarget","pi1","S,O,I","NotTarget","pi2","S,O,I")));
-		// ModifyEdge ---> Neither S nor O can be target of pi
-		put("ModifyEdge",new ArrayList<>(Arrays.asList("NotTarget","pi","S,O")));
-		// RandomTransformSource -----> S, O and T cannot be the target of pi
-		put("RandomTransformSource",new ArrayList<>(Arrays.asList("NotTarget","pi","S,O,T")));
-		// RandomTransformTarget -----> Neither S, O or T can be the target of pi
-		put("RandomTransformTarget",new ArrayList<>(Arrays.asList("NotTarget","pi","S,O,T")));
 		
 	}};
 
@@ -125,13 +96,5 @@ public interface CheckArgs {
 	 */
 	public void checkArgs(HashMap<String,ArrayList<String>> map) throws SyntaxException;
 	
-	
-	/**
-	 * 
-	 * check all the specific edge's constrains of the operators
-	 * @param map contains all arguments for execute an operator
-	 * @throws SyntaxException 
-	 */
-	public void checkEdgeContraints(HashMap<String, ArrayList<String>> map) throws SyntaxException;
 	
 }
