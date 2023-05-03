@@ -105,7 +105,8 @@ public class CheckSyntax implements CheckArgs{
 		// setForm: example "S","*","Set","Str"
 		ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(op);
 		// listKeys: list of param's names eg: [S,pi,O,pf]
-		String[] listKeys = OperatorsHandling.listKeys.get(op)[0].split(",");
+		String[] listKeys = OperatorsHandling.listKeys.get(op);
+		
 		// check if the user has entered enough arguments for the operator in the command
 		if (setForm.size()!=localMap.size()) {
 			throw new SyntaxException(2);
@@ -119,12 +120,12 @@ public class CheckSyntax implements CheckArgs{
 				if (setForm.get(i).equals("S")) {
 					checkSet("S",localMap.get(listKeys[i]));
 				}else {
-					System.out.println(localMap);
 					checkSet("Set",localMap.get(listKeys[i]));
 				}
 			} 
 			// else the args is not a Set ==> it has only one String inside the ArrayList
 			else {
+				
 				// if params at a position can be null ==> it can be null,* or Str
 				if(setForm.get(i)==null) {continue;}
 				// this is very special, use for LDP only
@@ -155,10 +156,6 @@ public class CheckSyntax implements CheckArgs{
 		
 	}
 	
-		
-
-	
-
 
 
 }

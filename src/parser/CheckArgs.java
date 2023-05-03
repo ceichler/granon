@@ -77,7 +77,6 @@ public interface CheckArgs {
 		// {idn = ["Str","Str",...],sens = ["Str","Str",...],qID = ["Str","Str",...]}
 		put("Anatomization", 		new ArrayList<>(Arrays.asList("Str","Str","Str")));
 		
-		
 	}};
 
 	

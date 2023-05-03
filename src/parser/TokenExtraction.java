@@ -218,8 +218,6 @@ public class TokenExtraction extends OperatorsHandling{
 				
 				// getting the Set convert parameters
 				String[] split_element = listKeys.get(key);
-				
-
 
 				
 				if (key.contains("_att")) {
