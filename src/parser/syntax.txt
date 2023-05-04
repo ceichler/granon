@@ -96,7 +96,7 @@ Test Exception
 	except\\s*\\{\\s*\\((.+?)\\)\\s*\\}|where\\s*\\{\\s*\\((.+?)\\)\\s*\\}|JoinSet\\s*\\((.+?)\\)
 	
 	JoinSet ("hasQI",*) where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
-	Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
+	Anatomization ( {"name"}, {"knows","*" }, {"livesIn"} )
 	
 	
 	

@@ -34,6 +34,15 @@ public interface CheckArgs {
 		put("Set", new ArrayList<>(Arrays.asList("**",null,null))); // for O,I,T
 		
 		/**
+		 * list Set
+		 */
+		put("ListSet", new ArrayList<>(Arrays.asList("where","except")));
+		/**
+		 * list Str
+		 */
+		put("ListStr", new ArrayList<>(Arrays.asList("JoinSet","idn","qID","sens")));
+		
+		/**
 		 *  operateurs
 		 */
 		// DeleteNode(X)
@@ -60,7 +69,7 @@ public interface CheckArgs {
 		put("CloneSet", 			new ArrayList<>(Arrays.asList("S","Str","Str")));
 		// Need a specific definition
 		// JoinSet([0],[1]) where [2] except [3]
-		put("JoinSet",				new ArrayList<>(Arrays.asList("Str","Str","Set","Set"))); 
+		put("JoinSet",				new ArrayList<>(Arrays.asList("ListStr","ListSet","ListSet"))); 
 		
 		
 		/**
@@ -75,7 +84,7 @@ public interface CheckArgs {
 		put("LDP",					new ArrayList<>(Arrays.asList("S","Str","Set","Num")));
 		// Need a specific definition
 		// {idn = ["Str","Str",...],sens = ["Str","Str",...],qID = ["Str","Str",...]}
-		put("Anatomization", 		new ArrayList<>(Arrays.asList("Str","Str","Str")));
+		put("Anatomization", 		new ArrayList<>(Arrays.asList("ListStr","ListStr","ListStr")));
 		
 	}};
 

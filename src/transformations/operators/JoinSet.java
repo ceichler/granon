@@ -124,7 +124,7 @@ public class JoinSet extends Operator {
 		if (map.get("except").size() >= 3) {
 			for (int i = 0; i < map.get("except").size();i+=3 ) {
 				if (!map.get("except").get(i).equals("*")) {
-					System.err.println(" Node in except must be represented by (*,x,X_att)");
+					System.err.println("[in JoinSet constructor] Node in except must be represented by (*,x,X_att)");
 				}
 				excepts.add(new Pair<String>(map.get("except").get(i+1), map.get("except").get(i+2)));
 			}
@@ -137,7 +137,7 @@ public class JoinSet extends Operator {
 		if (map.get("where").size() >= 3) {
 			for (int i = 0; i < map.get("where").size();i+=3 ) {
 				if (!map.get("where").get(i).equals("*")) {
-					System.err.println(" Node in where must be represented by (*,x,X_att)");
+					System.err.println("[in JoinSet constructor] Node in where must be represented by (*,x,X_att)");
 				}
 				wheres.add(new Pair<String>(map.get("where").get(i+1), map.get("where").get(i+2)));
 			}

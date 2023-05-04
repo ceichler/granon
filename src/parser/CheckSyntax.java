@@ -65,42 +65,8 @@ public class CheckSyntax implements CheckArgs{
 		localMap.putAll(map);
 		String op = new String(localMap.get("operator").get(0));
 		localMap.remove("operator");
-		// Special check for JoinSet and Anatomization
-		if (op.equals("JoinSet")) {
-			ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(op);
-			// check if JoinSet("Str","Str")
-			// To test Exception: JoinSet (*,"QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
-			// JoinSet ("hasQI",*) where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
-			if (localMap.get("JoinSet").get(0).equals("*") || localMap.get("JoinSet").get(1).equals("*") || localMap.get("JoinSet").get(0) == null || localMap.get("JoinSet").get(1) == null) {
-				throw new SyntaxException(5," [JoinSet] must define the joined Node/Edge");
-			}
-			// to test this exception: JoinSet ("hasQI","QI") where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
-			for (int i = 0; i<localMap.get("where").size();i+=3) {
-				ArrayList<String> whereSet = new ArrayList<String>(Arrays.asList(localMap.get("where").get(i),localMap.get("where").get(i+1),localMap.get("where").get(i+2)));
-				checkSet("Set",whereSet);
-			}
-			// to test this exception: JoinSet ("hasQI","QI") where {(*,"type","Person"),(*,"knows",*)} except {("id150","liveIn","Paris")}
-			for (int i = 0; i<localMap.get("except").size();i+=3) {
-				ArrayList<String> whereSet = new ArrayList<String>(Arrays.asList(localMap.get("except").get(i),localMap.get("except").get(i+1),localMap.get("except").get(i+2)));
-				checkSet("Set",whereSet);
-			}
-			// return when the JoinSet which passed the SyntaxException
-			return;
-			
-		}
-		else if (op.equals("Anatomization")) {
-			
-			for (String key:localMap.keySet()) {
-				for (int i = 0; i<localMap.get(key).size();i++) {
-					if (localMap.get(key).get(i).equals("*") || localMap.get(key).get(i) == null) {
-						throw new SyntaxException(5,"an Edge must be defined by a String (neither * nor null)!");
-					}
-				}
-			}
-			
-			// return when the Anatomization passed the SyntaxException
-			return;
-		}
+
+		
 		
 		// setForm: example "S","*","Set","Str"
 		ArrayList<String> setForm = CheckArgs.parameterRequiredForm.get(op);
@@ -108,49 +74,79 @@ public class CheckSyntax implements CheckArgs{
 		String[] listKeys = OperatorsHandling.listKeys.get(op);
 		
 		// check if the user has entered enough arguments for the operator in the command
-		if (setForm.size()!=localMap.size()) {
+		// example: RandomSource((*,"type","City"),"inGroup",(*,null,null),(*,"type","City")) ==> size = 4
+		// setForm <of RandomSource> = (S,p,O,T) ===> size = 4
+		// except JoinSet
+		if (setForm.size()!=localMap.size() && !op.equals("JoinSet")) {
 			throw new SyntaxException(2);
 		}
 		
 		// step through all the arguments in the map
 		for (int i=0;i<listKeys.length;i++) {
-			// if a, ArrayList of correspoinding key has 3 String inside ==> it must be a Set.
-			// e.g: map = {S=[x,s,S], O=[*,o,O],...} map.get("S).size() = [x,s,S].size() = 3
-			if (localMap.get(listKeys[i]).size() == 3) {
-				if (setForm.get(i).equals("S")) {
-					checkSet("S",localMap.get(listKeys[i]));
-				}else {
-					checkSet("Set",localMap.get(listKeys[i]));
+			//check for special form like "ListSet", "ListStr"
+			if(setForm.get(i).equals("ListSet")) {
+				// localMap in this case has the form: key=[*,s1,S1,*,s2,S2,...]
+				// e.g where=[*, *, Stuart, *, livesIn, Paris], except=[*, knows, *]
+				for ( int count =0;count<localMap.get(listKeys[i]).size();count+=3){
+					
+					// aSet is a Set to check
+					//e.g: where {aSet,aSet,aSet}
+					// so aSet is an ArrayList trying to get a tripler who represent a valid Set
+					ArrayList<String> aSet = new ArrayList<String>(Arrays.asList(localMap.get(listKeys[i]).get(count),
+							localMap.get(listKeys[i]).get(count+1),
+							localMap.get(listKeys[i]).get(count+2)));
+					checkSet("Set",aSet);				
 				}
-			} 
-			// else the args is not a Set ==> it has only one String inside the ArrayList
-			else {
-				
-				// if params at a position can be null ==> it can be null,* or Str
-				if(setForm.get(i)==null) {continue;}
-				// this is very special, use for LDP only
-				if(setForm.get(i).equals("Num")) {
-					try {
-						// check if this args is a number or not
-						Integer.parseInt(localMap.get(listKeys[i]).get(0));
-					}catch (NumberFormatException e){
-						throw new SyntaxException("k must be a number");
+			}else if (setForm.get(i).equals("ListStr")) {
+				for (String aStr:localMap.get(listKeys[i])) {
+					if (aStr == null) {
+						throw new SyntaxException(4,listKeys[i]+" cannot contain null");
+					}else if (aStr.equals("*")) {
+						throw new SyntaxException(4,listKeys[i]+" cannot contain *");
 					}
-				}
-				// if the params cannot be null --> error for null args in this position
-				if (localMap.get(listKeys[i]).get(0) == null && setForm.get(i)!=null) {
-					throw new SyntaxException(4,listKeys[i] + " cannot be null");
-				}
-				// maybe redundant (must be verified)
-				else if (localMap.get(listKeys[i]).get(0) == null && setForm.get(i)==null){
-					continue;
-				}
-				// if we have * at a positon that must be Str --> error
-				else if(localMap.get(listKeys[i]).get(0).equals("*") && setForm.get(i).equals("Str")) {
-					throw new SyntaxException(4,listKeys[i]+ " cannot be *");
 				}
 			}
 			
+			// check the rest neither "ListStr" not "ListSet"
+			else {
+			
+				// if a, ArrayList of correspoinding key has 3 String inside ==> it must be a Set.
+				// e.g: map = {S=[x,s,S], O=[*,o,O],...} map.get("S).size() = [x,s,S].size() = 3
+				if (localMap.get(listKeys[i]).size() == 3) {
+					if (setForm.get(i).equals("S")) {
+						checkSet("S",localMap.get(listKeys[i]));
+					}else {
+						checkSet("Set",localMap.get(listKeys[i]));
+					}
+				} 
+				// else the args is not a Set ==> it has only one String inside the ArrayList
+				else {
+					
+					// if params at a position can be null ==> it can be null,* or Str
+					if(setForm.get(i)==null) {continue;}
+					// this is very special, use for LDP only
+					if(setForm.get(i).equals("Num")) {
+						try {
+							// check if this args is a number or not
+							Integer.parseInt(localMap.get(listKeys[i]).get(0));
+						}catch (NumberFormatException e){
+							throw new SyntaxException("k must be a number");
+						}
+					}
+					// if the params cannot be null --> error for null args in this position
+					if (localMap.get(listKeys[i]).get(0) == null && setForm.get(i)!=null) {
+						throw new SyntaxException(4,listKeys[i] + " cannot be null");
+					}
+					// maybe redundant (must be verified)
+					else if (localMap.get(listKeys[i]).get(0) == null && setForm.get(i)==null){
+						continue;
+					}
+					// if we have * at a positon that must be Str --> error
+					else if(localMap.get(listKeys[i]).get(0).equals("*") && setForm.get(i).equals("Str")) {
+						throw new SyntaxException(4,listKeys[i]+ " cannot be *");
+					}
+				}
+			}
 		}
 		(new SpecificConstraints(map)).checkTarget();
 		
