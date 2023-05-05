@@ -1,6 +1,7 @@
 package transformations.operators;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import executable.granonui.Tui;
@@ -54,9 +55,20 @@ public class EdgeChordKeep extends Operator {
 	 * @param map contains all needed parameters
 	 */
 	
-	public EdgeChordKeep(HashMap<String,String> map) {
+	public EdgeChordKeep(HashMap<String,ArrayList<String>> mapTokens) {
 		r = Grammar.edgeChordKeep.getClone();
-		this.map = map;
+		map.put("x",mapTokens.get("S").get(0));
+		map.put("s",mapTokens.get("S").get(1));
+		map.put("S",mapTokens.get("S").get(2));
+		map.put("o",mapTokens.get("O").get(1));
+		map.put("O",mapTokens.get("O").get(2));
+		map.put("i",mapTokens.get("I").get(1));
+		map.put("I",mapTokens.get("I").get(2));
+		map.put("pi1",mapTokens.get("pi1").get(0));
+		map.put("pi2",mapTokens.get("pi2").get(0));
+		map.put("pf",mapTokens.get("pf").get(0));
+		System.out.println("\u001B[36m [In EdgeChord] mapTokens = "+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeChord] map = "+map+"\u001B[0m");
 	}
 
 	

@@ -1,6 +1,7 @@
 package transformations.operators;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import executable.granonui.Tui;
@@ -73,9 +74,18 @@ public class RandomTransformSrc extends Operator {
 	 * @param map contains all needed arguments
 	 */
 	
-	public RandomTransformSrc(HashMap<String,String> map) {
+	public RandomTransformSrc(HashMap<String,ArrayList<String>> mapTokens) {
 		r = Grammar.randomTransformSrc.getClone();
-		this.map =map;
+		map.put("x",mapTokens.get("X").get(0));
+		map.put("s",mapTokens.get("X").get(1));
+		map.put("S",mapTokens.get("X").get(2));
+		map.put("o",mapTokens.get("O").get(1));
+		map.put("O",mapTokens.get("O").get(2));
+		map.put("pi",mapTokens.get("pi").get(0));
+		map.put("pf",mapTokens.get("pf").get(0));
+		map.put("t",mapTokens.get("t").get(1));
+		map.put("T",mapTokens.get("T").get(2));
+		if(mapTokens.get("pi").get(0).contentEquals(mapTokens.get("pf").get(0))) throw new InvalidArguments("pi and pf must be distinct");
 	}
 	
 	@Override

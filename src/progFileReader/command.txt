@@ -1,6 +1,0 @@
-EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,"inGroup","France"))
-EdgeCut (S=("Paris",null,null),p="type",O=(*,null,null),pi="pi",M_att="IntermNode",po="pf")
-EdgeChordKeep (pi="livesIn",M=(*,"type","city"),O=(*,null,null),pf="livesIn",S=(*,"type","Person"),po="inGroup")
-NewNode(X="id108")
-JoinSet ("hasQI","id108") where {(*,*,"Stuart")} except {(*,"knows",*)}
-RandomTarget(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),T=(*,"isA","Name"))

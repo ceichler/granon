@@ -1,178 +1,112 @@
 package parser;
 
-
-import transformations.operators.*;
-import transformations.procedures.*;
+import java.lang.reflect.Constructor;
 import java.util.*;
 
+import parser.exceptions.SyntaxException;
+import parser.operators.*;
 
 /**
- * This class defines a parser to analyze and execute the command
+ * the parser for graph rewriting language
+ * @author khai
  *
- * @author cnguyen
  */
 
 public class Parser {
+
 	
-	/**
-	 * 
-	 * the command to execute
-	 */
 	public static String command;
 	
 	/**
-	 * the checker for command's syntax
+	 * list of operators provided by the language
 	 */
-	private static CheckSyntax syntaxChecker = new CheckSyntax();
-	
+	private static final ArrayList<String> listOperators = new ArrayList<String>(Arrays.asList(
+			
+				// operators
+				"NewNode",
+				"DeleteNode",
+				"EdgeReverse",
+				"EdgeCut",
+				"EdgeCopy",
+				"EdgeChord",
+				"EdgeChordKeep",
+				"ModifyEdge",
+				"RandomTransformSource",
+				"RandomTransformTarget",
+				"CloneSet",
+				"JoinSet",
+				
+				
+				//procedures
+				"RandomSource",
+				"RandomTarget",
+				"LDP",
+				"Anatomization"
+			
+			));
+
+	/**
+	 * get the operator name from the user's command
+	 * @return operator's name
+	 * @throws SyntaxException
+	 */
+	private static String getOperator() throws SyntaxException {
+		String[] operator;
+        int index = command.indexOf("(");
+        if (index >= 0) {        	
+            operator = new String[1];
+            operator[0] = command.substring(0, index).trim() ;
+        } else {
+        	operator = command.split("\\s+");
+        	if (!listOperators.contains(operator[0])) {
+        		throw new SyntaxException(operator[0] + " does exist");
+        	}
+        }
+    	 	
+        if (operator.length > 0) {
+        	operator[0] = operator[0].trim();
+        	return operator[0];
+        }
+        throw new SyntaxException("Cannot get operator from command");
+	}
 	
 	/**
-	 * execute the command
-	 * @return 0 if success, -1 otherwise
+	 * execute the user's command
+	 * 
 	 */
-    public static int execute() {
-    	
-    	command = command.trim();
-    	/**
-    	 * 
-    	 */
-    	OperatorsHandling tokenHd = new TokenExtraction(command);
-    	HashMap<String, ArrayList<String>> result = null;
-    	
-    	
+	public static void execute(){
+		
+		String operator = null;
 		try {
-			result = tokenHd.getToken();
-			syntaxChecker.checkArgs(result);
+			operator = getOperator();
 		} catch (SyntaxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return -1;
 		}
-			
-    	System.out.println("\u001B[36m [result] " + result +"\u001B[0m");
-    	HashMap <String,String> execMap = null;
-    	if (!result.get("operator").get(0).equals("JoinSet") && !result.get("operator").get(0).equals("Anatomization")) {
-    		execMap = tokenHd.generateExecutableMap(result);
-    	}   	
-    	
-    	System.out.println("\u001B[36m [operator] " + result.get("operator").get(0) + "\u001B[0m");
-    	System.out.println("\u001B[36m [execMap] " + execMap + "\u001B[0m");
-    	
-    	switch (result.get("operator").get(0)) {
-    	
-    	
-    		case "NewNode":
-    			System.out.println("NewNode");
-    			(new NewNode(execMap)).execute();
-    			break;
-    			
-    			
-    		case "DeleteNode":
-    			System.out.println("DeleteNode");
-    			(new DeleteNode(execMap)).execute();
-    			
-    			
-    			
-    		case "EdgeReverse":
-    			// Neither S nor O can be the target of pi
-    			System.out.println("EdgeReverse");
-    			(new EdgeReverse(execMap)).execute();
-    			break;
-    			
-    			
-    			
-    		case "EdgeCut":
-    			// Neither S nor O can be the target of pi
-    			System.out.println("EdgeCut");
-    			(new EdgeCut(execMap)).execute();
-    			break;
-    			
-    			
-    			
-    		case "EdgeCopy":
-    			// Neither S nor O can be target of pi
-    			System.out.println("EdgeCopy");
-    			(new EdgeCopy(execMap)).execute();
-    			break;
-    			
-    			
-    		case "EdgeChord":
-    			// Neither S nor O nor I can be the target of pi1 or pi2
-    			System.out.println("EdgeChord");
-    			 (new EdgeChord(execMap)).execute();
-    			break;
-    			
-    			
-    		case "EdgeChordKeep":
-    			// Neither S nor O nor I can be the target of pi1 or pi2
-    			System.out.println("EdgeChordKeep");
-    			(new EdgeChordKeep(execMap)).execute();
-    			break;
-    			
-    			
-    		case "ModifyEdge":
-    			// Neither S nor O can be target of pi
-    			System.out.println("ModifyEdge");
-    			(new ModifyEdge(execMap)).execute();
-    			break;
-    			
-    			
-    		case "RandomTransformSource":
-    			// S, O and T cannot be the target of pi
-    			System.out.println("RandomSource");
-    			(new RandomTransformSrc(execMap)).execute();
-    			break;
-    			
-    			
-    		case "RandomTransformTarget":
-    			// Neither S, O or T can be the target of pi
-    			System.out.println("RandomTarget");
-    			(new RandomTransformTar(execMap)).execute();
-    			break;	
-    			
-    			
-    		case "RandomSource":
-    			System.out.println("RandomSource");
-    			(new RandomSrc(execMap)).execute();
-    			break;
-    			
-    			
-    		case "RandomTarget":
-    			System.out.println("RandomTarget");
-    			(new RandomTar(execMap)).execute();
-    			break;
-    			
-    			
-    		case "CloneSet":
-    			(new CloneSet(execMap)).execute();
-    			System.out.println("CloneSet");
-    			break;
-    			
-    			
-    		case "LDP":
-    			System.out.println("LDP");
-    			(new LDP(execMap)).execute();
-    			break;
-    			
-    			
-    		case "Anatomization":
-    			System.out.println("Anatomization");
-    			(new Anatomization(result.get("idn"),result.get("qID"),result.get("sens"))).execute();
-    			break;
-    			
-    			
-    		case "JoinSet":
-    			// (new NewNode(result.get("JoinSet").get(1))).execute();
-    			// {JoinSet=[hasQI, QI], where=[*, *, Stuart], except=[*, knows, *], operator=[JoinSet]}
-    			(new JoinSet(result)).execute();
-    			break;
-    			
-    			
-    		default:
-    			System.err.println("undefined operator");
-    			break;
-    			
-    			
-    	}
-    	return 0;
-    }
+		
+
+		// create the className of the operator
+		String className = "parser.operators.Parse"+operator;
+		
+		
+		try {
+			// create the operator
+		    Class<?> myClass = Class.forName(className);
+		    Constructor<?> constructor = myClass.getConstructor(String.class);
+		    Object myObj = constructor.newInstance(command);
+		    // Use the object
+		    if (myObj instanceof ParseOperator) {
+		    	// execute the operator
+		        ((ParseOperator) myObj).execute();
+		    }
+		} catch (Exception e) {
+		    // Handle any exceptions
+		    e.printStackTrace();
+		}
+
+
+		
+	}
+	
+	
 }

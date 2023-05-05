@@ -1,5 +1,6 @@
 package transformations.procedures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import transformations.operators.ModifyEdge;
@@ -68,11 +69,20 @@ public class RandomTar {
 	}
 	
 	/**
-	 * Constructing the class, init attribute
+	 * Constructing class, init attribute
 	 * @param map contains all needed arguments
 	 */
-	public RandomTar(HashMap<String,String> map) {
-		this(map.get("x"),map.get("s"),map.get("S"),map.get("t"),map.get("T"),map.get("o"),map.get("O"),map.get("p"));
+	public RandomTar(HashMap<String,ArrayList<String>> mapTokens) {
+		this(
+				mapTokens.get("S").get(0),
+				mapTokens.get("S").get(1),
+				mapTokens.get("S").get(2),
+				mapTokens.get("T").get(1),
+				mapTokens.get("T").get(2),
+				mapTokens.get("O").get(1),
+				mapTokens.get("O").get(2),
+				mapTokens.get("p").get(0)
+			);
 	}
 	
 	/**

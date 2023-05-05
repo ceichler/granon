@@ -25,7 +25,7 @@ public class BenchSentiment {
 		File outputFile = null;
 
 		for(Integer nbT : nbTweets) {
-			SentimentBuilder.parse(600);
+			// SentimentBuilder.parse(600, nbT);
 			//GraGraUtils.print(grammar.getHostGraph());
 			Tui.grammar = grammar;
 			outputFile =new File("benchLDP_sentiment_"+nbT);

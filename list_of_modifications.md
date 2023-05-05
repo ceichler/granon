@@ -32,3 +32,9 @@ need to test more for JoinSet
 
 try to add some specific constrains
 
+## Vendredi mai 2023
+
+***Adding new constructers for operators***
+
+Modify constructors to get HashMap<String,ArrayList<String>> for better parser
+

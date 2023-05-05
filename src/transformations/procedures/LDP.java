@@ -1,5 +1,6 @@
 package transformations.procedures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import transformations.operators.DeleteNode;
@@ -76,8 +77,16 @@ public class LDP {
 	 * Constructing the class
 	 * @param map contains all needed arguments
 	 */
-	public LDP(HashMap<String,String> map) {
-		this(map.get("x"),map.get("s"),map.get("S"),map.get("o"),map.get("O"),map.get("p"),Integer.parseInt(map.get("k")));
+	public LDP(HashMap<String,ArrayList<String>> mapTokens) {
+		this(
+				mapTokens.get("S").get(0),
+				mapTokens.get("S").get(1),
+				mapTokens.get("S").get(2),
+				mapTokens.get("O").get(1),
+				mapTokens.get("O").get(2),
+				mapTokens.get("p").get(0),
+				Integer.parseInt(mapTokens.get("k").get(0))
+			);
 	}
 	
 	
