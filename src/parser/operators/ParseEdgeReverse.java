@@ -29,39 +29,23 @@ public class ParseEdgeReverse extends ParseOperator{
 	}
 	
 	
-	/**
-	 * Neither S nor O can be the target of pi
-	 * @param mapTokens
-	 * @throws SyntaxException 
-	 */
-	private void checkContrains(HashMap<String,ArrayList<String>> mapTokens) throws SyntaxException {
-		// get the current graph
-		Graph graph = Tui.grammar.getHostGraph();
-		
-		if (mapTokens.get("pi") == null) {return;}
-		
-		String pi = mapTokens.get("pi").get(0);
-		
-		ArrayList<String> listEdgeDst = getEdgeDst(graph, pi);
-		
-		if (listEdgeDst.contains(mapTokens.get("S").get(2))) {
-			throw new SyntaxException(pi + "'s destinaton cannot be " + mapTokens.get("S").get(2));
-		}
-		
-		if ( listEdgeDst.contains(mapTokens.get("O").get(2))) {
-			throw new SyntaxException(pi + "'s destinaton cannot be " + mapTokens.get("O").get(2));
-		}
-		
-	}
-	
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
 		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
+		
+		System.out.println("\u001B[33m [EdgeReverse]  "+mapTokens+"\u001B[0m");
+		
+		
+		ArrayList<String> listEdge = new ArrayList<String>(Arrays.asList("p"));
+		ArrayList<String> listDst = new ArrayList<String>(Arrays.asList("S","O"));
+		
+		// Neither S nor O can be the target of pi
+		checkContrains(mapTokens,listEdge,listDst);
+		
 		// execute the operator
-		checkContrains(mapTokens);
 		(new EdgeReverse(mapTokens)).execute();
 		
 		

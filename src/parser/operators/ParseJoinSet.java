@@ -95,6 +95,9 @@ public class ParseJoinSet extends ParseOperator{
 	public void execute() throws SyntaxException {
 		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg();
 		System.out.println();
+		
+		System.out.println("\u001B[33m [JoinSet]  "+mapTokens+"\u001B[0m");
+		
 		checkSyntax(mapTokens);
 		(new JoinSet(mapTokens)).execute();
 		

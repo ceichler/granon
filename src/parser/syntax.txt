@@ -111,6 +111,7 @@ Specific contraints
 	
 	EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))                                 //// The inGroup's target cannot be France
 	
+	EdgeCopy((*,"type","Person"),"name",(*,*,"Johnson"),"nom")					//// name's destinaton cannot be Johnson
 	
 		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"France"),"livesIn")             //// inGroup France
 		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"Europe not France"),"livesIn")  //// inGroup Europe not France

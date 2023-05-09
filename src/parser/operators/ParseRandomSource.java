@@ -33,6 +33,9 @@ public class ParseRandomSource extends ParseOperator{
 		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
+		
+		System.out.println("\u001B[33m [RandomSource]  "+mapTokens+"\u001B[0m");
+		
 		// execute the operator
 		(new RandomSrc(mapTokens)).execute();
 		

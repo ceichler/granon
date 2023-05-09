@@ -58,13 +58,13 @@ public class Parser {
             operator[0] = command.substring(0, index).trim() ;
         } else {
         	operator = command.split("\\s+");
-        	if (!listOperators.contains(operator[0])) {
-        		throw new SyntaxException(operator[0] + " does exist");
-        	}
         }
     	 	
         if (operator.length > 0) {
         	operator[0] = operator[0].trim();
+        	if (!listOperators.contains(operator[0])) {
+        		throw new SyntaxException(operator[0] + " does not exist");
+        	}
         	return operator[0];
         }
         throw new SyntaxException("Cannot get operator from command");
@@ -82,6 +82,7 @@ public class Parser {
 		} catch (SyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return;
 		}
 		
 

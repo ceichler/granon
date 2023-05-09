@@ -36,7 +36,7 @@ public class ParseDeleteNode extends ParseOperator{
 		
 		
 
-		System.out.println("\u001B[33m  [DeleteNode]"+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[33m  [DeleteNode] "+mapTokens+"\u001B[0m");
 		
 		// execute the operator
 		(new DeleteNode(mapTokens)).execute();

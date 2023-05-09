@@ -65,6 +65,9 @@ public class ParseAnatomization extends ParseOperator{
 		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg();
 		this.checkSyntax(mapTokens);
 		
+		System.out.println("\u001B[33m [Anatomization]  "+mapTokens+"\u001B[0m");
+		
+		
 		// execute the operator
 		(new Anatomization(mapTokens)).execute();
 		
