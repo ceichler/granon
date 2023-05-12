@@ -121,7 +121,8 @@ public class JoinSet extends Operator {
     	 *  excepts = {Pair<String>(X1_x,X1_att),Pair<String>(X2_x,X2_att),...}
     	 */
 		HashSet<Pair<String>> excepts = new HashSet<Pair<String>>();
-		if (map.get("except").size() >= 3) {
+		if (!map.keySet().contains("except")) { System.out.println(" [JoinSet] has no NAC! "); }
+		else if (map.get("except").size() >= 3) {
 			for (int i = 0; i < map.get("except").size();i+=3 ) {
 				if (!map.get("except").get(i).equals("*")) {
 					System.err.println("[in JoinSet constructor] Node in except must be represented by (*,x,X_att)");
@@ -134,7 +135,8 @@ public class JoinSet extends Operator {
 		 *  wheres = {Pair<String>(Y1_x,Y1_att),Pair<String>(Y2_x,Y2_att),...}
 		 */
 		HashSet<Pair<String>> wheres = new HashSet<Pair<String>>();
-		if (map.get("where").size() >= 3) {
+		if (!map.keySet().contains("where")) { System.out.println(" [JoinSet] has no PAC! "); }
+		else if (map.get("where").size() >= 3) {
 			for (int i = 0; i < map.get("where").size();i+=3 ) {
 				if (!map.get("where").get(i).equals("*")) {
 					System.err.println("[in JoinSet constructor] Node in where must be represented by (*,x,X_att)");

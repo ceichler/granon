@@ -7,7 +7,7 @@ import java.util.HashMap;
 import parser.exceptions.SyntaxException;
 import transformations.procedures.RandomTar;
 
-public class ParseRandomTarget extends ParseOperator{
+public class ParseRandomTarget extends ParseOperatorOpt{
 
 	/**
 	 * list of keys for parsing
@@ -24,13 +24,19 @@ public class ParseRandomTarget extends ParseOperator{
 	 */
 	
 	public ParseRandomTarget(String command) {
-		this.command = command;
+		super(command);
 	}
 	
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
 		System.out.println("\u001B[33m [RandomTarget]  "+mapTokens+"\u001B[0m");

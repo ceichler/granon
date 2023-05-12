@@ -9,7 +9,7 @@ import executable.granonui.Tui;
 import parser.exceptions.SyntaxException;
 import transformations.operators.EdgeCopy;
 
-public class ParseEdgeCopy extends ParseOperator{
+public class ParseEdgeCopy extends ParseOperatorOpt{
 
 	
 	/**
@@ -27,7 +27,7 @@ public class ParseEdgeCopy extends ParseOperator{
 	 */
 	
 	public ParseEdgeCopy(String command) {
-		this.command = command;
+		super(command);
 	}
 	
 	
@@ -35,7 +35,13 @@ public class ParseEdgeCopy extends ParseOperator{
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
 		

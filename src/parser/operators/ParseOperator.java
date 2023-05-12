@@ -12,11 +12,17 @@ public abstract class ParseOperator {
 	/**
 	 * user's command
 	 */
-	String command;
+	protected String command;
 	/**
 	 * for positional arguments
 	 */
 	String regex = "(\\([^\\\\)\\\\(]+\\))|(\\\"[^\\\"]+\\\")|(\\*)|(null)";
+	
+	
+	public ParseOperator(String command) {
+		this.command = command;
+	}
+	
 	
 	/**
 	 * execute the command

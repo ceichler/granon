@@ -9,7 +9,7 @@ import executable.granonui.Tui;
 import parser.exceptions.SyntaxException;
 import transformations.operators.RandomTransformTar;
 
-public class ParseRandomTransformTarget extends ParseOperator{
+public class ParseRandomTransformTarget extends ParseOperatorOpt{
 	/**
 	 * list of keys for parsing
 	 */
@@ -20,19 +20,25 @@ public class ParseRandomTransformTarget extends ParseOperator{
 	ArrayList<String> parameterRequiredForm = new ArrayList<String> (Arrays.asList("S","*","Set","Set","Str"));
 	
 	/**
-	 * create parser for CloneSet
+	 * create parser for ParseRandomTransformTarget
 	 * @param command
 	 */
 	
 	public ParseRandomTransformTarget(String command) {
-		this.command = command;
+		super(command);
 	}
 
 	
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
 		

@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 import parser.exceptions.SyntaxException;
 import transformations.procedures.Anatomization;
 
-public class ParseAnatomization extends ParseOperator{
+public class ParseAnatomization extends ParseOperatorOpt{
 	
 	public ParseAnatomization(String command) {
-		this.command = command;
+		super(command);
 	}
 
 	
@@ -26,7 +26,7 @@ public class ParseAnatomization extends ParseOperator{
 		String pattern =  "Anatomization\\s*\\(\\s*\\{(.*)\\}\\s*,\\s*\\{(.*)\\}\\s*,\\s*\\{(.*)\\}\\s*\\)";
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(command);
-		if (matcher.find()) {
+		if (matcher.find()) {ArrayList<String> parameterRequiredForm = new ArrayList<String> (Arrays.asList("S","Str","Str"));
 			/**
 			 * create a HashMap result to contain the matched tokens
 			 */
@@ -62,7 +62,23 @@ public class ParseAnatomization extends ParseOperator{
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg();
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg();
+		}else {
+			ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("idn","qID","sens"));
+			ArrayList<String> parameterRequiredForm = new ArrayList<String> (Arrays.asList("Str","Str","Str"));
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+			
+			for (String key : mapTokens.keySet()) {
+				for (int i=0;i<mapTokens.get(key).size();i++) {
+					mapTokens.get(key).set(i,mapTokens.get(key).get(i).replace("{","").replace("}",""));		 
+				}
+			}
+			
+			System.out.println(mapTokens);
+		}
 		this.checkSyntax(mapTokens);
 		
 		System.out.println("\u001B[33m [Anatomization]  "+mapTokens+"\u001B[0m");

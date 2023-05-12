@@ -8,7 +8,7 @@ import parser.exceptions.SyntaxException;
 import transformations.operators.DeleteNode;
 import transformations.operators.NewNode;
 
-public class ParseDeleteNode extends ParseOperator{
+public class ParseDeleteNode extends ParseOperatorOpt{
 	/**
 	 * list of keys for parsing
 	 */
@@ -23,7 +23,7 @@ public class ParseDeleteNode extends ParseOperator{
 	 * @param command
 	 */
 	public ParseDeleteNode(String command) {
-		this.command = command;
+		super(command);
 	}
 	
 	
@@ -31,7 +31,13 @@ public class ParseDeleteNode extends ParseOperator{
 	public void execute() throws SyntaxException {
 		
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
 		

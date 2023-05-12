@@ -9,7 +9,7 @@ import executable.granonui.Tui;
 import parser.exceptions.SyntaxException;
 import transformations.operators.EdgeChordKeep;
 
-public class ParseEdgeChordKeep extends ParseOperator{
+public class ParseEdgeChordKeep extends ParseOperatorOpt{
 
 	/**
 	 * list of keys for parsing
@@ -26,13 +26,19 @@ public class ParseEdgeChordKeep extends ParseOperator{
 	 */
 	
 	public ParseEdgeChordKeep(String command) {
-		this.command = command;
+		super(command);
 	}
 	
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
 		System.out.println("\u001B[33m [EdgeChordKeep]  "+mapTokens+"\u001B[0m");

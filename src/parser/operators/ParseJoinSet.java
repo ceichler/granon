@@ -16,7 +16,7 @@ public class ParseJoinSet extends ParseOperator{
 	 * @param command
 	 */
 	public ParseJoinSet(String command) {
-		this.command = command;
+		super(command);
 	}
 
 	
@@ -82,19 +82,22 @@ public class ParseJoinSet extends ParseOperator{
 		String[] strs = new String[] {"where","except"};
 		
 		for (String str:strs) {
-			for (int i = 0; i<localMapTokens.get(str).size();i+=3) {
-				ArrayList<String> setForCheck = new ArrayList<String>(Arrays.asList(
-								localMapTokens.get(str).get(i),
-								localMapTokens.get(str).get(i+1),
-								localMapTokens.get(str).get(i+2)));
-				checkSet("Set",setForCheck);
+			if (!localMapTokens.containsKey(str)) {
+				continue;
+			}else {
+				for (int i = 0; i<localMapTokens.get(str).size();i+=3) {
+					ArrayList<String> setForCheck = new ArrayList<String>(Arrays.asList(
+									localMapTokens.get(str).get(i),
+									localMapTokens.get(str).get(i+1),
+									localMapTokens.get(str).get(i+2)));
+					checkSet("Set",setForCheck);
+				}
 			}
 		}
 	}
 	@Override
 	public void execute() throws SyntaxException {
 		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg();
-		System.out.println();
 		
 		System.out.println("\u001B[33m [JoinSet]  "+mapTokens+"\u001B[0m");
 		

@@ -9,7 +9,7 @@ import executable.granonui.Tui;
 import parser.exceptions.SyntaxException;
 import transformations.operators.EdgeReverse;
 
-public class ParseEdgeReverse extends ParseOperator{
+public class ParseEdgeReverse extends ParseOperatorOpt{
 
 	/**
 	 * list of keys for parsing
@@ -25,14 +25,20 @@ public class ParseEdgeReverse extends ParseOperator{
 	 * @param command
 	 */
 	public ParseEdgeReverse(String command) {
-		this.command = command;
+		super(command);
 	}
 	
 	
 	@Override
 	public void execute() throws SyntaxException {
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
 		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
 		
 		

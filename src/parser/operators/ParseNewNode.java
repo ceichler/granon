@@ -23,7 +23,7 @@ public class ParseNewNode extends ParseOperator{
 	 * @param command
 	 */
 	public ParseNewNode(String command) {
-		this.command = command;
+		super(command);
 	}
 
 	

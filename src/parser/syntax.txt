@@ -1,36 +1,36 @@
-Syntax: 	DeleteNode((S_att,p,O_att)) | DeleteNode (S_att,p,O_att)
+Syntax: 	DeleteNode(X) 
 E.g 		DeleteNode(("id105",*,*)) , DeleteNode("id105",*,*)
-		DeleteNode(S=("id105",*,*))
+		DeleteNode(X=("id105",*,*))
 
 
-Syntax: 	NewNode(S_att) | NewNode S_att
+Syntax: 	NewNode(X_att) | NewNode X_att
 e.g 		NewNode("id108") | NewNode "id108"
-		NewNode(X="id108")
+		NewNode(X_att="id108")
 
 
-Syntax:  	EdgeReverse((x,s,S_att),p,(*,o,O_att))
+Syntax:  	EdgeReverse((S,p,O)
 e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,null,null))
 		EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,null,null))
 
 
-Syntax:  	EdgeCut(S,p,O,pi,M_att,po)
+Syntax:  	EdgeCut(S,pi,O,pf1,interm,pf2)
 e.g  		EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
-		EdgeCut (S=("Paris",null,null),p="type",O=(*,null,null),pi="pi",M_att="IntermNode",po="pf")
+		EdgeCut (S=("Paris",null,null),pi="type",O=(*,null,null),pf1="pi",interm="IntermNode",pf2="pf")
 
 
 Syntax:	EdgeCopy(S, pi, O, pf)
 e.g 		EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
-		EdgeCopy (S=("id555",*,*),pi="knows",O=(*,"type","person"),pf="cousin")
+		EdgeCopy (S=(*,*,*),pi="knows",O=(*,"isA","Name"),pf="cousin")
 
 
-Syntax: 	 EdgeChord(S, pi , M, po , O, pf)
+Syntax: 	 EdgeChord(S, pi1 , I, pi2 , O, pf)
 e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),"livesIn")
 		 EdgeChord ((*,"type","Person"),"name",(*,null,null),"isA",(*,null,null),"hasA")
-e.g		 EdgeChord (S=(*,"type","Person"),pi="livesIn",M=(*,null,null),po="inGroup",O=(*,null,null),pf="livesIn")
+e.g		 EdgeChord (S=(*,"type","Person"),pi1="livesIn",I=(*,null,null),pi2="inGroup",O=(*,null,null),pf="livesIn")
 
-Syntax: 	 EdgeChordKeep(S, pI , M, pO , O, pf) 
+Syntax: 	 EdgeChordKeep(S, pi1 , I, pi2 , O, pf) 
 e.g		 EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,null,null),"livesIn")
-		 EdgeChordKeep (S=(*,"type","Person"),pi="livesIn",M=(*,"type","city"),po="inGroup",O=(*,null,null),pf="livesIn") 
+		 EdgeChordKeep (S=(*,"type","Person"),pi1="livesIn",I=(*,"type","city"),pi2="inGroup",O=(*,null,null),pf="livesIn") 
 		 EdgeChordKeep (pi="livesIn",M=(*,"type","city"),O=(*,null,null),pf="livesIn",S=(*,"type","Person"),po="inGroup")		   
 
 
@@ -65,7 +65,7 @@ e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),"3")
 
 Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
 e.g		Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
-Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
+		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
 		Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
 		
 		
@@ -116,3 +116,75 @@ Specific contraints
 		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"France"),"livesIn")             //// inGroup France
 		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"Europe not France"),"livesIn")  //// inGroup Europe not France
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+Test KeywordArgument
+
+
+DeleteNode(X=("id105",*,*))
+NewNode(X_att="id108")
+
+EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,null,null))
+EdgeReverse(S = (*,"type","Person"),p="livesIn")
+
+
+EdgeCut (S=("Paris",null,null),pi="type",O=(*,null,null),pf1="pi",interm="IntermNode",pf2="pf")
+EdgeCut (S=("Paris",null,null),pi="type",pf1="pi",interm="IntermNode",pf2="pf")
+
+
+EdgeCopy (S=(*,null,null),pi="knows",O=(*,"isA","Name"),pf="cousin")
+EdgeCopy (pi="knows",O=(*,"isA","Name"),pf="cousin")
+
+
+
+
+EdgeChord (S=(*,"type","Person"),pi1="livesIn",I=(*,null,null),pi2="inGroup",O=(*,null,null),pf="livesIn")
+EdgeChord (S=(*,"type","Person"),pi1="livesIn",pi2="inGroup",pf="livesIn")
+
+
+
+
+
+EdgeChordKeep (pi="livesIn",M=(*,"type","city"),O=(*,null,null),pf="livesIn",S=(*,"type","Person"),po="inGroup")
+EdgeChordKeep (pi="livesIn",M=(*,"type","city"),pf="livesIn",S=(*,"type","Person"),po="inGroup")
+
+
+
+
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn", pf="worksIn")
+
+
+
+
+RandomSource(S=(*,"type","City"),p="inGroup",O=(*,null,null),T=(*,"type","City"))
+RandomSource(S=(*,"type","City"),p="inGroup",T=(*,"type","City"))
+
+
+
+RandomTarget(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),T=(*,"isA","Name"))
+
+
+
+CloneSet(S=("*", "type", "city"), c="clone", C_att="Clone")
+
+
+LDP(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),k=3)
+
+
+	Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
+	
