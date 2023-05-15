@@ -162,8 +162,10 @@ public abstract class ParseOperator {
 			if (localMap.get(listKeys.get(i)).size() == 3) {
 				if (setForm.get(i).equals("S")) {
 					checkSet("S",localMap.get(listKeys.get(i)));
-				}else {
+				}else if (setForm.get(i).equals("Set")) {
 					checkSet("Set",localMap.get(listKeys.get(i)));
+				}else {
+					throw new SyntaxException("Cannot identify this Set");
 				}
 			} 
 			// else the args is not a Set ==> it has only one String inside the ArrayList
@@ -191,6 +193,8 @@ public abstract class ParseOperator {
 				// if we have * at a positon that must be Str --> error
 				else if(localMap.get(listKeys.get(i)).get(0).equals("*") && setForm.get(i).equals("Str")) {
 					throw new SyntaxException(listKeys.get(i)+ " cannot be *");
+				} else {
+					throw new SyntaxException("Something wrong with "  + listKeys.get(i) + "'s form !");
 				}
 			}
 		}
