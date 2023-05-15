@@ -165,6 +165,7 @@ EdgeChordKeep (pi="livesIn",M=(*,"type","city"),pf="livesIn",S=(*,"type","Person
 
 EdgeChordKeep(S, pi1 , I, pi2 , O, pf) 
 EdgeChordKeep (S=(*,"type","Person"),pi1="livesIn",I=(*,"type","city"),pi2="inGroup",pf="livesIn")
+EdgeChordKeep (pi1="livesIn",I=(*,"type","city"),pi2="inGroup",pf="livesIn")
 
 
 ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn", pf="worksIn")

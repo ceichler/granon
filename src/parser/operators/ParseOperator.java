@@ -193,8 +193,6 @@ public abstract class ParseOperator {
 				// if we have * at a positon that must be Str --> error
 				else if(localMap.get(listKeys.get(i)).get(0).equals("*") && setForm.get(i).equals("Str")) {
 					throw new SyntaxException(listKeys.get(i)+ " cannot be *");
-				} else {
-					throw new SyntaxException("Something wrong with "  + listKeys.get(i) + "'s form !");
 				}
 			}
 		}
