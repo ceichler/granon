@@ -173,6 +173,12 @@ public abstract class ParseOperator {
 				
 				// if params at a position can be null ==> it can be null,* or Str
 				if(setForm.get(i)==null) {continue;}
+				
+				// Check the formule
+				if (setForm.get(i).equals("S") || setForm.get(i).equals("Set")) {
+					throw new SyntaxException("Something wrong with "  + listKeys.get(i) + "'s form !");
+				}
+				
 				// this is very special, use for LDP only
 				if(setForm.get(i).equals("Num")) {
 					try {
@@ -193,7 +199,7 @@ public abstract class ParseOperator {
 				// if we have * at a positon that must be Str --> error
 				else if(localMap.get(listKeys.get(i)).get(0).equals("*") && setForm.get(i).equals("Str")) {
 					throw new SyntaxException(listKeys.get(i)+ " cannot be *");
-				}
+				} 
 			}
 		}
 	}
