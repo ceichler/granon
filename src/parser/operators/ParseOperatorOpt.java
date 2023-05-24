@@ -86,7 +86,13 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 		
 		for (String keyword:result.keySet()) {
 			if (!listArgKeywords.contains(keyword)) {
-				throw new SyntaxException(keyword + " is not the keywork for this operator");
+				String syntax = this.getClass().getSimpleName().replace("Parse", "")+"(";
+				for (String key:listArgKeywords) {
+					syntax = syntax + key + ",";
+				}
+				syntax = syntax.substring(0, syntax.length()-1);
+				syntax = syntax + ")";
+				throw new SyntaxException(keyword + " is not the keywork for this operator [Syntax] "+syntax);
 			}
 			if (result.get(keyword).get(0).equals("")) {
 				throw new SyntaxException(keyword + " has no value");

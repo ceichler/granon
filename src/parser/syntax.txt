@@ -159,7 +159,7 @@ EdgeChord (S=(*,"type","Person"),pi1="livesIn",pi2="inGroup",pf="livesIn")
 
 
 
-
+EdgeChordKeep ((*,null,null),"livesIn",(*,"type","city"),(*,null,null),"livesIn",(*,"type","Person"),"inGroup")
 EdgeChordKeep (pi="livesIn",M=(*,"type","city"),O=(*,null,null),pf="livesIn",S=(*,"type","Person"),po="inGroup")
 EdgeChordKeep (pi="livesIn",M=(*,"type","city"),pf="livesIn",S=(*,"type","Person"),po="inGroup")
 

@@ -67,8 +67,8 @@ public class EdgeChordKeep extends Operator {
 		map.put("pi1",mapTokens.get("pi1").get(0));
 		map.put("pi2",mapTokens.get("pi2").get(0));
 		map.put("pf",mapTokens.get("pf").get(0));
-		System.out.println("\u001B[36m [In EdgeChord] mapTokens = "+mapTokens+"\u001B[0m");
-		System.out.println("\u001B[36m [In EdgeChord] map = "+map+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeChordKeep] mapTokens = "+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeChordKeep] map = "+map+"\u001B[0m");
 	}
 
 	

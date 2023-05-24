@@ -25,7 +25,7 @@ public abstract class ParseOperator {
 	
 	
 	/**
-	 * execute the command
+	 * execute the user's command
 	 * @throws SyntaxException
 	 */
 	public abstract void execute() throws SyntaxException;
@@ -54,7 +54,15 @@ public abstract class ParseOperator {
 		        	
 		        	
 		        	 if (count >= listArgKeywords.size()) {
-							throw new SyntaxException("Redundant arguments");
+		        		 String errorStr = new String("Redundant arguments. [Syntax] " + 
+		 						this.getClass().getSimpleName().replace("Parse", "") +
+		 						"(");
+		 				for (String keyword:listArgKeywords) {
+		 					errorStr = errorStr + keyword + ",";
+		 				}
+		 				errorStr = errorStr.substring(0, errorStr.length()-1);
+		 				errorStr = errorStr + ")";
+		 				throw new SyntaxException(errorStr);
 					}
 		        	
 		        	
@@ -81,7 +89,16 @@ public abstract class ParseOperator {
 			}
 			
 			if (mapTokens.size() != listArgKeywords.size()) {
-				throw new SyntaxException("Missing arguments");
+				
+				String errorStr = new String("Missing arguments. [Syntax] " + 
+						this.getClass().getSimpleName().replace("Parse", "") +
+						"(");
+				for (String keyword:listArgKeywords) {
+					errorStr = errorStr + keyword + ",";
+				}
+				errorStr = errorStr.substring(0, errorStr.length()-1);
+				errorStr = errorStr + ")";
+				throw new SyntaxException(errorStr);
 			}
 			
 		return mapTokens;
@@ -90,8 +107,8 @@ public abstract class ParseOperator {
 	
 	/**
 	 * Check the syntax of provided Set 
-	 * @param setFormCode required form of Set ("String",null,null) or ("*",null,null)
-	 * @param setVal the set to check
+	 * @param setFormCode required form of Set S=("String",null,null) or Set=("*",null,null)
+	 * @param setVal the set for checking syntax
 	 * @throws SyntaxException
 	 */
 	public void checkSet(String setFormCode, ArrayList<String> setVal) throws SyntaxException {
@@ -99,7 +116,11 @@ public abstract class ParseOperator {
 		
 		// The number of elements in a Set is extractly 3
 		if (setVal.size()!=3) {
-			throw new SyntaxException("The number of elements in the Set must be 3");
+			String error = new String("(");
+			for (String ele:setVal) {error += "\""+ele+"\","; }
+			error = error.replaceAll(".$", ")");
+			error +=  " is not a Set. The number of elements in the Set must be 3";
+			throw new SyntaxException(error);
 		}
 		
 		
@@ -110,7 +131,7 @@ public abstract class ParseOperator {
 		} else if (setFormCode.equals("Set")) {
 			setForm = new ArrayList<>(Arrays.asList("**",null,null));
 		} else {
-			throw new SyntaxException("Invalid setFormCode");
+			throw new SyntaxException("Invalid setFormCode. " + setFormCode+ " ?");
 		}
 		
 		
@@ -120,17 +141,17 @@ public abstract class ParseOperator {
 			
 			if (setVal.get(i) == null && setForm.get(i)!=null) {
 				// if we have null in the command but the form is not null ==> invalid syntax. E.g Command: (*,null,*), form: (*,*,*) ==> invalid
-				throw new SyntaxException(setFormCode + "["+i+ "] null is not allowed");
+				throw new SyntaxException(setVal.toString() + " " + setFormCode + "["+i+ "] null is not allowed");
 			}
 			
 			// if we have * in the command but the form is "Str" ==> invalid syntax. E.g Command: (*,null,*), form: (Str,null,*) ==> invalid
 			else if (setVal.get(i).equals("*") && setForm.get(i).equals("Str")) {
-				throw new SyntaxException(setFormCode + "["+i+ "]  * is not allowed");
+				throw new SyntaxException(setVal.toString() + " " + setFormCode + "["+i+ "]  * is not allowed");
 			}
 			
 			// this is special case for "Set" setFormCode. e.g Command: ("id105",null,null), form: ("**",null,null) ==> invalid 
 			else if (setForm.get(i).equals("**") && !setVal.get(i).equals("*")) {
-				throw new SyntaxException(setFormCode + "["+i+ "]  must be *");
+				throw new SyntaxException(setVal.toString() + " " + setFormCode + "["+i+ "]  must be *");
 			}
 			
 		}
@@ -165,7 +186,14 @@ public abstract class ParseOperator {
 				}else if (setForm.get(i).equals("Set")) {
 					checkSet("Set",localMap.get(listKeys.get(i)));
 				}else {
-					throw new SyntaxException("Cannot identify this Set");
+					
+					/*syntax syntax attendu*/
+					throw new SyntaxException(
+							"Cannot identify this Set: " 
+							+ localMap.get(listKeys.get(i))
+					);
+					
+					
 				}
 			} 
 			// else the args is not a Set ==> it has only one String inside the ArrayList
@@ -176,6 +204,7 @@ public abstract class ParseOperator {
 				
 				// Check the formule
 				if (setForm.get(i).equals("S") || setForm.get(i).equals("Set")) {
+					checkSet("S",localMap.get(listKeys.get(i)));
 					throw new SyntaxException("Something wrong with "  + listKeys.get(i) + "'s form !");
 				}
 				
@@ -209,7 +238,7 @@ public abstract class ParseOperator {
 	 * 
 	 * This method is used to get all destination's "att" of an prop in provided Graph
 	 * @param graph current graph
-	 * @param prop  the Edge's "prop" 
+	 * @param prop  the Edge's "prop" that we want to check the destination
 	 */
 	public ArrayList<String> getEdgeDst(Graph graph, String prop) {
 		ArrayList<String> dstsName = new ArrayList<String>();
@@ -228,7 +257,7 @@ public abstract class ParseOperator {
 	
 	/**
 	 * Check if any node's att in listDst appear in the list destination of elements in listEdge
-	 * @param mapTokens
+	 * @param mapTokens the map that contains all the args after extracting user's command
 	 * @param listEdge list all edge for checking destination
 	 * @param listDst list node's att that cannot be destination of element in listEdge
 	 * @throws SyntaxException 
