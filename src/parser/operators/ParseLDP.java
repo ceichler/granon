@@ -10,7 +10,7 @@ import transformations.procedures.LDP;
 public class ParseLDP extends ParseOperatorOpt{
 
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("S","p","O","k"));
 	/**
@@ -20,7 +20,7 @@ public class ParseLDP extends ParseOperatorOpt{
 	
 	/**
 	 * create parser for LDP
-	 * @param command
+	 * @param command user's command
 	 */
 	public ParseLDP(String command) {
 		super(command);

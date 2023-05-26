@@ -10,7 +10,7 @@ import transformations.operators.CloneSet;
 public class ParseCloneSet extends ParseOperatorOpt{
 
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	protected ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("S","c","C_att"));
 	/**
@@ -20,7 +20,7 @@ public class ParseCloneSet extends ParseOperatorOpt{
 	
 	/**
 	 * create parser for CloneSet
-	 * @param command
+	 * @param command user's command
 	 */
 	
 	public ParseCloneSet(String command) {

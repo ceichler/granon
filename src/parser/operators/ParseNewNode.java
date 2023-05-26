@@ -8,7 +8,7 @@ import transformations.operators.NewNode;
 public class ParseNewNode extends ParseOperator{
 	
 	/**
-	 * list arguments for parsing the command
+	 * list of keywords that represent the required arguments in operator
 	 */
 	ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("X"));
 	
@@ -20,7 +20,7 @@ public class ParseNewNode extends ParseOperator{
 	
 	/**
 	 * create the parser for NewNode
-	 * @param command
+	 * @param command user's command
 	 */
 	public ParseNewNode(String command) {
 		super(command);

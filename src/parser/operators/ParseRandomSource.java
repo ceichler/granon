@@ -10,7 +10,7 @@ import transformations.procedures.RandomSrc;
 public class ParseRandomSource extends ParseOperatorOpt{
 
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("S","p","O","T"));
 	/**
@@ -20,7 +20,7 @@ public class ParseRandomSource extends ParseOperatorOpt{
 	
 	/**
 	 * create parser for RandomSource
-	 * @param command
+	 * @param command user's command
 	 */
 	
 	public ParseRandomSource(String command) {

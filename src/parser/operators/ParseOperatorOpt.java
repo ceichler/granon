@@ -10,11 +10,15 @@ import parser.exceptions.SyntaxException;
 
 public abstract class ParseOperatorOpt extends ParseOperator{
 		
-	
+	/**
+	 * the regex pattern for extracting tokens (arguments) from the keyword arguments of user's command
+	 */
 	final String regex = "(\\w+)\\s*=\\s*(.*?)\\s*(?:(?=\\w+\\s*=)|\\)$)";
 	
 	
-	
+	/**
+	 * create the Parser for this operator with user's command
+	 */
 	public ParseOperatorOpt(String command) {
 		super(command);
 		// TODO Auto-generated constructor stub
@@ -22,7 +26,7 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 
 
 	/**
-	 * Extracts keyword arguments from a string and returns a HashMap containing the parameter key-value pairs. (required to pass all arguments)
+	 * Extracts keyword arguments from the user's command and returns a HashMap containing the parameter key-value pairs. (required to pass all arguments)
 	 * 
 	 * @param comd a string containing keyword arguments in the form "key=value"
 	 * @return a HashMap where the keys are the parameter names (keywords) extracted from the string and the values are ArrayLists of parameters associated with those keywords

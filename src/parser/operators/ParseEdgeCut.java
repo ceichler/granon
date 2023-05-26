@@ -13,7 +13,7 @@ public class ParseEdgeCut extends ParseOperatorOpt {
 
 	
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("S","pi","O","pf1","interm","pf2"));
 	/**
@@ -23,7 +23,7 @@ public class ParseEdgeCut extends ParseOperatorOpt {
 	
 	/**
 	 * create parser for EdgeCut
-	 * @param command
+	 * @param command user's command
 	 */
 	
 	public ParseEdgeCut(String command) {

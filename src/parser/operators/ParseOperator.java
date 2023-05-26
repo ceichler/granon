@@ -10,11 +10,11 @@ import parser.exceptions.SyntaxException;
 public abstract class ParseOperator {
 	
 	/**
-	 * user's command
+	 * command that entered by user. 
 	 */
 	protected String command;
 	/**
-	 * for positional arguments
+	 * regex pattern for positional arguments to extract the arguments from user's command
 	 */
 	final String regex = "(\\([^\\\\)\\\\(]+\\))|(\\\"[^\\\"]+\\\")|(\\*)|(null)";
 	
@@ -32,9 +32,9 @@ public abstract class ParseOperator {
 	
 	
 	/**
-	 * extract the token from the user's command
-	 * @param listArgKeywords ArrayList contains parameters to parse the user's command
-	 * @return HashMap contains parameter and corresponding arguments of user's command
+	 * extract the token (the arguments) from the user's command
+	 * @param listArgKeywords ArrayList contains keywords that represent parameters of user's commands <br> E.g: S,c,C_att in CloneSet (S,c,C_att)
+	 * @return The HashMap includes the keyword of the parameters provided by listArgKeyword and the corresponding arguments extracted from the user command
 	 * @throws SyntaxException 
 	 */
 	public HashMap<String,ArrayList<String>> getTokensPosArg(ArrayList<String> listArgKeywords) throws SyntaxException{
@@ -106,7 +106,7 @@ public abstract class ParseOperator {
 
 	
 	/**
-	 * Check the syntax of provided Set 
+	 * Check if the provided Set follows the required syntax
 	 * @param setFormCode required form of Set S=("String",null,null) or Set=("*",null,null)
 	 * @param setVal the set for checking syntax
 	 * @throws SyntaxException
@@ -159,10 +159,10 @@ public abstract class ParseOperator {
 	}
 	
 	/**
-	 * Check the syntax on an HashMap obtained by parsing the user's command
+	 * Verify the user's command syntax using a HashMap containing all the tokens extracted from it
 	 * @param mapTokens the HashMap contains all arguments extracted from user's command
 	 * @param parameterRequiredForm required form of the command
-	 * @param listArgKeywords ArrayList contains parameters to parse the user's command
+	 * @param listArgKeywords ArrayList of all keywords that represent the parameters <br> E.g: S,c,C_att in CloneSet (S,c,C_att)
 	 * @throws SyntaxException
 	 */
 	public void checkSyntax(HashMap<String,ArrayList<String>> mapTokens, ArrayList<String> parameterRequiredForm, ArrayList<String> listArgKeywords) throws SyntaxException{
@@ -238,7 +238,7 @@ public abstract class ParseOperator {
 	 * 
 	 * This method is used to get all destination's "att" of an prop in provided Graph
 	 * @param graph current graph
-	 * @param prop  the Edge's "prop" that we want to check the destination
+	 * @param prop  the Edge's "prop" that we want to get the destination
 	 */
 	public ArrayList<String> getEdgeDst(Graph graph, String prop) {
 		ArrayList<String> dstsName = new ArrayList<String>();
@@ -258,7 +258,7 @@ public abstract class ParseOperator {
 	/**
 	 * Check if any node's att in listDst appear in the list destination of elements in listEdge
 	 * @param mapTokens the map that contains all the args after extracting user's command
-	 * @param listEdge list all edge for checking destination
+	 * @param listEdge list all edges for checking destination
 	 * @param listDst list node's att that cannot be destination of element in listEdge
 	 * @throws SyntaxException 
 	 */
@@ -270,8 +270,10 @@ public abstract class ParseOperator {
 		
 			if (mapTokens.get(edge) == null) {return;}
 			
+			// p is the prop of edge
 			String p = mapTokens.get(edge).get(0);
 			
+			// get list of the Destination of the egde
 			ArrayList<String> listEdgeDst = getEdgeDst(graph, p);
 			
 			for (String dst:listDst) {

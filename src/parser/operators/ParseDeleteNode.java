@@ -10,7 +10,7 @@ import transformations.operators.NewNode;
 
 public class ParseDeleteNode extends ParseOperatorOpt{
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	private ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("X"));
 	/**
@@ -20,7 +20,7 @@ public class ParseDeleteNode extends ParseOperatorOpt{
 	
 	/**
 	 * create parser for DeleteNode
-	 * @param command
+	 * @param command user's command
 	 */
 	public ParseDeleteNode(String command) {
 		super(command);

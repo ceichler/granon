@@ -14,7 +14,9 @@ import parser.operators.*;
 
 public class Parser {
 
-	
+	/*
+	 * the command that user want to execute on the database
+	 */
 	public static String command;
 	
 	/**
@@ -71,7 +73,7 @@ public class Parser {
 	}
 	
 	/**
-	 * execute the user's command
+	 * execute the user's command on the database
 	 * 
 	 */
 	public static void execute(){

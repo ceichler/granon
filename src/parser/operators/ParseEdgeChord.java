@@ -12,7 +12,7 @@ import transformations.operators.EdgeChord;
 public class ParseEdgeChord extends ParseOperatorOpt {
 
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("S","pi1","I","pi2","O","pf"));
 	/**
@@ -22,7 +22,7 @@ public class ParseEdgeChord extends ParseOperatorOpt {
 	
 	/**
 	 * create parser for EdgeChord
-	 * @param command
+	 * @param command user's command
 	 */
 	
 	public ParseEdgeChord(String command) {

@@ -45,6 +45,11 @@ public class ParseAnatomization extends ParseOperatorOpt{
 		return mapTokens;
 	}
 	
+	/**
+	 * verify the syntax of this command
+	 * @param mapTokens HashMap that contains all need information extracted from user's command
+	 * @throws SyntaxException
+	 */
 	public void checkSyntax(HashMap<String,ArrayList<String>> mapTokens) throws SyntaxException{
 		HashMap<String, ArrayList<String>> localMap = new HashMap<String, ArrayList<String>>();
 		localMap.putAll(mapTokens);
