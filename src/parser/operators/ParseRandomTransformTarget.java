@@ -11,7 +11,7 @@ import transformations.operators.RandomTransformTar;
 
 public class ParseRandomTransformTarget extends ParseOperatorOpt{
 	/**
-	 * list of keys for parsing
+	 * list of keywords that represent the required arguments in operator
 	 */
 	ArrayList<String> listArgKeywords = new ArrayList<String>(Arrays.asList("S","pi","O","T","pf"));
 	/**
@@ -21,7 +21,7 @@ public class ParseRandomTransformTarget extends ParseOperatorOpt{
 	
 	/**
 	 * create parser for ParseRandomTransformTarget
-	 * @param command
+	 * @param command user's command
 	 */
 	
 	public ParseRandomTransformTarget(String command) {

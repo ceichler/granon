@@ -16,7 +16,7 @@ public abstract class ParseOperator {
 	/**
 	 * for positional arguments
 	 */
-	String regex = "(\\([^\\\\)\\\\(]+\\))|(\\\"[^\\\"]+\\\")|(\\*)|(null)";
+	final String regex = "(\\([^\\\\)\\\\(]+\\))|(\\\"[^\\\"]+\\\")|(\\*)|(null)";
 	
 	
 	public ParseOperator(String command) {

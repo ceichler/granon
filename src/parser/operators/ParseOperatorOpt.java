@@ -11,7 +11,7 @@ import parser.exceptions.SyntaxException;
 public abstract class ParseOperatorOpt extends ParseOperator{
 		
 	
-	protected String regex = "(\\w+)\\s*=\\s*(.*?)\\s*(?:(?=\\w+\\s*=)|\\)$)";
+	final String regex = "(\\w+)\\s*=\\s*(.*?)\\s*(?:(?=\\w+\\s*=)|\\)$)";
 	
 	
 	
