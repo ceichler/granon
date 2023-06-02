@@ -1,0 +1,1507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document version="1.0">
+    <GraphTransformationSystem ID="I0" directed="true"
+        name="AnonOperator" parallel="true">
+        <TaggedValue Tag="AttrHandler" TagValue="Java Expr">
+            <TaggedValue Tag="Package" TagValue="java.lang"/>
+            <TaggedValue Tag="Package" TagValue="java.util"/>
+        </TaggedValue>
+        <TaggedValue Tag="CSP" TagValue="true"/>
+        <TaggedValue Tag="identification" TagValue="true"/>
+        <TaggedValue Tag="NACs" TagValue="true"/>
+        <TaggedValue Tag="PACs" TagValue="true"/>
+        <TaggedValue Tag="GACs" TagValue="true"/>
+        <TaggedValue Tag="TypeGraphLevel" TagValue="DISABLED"/>
+        <Types>
+            <NodeType ID="I1" abstract="false" name="node%:RECT:java.awt.Color[r=0,g=0,b=0]:[NODE]:">
+                <AttrType ID="I3" attrname="att" typename="String" visible="true"/>
+            </NodeType>
+            <NodeType ID="I4" abstract="false" name="artifact%:OVAL:java.awt.Color[r=0,g=0,b=255]:[NODE]:">
+                <AttrType ID="I6" attrname="att" typename="String" visible="true"/>
+            </NodeType>
+            <EdgeType ID="I7" abstract="false" name="relation%:SOLID_LINE:java.awt.Color[r=0,g=0,b=0]:[EDGE]:">
+                <AttrType ID="I9" attrname="prop" typename="String" visible="true"/>
+            </EdgeType>
+            <EdgeType ID="I10" abstract="false" name="artifact%:SOLID_LINE:java.awt.Color[r=0,g=0,b=255]:[EDGE]:">
+                <AttrType ID="I12" attrname="prop" typename="String" visible="true"/>
+            </EdgeType>
+        </Types>
+        <Graph ID="I13" kind="HOST" name="Graph">
+            <Node ID="I14" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Person</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I17" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Paris</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I20" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>city</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I23" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>London</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I26" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Berlin</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I29" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>id105</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I32" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>id106</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I35" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>id110</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I38" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Miller</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I41" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Stuart</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I44" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Johnson</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I47" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>id107</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I50" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Name</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I53" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Brest</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I56" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>France</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I59" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>Europe not France</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Node ID="I62" type="I1">
+                <Attribute constant="true" type="I3">
+                    <Value>
+                        <string>THisIsANewNode</string>
+                    </Value>
+                </Attribute>
+            </Node>
+            <Edge ID="I65" source="I17" target="I20" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I68" source="I23" target="I20" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I71" source="I26" target="I20" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I74" source="I29" target="I38" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>name</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I77" source="I32" target="I41" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>name</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I80" source="I35" target="I44" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>name</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I83" source="I35" target="I14" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I86" source="I32" target="I14" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I89" source="I29" target="I14" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I92" source="I47" target="I14" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I95" source="I47" target="I41" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>name</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I98" source="I47" target="I20" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>livesInA</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I101" source="I47" target="I44" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>knows</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I104" source="I29" target="I41" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>knows</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I107" source="I38" target="I50" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>isA</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I110" source="I41" target="I50" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>isA</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I113" source="I44" target="I50" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>isA</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I116" source="I53" target="I20" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>type</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I119" source="I29" target="I23" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>livesIn</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I122" source="I35" target="I26" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>livesIn</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I125" source="I47" target="I17" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>livesIn</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I128" source="I17" target="I56" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>inGroup</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I131" source="I53" target="I56" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>inGroup</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I134" source="I23" target="I59" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>inGroup</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I137" source="I26" target="I59" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>inGroup</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I140" source="I29" target="I41" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>cousin</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+            <Edge ID="I143" source="I47" target="I44" type="I7">
+                <Attribute constant="true" type="I9">
+                    <Value>
+                        <string>cousin</string>
+                    </Value>
+                </Attribute>
+            </Edge>
+        </Graph>
+        <Rule ID="I146" enabled="false" formula="true" name="NewNode">
+            <Parameter name="X" type="String"/>
+            <Graph ID="I148" kind="LHS" name="LeftOf_NewNode"/>
+            <Graph ID="I149" kind="RHS" name="RightOf_NewNode">
+                <Node ID="I150" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>X</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+            </Graph>
+            <Morphism comment="Formula: true" name="NewNode"/>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I153" enabled="false" formula="true" name="RandomTransformSource">
+            <Parameter name="T" type="String"/>
+            <Parameter name="t" type="String"/>
+            <Parameter name="pi" type="String"/>
+            <Parameter name="pf" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="x" type="String"/>
+            <Graph ID="I155" kind="LHS" name="LeftOf_RandomTransformSource">
+                <Node ID="I156" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I159" type="I1"/>
+                <Node ID="I161" type="I1"/>
+                <Edge ID="I163" source="I156" target="I161" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I166" kind="RHS" name="RightOf_RandomTransformSource">
+                <Node ID="I167" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I170" type="I1"/>
+                <Node ID="I172" type="I1"/>
+                <Edge ID="I174" source="I170" target="I172" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="RandomTransformSource">
+                <Mapping image="I167" orig="I156"/>
+                <Mapping image="I170" orig="I159"/>
+                <Mapping image="I172" orig="I161"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I177" kind="PAC" name="SourceSet">
+                        <Node ID="I178" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I181" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I184" source="I178" target="I181" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I178" orig="I156"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I187" kind="PAC" name="ObjectSet">
+                        <Node ID="I188" type="I1"/>
+                        <Node ID="I190" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I193" source="I188" target="I190" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I188" orig="I161"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I196" kind="PAC" name="TargetSet">
+                        <Node ID="I197" type="I1"/>
+                        <Node ID="I199" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>T</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I202" source="I197" target="I199" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>t</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="TargetSet">
+                        <Mapping image="I197" orig="I159"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I205" enabled="false" formula="true" name="RandomTransformTarget">
+            <Parameter name="T" type="String"/>
+            <Parameter name="t" type="String"/>
+            <Parameter name="pi" type="String"/>
+            <Parameter name="pf" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="x" type="String"/>
+            <Graph ID="I207" kind="LHS" name="LeftOf_RandomTransformTarget">
+                <Node ID="I208" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I211" type="I1"/>
+                <Node ID="I213" type="I1"/>
+                <Edge ID="I215" source="I208" target="I213" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I218" kind="RHS" name="RightOf_RandomTransformTarget">
+                <Node ID="I219" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I222" type="I1"/>
+                <Node ID="I224" type="I1"/>
+                <Edge ID="I226" source="I219" target="I222" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="RandomTransformTarget">
+                <Mapping image="I219" orig="I208"/>
+                <Mapping image="I222" orig="I211"/>
+                <Mapping image="I224" orig="I213"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I229" kind="PAC" name="SourceSet">
+                        <Node ID="I230" type="I1"/>
+                        <Node ID="I232" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I235" source="I230" target="I232" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I230" orig="I208"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I238" kind="PAC" name="ObjectSet">
+                        <Node ID="I239" type="I1"/>
+                        <Node ID="I241" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I244" source="I239" target="I241" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I239" orig="I213"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I247" kind="PAC" name="TargetSet">
+                        <Node ID="I248" type="I1"/>
+                        <Node ID="I250" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>T</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I253" source="I248" target="I250" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>t</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="TargetSet">
+                        <Mapping image="I248" orig="I211"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I256" enabled="false" formula="true" name="ModifyEdge">
+            <Parameter name="O" type="String"/>
+            <Parameter name="pi" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="pf" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="x" type="String"/>
+            <Graph ID="I258" kind="LHS" name="LeftOf_ModifyEdge">
+                <Node ID="I259" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I262" type="I1"/>
+                <Edge ID="I264" source="I259" target="I262" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I267" kind="RHS" name="RightOf_ModifyEdge">
+                <Node ID="I268" type="I1"/>
+                <Node ID="I270" type="I1"/>
+                <Edge ID="I272" source="I268" target="I270" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="ModifyEdge">
+                <Mapping image="I268" orig="I259"/>
+                <Mapping image="I270" orig="I262"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I275" kind="PAC" name="SourceSet">
+                        <Node ID="I276" type="I1"/>
+                        <Node ID="I278" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I281" source="I276" target="I278" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I276" orig="I259"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I284" kind="PAC" name="ObjectSet">
+                        <Node ID="I285" type="I1"/>
+                        <Node ID="I287" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I290" source="I285" target="I287" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I285" orig="I262"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I293" enabled="false" formula="true" name="JoinSet" parallel="true">
+            <Parameter name="X" type="String"/>
+            <Parameter name="nXi" type="String"/>
+            <Parameter name="nxi" type="String"/>
+            <Parameter name="x" type="String"/>
+            <Parameter name="src" type="String"/>
+            <Graph ID="I295" kind="LHS" name="LeftOf_JoinSet">
+                <Node ID="I296" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>src</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I299" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>X</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+            </Graph>
+            <Graph ID="I302" kind="RHS" name="RightOf_JoinSet">
+                <Node ID="I303" type="I1"/>
+                <Node ID="I305" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>X</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Edge ID="I308" source="I303" target="I305" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="JoinSet">
+                <Mapping image="I305" orig="I299"/>
+                <Mapping image="I303" orig="I296"/>
+            </Morphism>
+            <ApplCondition>
+                <NAC>
+                    <Graph ID="I311" kind="NAC" name="NJS">
+                        <Node ID="I312" type="I1"/>
+                        <Node ID="I314" type="I1"/>
+                        <Edge ID="I316" source="I312" target="I314" type="I7"/>
+                    </Graph>
+                    <Morphism name="NJS">
+                        <Mapping image="I312" orig="I296"/>
+                    </Morphism>
+                </NAC>
+                <NAC>
+                    <Graph ID="I318" kind="NAC" name="NoDuplicate">
+                        <Node ID="I319" type="I1"/>
+                        <Node ID="I321" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>X</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I324" source="I319" target="I321" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="NoDuplicate">
+                        <Mapping image="I319" orig="I296"/>
+                        <Mapping image="I321" orig="I299"/>
+                    </Morphism>
+                </NAC>
+                <PAC>
+                    <Graph ID="I327" kind="PAC" name="PJS">
+                        <Node ID="I328" type="I1"/>
+                        <Node ID="I330" type="I1"/>
+                        <Edge ID="I332" source="I328" target="I330" type="I7"/>
+                    </Graph>
+                    <Morphism name="PJS">
+                        <Mapping image="I328" orig="I296"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I334" enabled="false" formula="true" name="CloneSet">
+            <Parameter name="src" type="String"/>
+            <Parameter name="c" type="String"/>
+            <Parameter name="C" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="X" type="String"/>
+            <Parameter name="x" type="String"/>
+            <Graph ID="I336" kind="LHS" name="LeftOf_CloneSet">
+                <Node ID="I337" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>src</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+            </Graph>
+            <Graph ID="I340" kind="RHS" name="RightOf_CloneSet">
+                <Node ID="I341" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>src</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I344" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>C</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Edge ID="I347" source="I341" target="I344" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>c</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="CloneSet">
+                <Mapping image="I341" orig="I337"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I350" kind="PAC" name="SourceSet">
+                        <Node ID="I351" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>src</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I354" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I357" source="I351" target="I354" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I351" orig="I337"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I360" enabled="false" formula="true" name="DeleteNode">
+            <Parameter name="X" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Graph ID="I362" kind="LHS" name="LeftOf_DeleteNode">
+                <Node ID="I363" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>X</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+            </Graph>
+            <Graph ID="I366" kind="RHS" name="RightOf_DeleteNode"/>
+            <Morphism comment="Formula: true" name="DeleteNode"/>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I367" kind="PAC" name="Set">
+                        <Node ID="I368" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>X</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I371" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I374" source="I368" target="I371" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="Set">
+                        <Mapping image="I368" orig="I363"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I377" enabled="false" formula="true" name="EdgeCut">
+            <Parameter name="x" type="String"/>
+            <Parameter name="pi" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="interm" type="String"/>
+            <Parameter name="pf1" type="String"/>
+            <Parameter name="pf2" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Graph ID="I379" kind="LHS" name="LeftOf_EdgeCut">
+                <Node ID="I380" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I383" type="I1"/>
+                <Edge ID="I385" source="I380" target="I383" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I388" kind="RHS" name="RightOf_EdgeCut">
+                <Node ID="I389" type="I1"/>
+                <Node ID="I391" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>interm</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I394" type="I1"/>
+                <Edge ID="I396" source="I389" target="I391" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf1</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+                <Edge ID="I399" source="I391" target="I394" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf2</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="EdgeCut">
+                <Mapping image="I389" orig="I380"/>
+                <Mapping image="I394" orig="I383"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I402" kind="PAC" name="SourceSet">
+                        <Node ID="I403" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I406" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I409" source="I403" target="I406" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I403" orig="I380"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I412" kind="PAC" name="ObjectSet">
+                        <Node ID="I413" type="I1"/>
+                        <Node ID="I415" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I418" source="I413" target="I415" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I413" orig="I383"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I421" enabled="false" formula="true" name="EdgeReverse">
+            <Parameter name="x" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="p" type="String"/>
+            <Graph ID="I423" kind="LHS" name="LeftOf_EdgeReverse">
+                <Node ID="I424" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I427" type="I1"/>
+                <Edge ID="I429" source="I424" target="I427" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>p</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I432" kind="RHS" name="RightOf_EdgeReverse">
+                <Node ID="I433" type="I1"/>
+                <Node ID="I435" type="I1"/>
+                <Edge ID="I437" source="I435" target="I433" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>p</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="EdgeReverse">
+                <Mapping image="I433" orig="I424"/>
+                <Mapping image="I435" orig="I427"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I440" kind="PAC" name="SourceSet">
+                        <Node ID="I441" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I444" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I447" source="I441" target="I444" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I441" orig="I424"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I450" kind="PAC" name="ObjectSet">
+                        <Node ID="I451" type="I1"/>
+                        <Node ID="I453" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I456" source="I451" target="I453" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I451" orig="I427"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I459" enabled="false" formula="true" name="EdgeChord">
+            <Parameter name="x" type="String"/>
+            <Parameter name="pi1" type="String"/>
+            <Parameter name="pi2" type="String"/>
+            <Parameter name="i" type="String"/>
+            <Parameter name="I" type="String"/>
+            <Parameter name="pf" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Graph ID="I461" kind="LHS" name="LeftOf_EdgeChord">
+                <Node ID="I462" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I465" type="I1"/>
+                <Node ID="I467" type="I1"/>
+                <Edge ID="I469" source="I462" target="I465" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi1</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+                <Edge ID="I472" source="I465" target="I467" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi2</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I475" kind="RHS" name="RightOf_EdgeChord">
+                <Node ID="I476" type="I1"/>
+                <Node ID="I478" type="I1"/>
+                <Node ID="I480" type="I1"/>
+                <Edge ID="I482" source="I476" target="I478" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="EdgeChord">
+                <Mapping image="I476" orig="I462"/>
+                <Mapping image="I478" orig="I467"/>
+                <Mapping image="I480" orig="I465"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I485" kind="PAC" name="SourceSet">
+                        <Node ID="I486" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I489" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I492" source="I486" target="I489" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I486" orig="I462"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I495" kind="PAC" name="ObjectSet">
+                        <Node ID="I496" type="I1"/>
+                        <Node ID="I498" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I501" source="I496" target="I498" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I496" orig="I467"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I504" kind="PAC" name="IntermSet">
+                        <Node ID="I505" type="I1"/>
+                        <Node ID="I507" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>I</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I510" source="I505" target="I507" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>i</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="IntermSet">
+                        <Mapping image="I505" orig="I465"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I513" enabled="false" formula="true" name="EdgeChordKeep">
+            <Parameter name="x" type="String"/>
+            <Parameter name="pi1" type="String"/>
+            <Parameter name="pi2" type="String"/>
+            <Parameter name="pf" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="I" type="String"/>
+            <Parameter name="i" type="String"/>
+            <Graph ID="I515" kind="LHS" name="LeftOf_EdgeChordKeep">
+                <Node ID="I516" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I519" type="I1"/>
+                <Node ID="I521" type="I1"/>
+                <Edge ID="I523" source="I516" target="I519" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi1</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+                <Edge ID="I526" source="I519" target="I521" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi2</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I529" kind="RHS" name="RightOf_EdgeChordKeep">
+                <Node ID="I530" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I533" type="I1"/>
+                <Node ID="I535" type="I1"/>
+                <Edge ID="I537" source="I530" target="I533" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi1</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+                <Edge ID="I540" source="I533" target="I535" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi2</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+                <Edge ID="I543" source="I530" target="I535" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="EdgeChordKeep">
+                <Mapping image="I530" orig="I516"/>
+                <Mapping image="I533" orig="I519"/>
+                <Mapping image="I535" orig="I521"/>
+                <Mapping image="I537" orig="I523"/>
+                <Mapping image="I540" orig="I526"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I546" kind="PAC" name="SourceSet">
+                        <Node ID="I547" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I550" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I553" source="I547" target="I550" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I547" orig="I516"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I556" kind="PAC" name="ObjectSet">
+                        <Node ID="I557" type="I1"/>
+                        <Node ID="I559" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I562" source="I557" target="I559" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I557" orig="I521"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I565" kind="PAC" name="IntermSet">
+                        <Node ID="I566" type="I1"/>
+                        <Node ID="I568" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>I</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I571" source="I566" target="I568" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>i</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="IntermSet">
+                        <Mapping image="I566" orig="I519"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Rule ID="I574" enabled="false" formula="true" name="EdgeCopy">
+            <Parameter name="x" type="String"/>
+            <Parameter name="pi" type="String"/>
+            <Parameter name="o" type="String"/>
+            <Parameter name="O" type="String"/>
+            <Parameter name="pf" type="String"/>
+            <Parameter name="S" type="String"/>
+            <Parameter name="s" type="String"/>
+            <Graph ID="I576" kind="LHS" name="LeftOf_EdgeCopy">
+                <Node ID="I577" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I580" type="I1"/>
+                <Edge ID="I582" source="I577" target="I580" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Graph ID="I585" kind="RHS" name="RightOf_EdgeCopy">
+                <Node ID="I586" type="I1">
+                    <Attribute type="I3" variable="true">
+                        <Value>
+                            <string>x</string>
+                        </Value>
+                    </Attribute>
+                </Node>
+                <Node ID="I589" type="I1"/>
+                <Edge ID="I591" source="I586" target="I589" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pi</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+                <Edge ID="I594" source="I586" target="I589" type="I7">
+                    <Attribute type="I9" variable="true">
+                        <Value>
+                            <string>pf</string>
+                        </Value>
+                    </Attribute>
+                </Edge>
+            </Graph>
+            <Morphism comment="Formula: true" name="EdgeCopy">
+                <Mapping image="I586" orig="I577"/>
+                <Mapping image="I589" orig="I580"/>
+                <Mapping image="I591" orig="I582"/>
+            </Morphism>
+            <ApplCondition>
+                <PAC>
+                    <Graph ID="I597" kind="PAC" name="SourceSet">
+                        <Node ID="I598" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>x</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Node ID="I601" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>S</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I604" source="I598" target="I601" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>s</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="SourceSet">
+                        <Mapping image="I598" orig="I577"/>
+                    </Morphism>
+                </PAC>
+                <PAC>
+                    <Graph ID="I607" kind="PAC" name="ObjectSet">
+                        <Node ID="I608" type="I1"/>
+                        <Node ID="I610" type="I1">
+                            <Attribute type="I3" variable="true">
+                                <Value>
+                                    <string>O</string>
+                                </Value>
+                            </Attribute>
+                        </Node>
+                        <Edge ID="I613" source="I608" target="I610" type="I7">
+                            <Attribute type="I9" variable="true">
+                                <Value>
+                                    <string>o</string>
+                                </Value>
+                            </Attribute>
+                        </Edge>
+                    </Graph>
+                    <Morphism name="ObjectSet">
+                        <Mapping image="I608" orig="I580"/>
+                    </Morphism>
+                </PAC>
+            </ApplCondition>
+            <TaggedValue Tag="layer" TagValue="0"/>
+            <TaggedValue Tag="priority" TagValue="0"/>
+        </Rule>
+        <Matches/>
+    </GraphTransformationSystem>
+</Document>

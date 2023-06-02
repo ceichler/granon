@@ -7,6 +7,14 @@ import agg.xt_basis.*;
 import executable.granonui.Tui;
 import parser.exceptions.SyntaxException;
 
+
+/**
+ * This class contains methods to parse commands of the form positional arguments
+ * @author khai
+ *
+ */
+
+
 public abstract class ParseOperator {
 	
 	/**

@@ -8,6 +8,12 @@ import java.util.regex.Pattern;
 
 import parser.exceptions.SyntaxException;
 
+/**
+ * This class contains methods to parse commands of the form keyword arguments
+ * @author khai
+ *
+ */
+
 public abstract class ParseOperatorOpt extends ParseOperator{
 		
 	/**

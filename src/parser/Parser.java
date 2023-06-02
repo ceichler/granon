@@ -7,7 +7,8 @@ import parser.exceptions.SyntaxException;
 import parser.operators.*;
 
 /**
- * the parser for graph rewriting language
+ * This program offers a parser capable of reading, parsing, and executing user commands on a graph database. <br>
+ * To input a user command, use the syntax Parser.command = [user command], and execute it by invoking the command Parser.execute()
  * @author khai
  *
  */

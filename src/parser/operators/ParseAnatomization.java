@@ -9,6 +9,13 @@ import java.util.regex.Pattern;
 import parser.exceptions.SyntaxException;
 import transformations.procedures.Anatomization;
 
+
+/**
+ * The class that represents Anatomisation in Parser
+ * @author khai
+ *
+ */
+
 public class ParseAnatomization extends ParseOperatorOpt{
 	
 	public ParseAnatomization(String command) {
