@@ -133,5 +133,20 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 		return result;
 	}
 	
-	
+	public HashMap<String,ArrayList<String>> getArgs(ArrayList<String> listArgKeywords, ArrayList<String> parameterRequiredForm) throws SyntaxException{
+		HashMap<String,ArrayList<String>> mapTokens;
+		
+		if (!command.contains("=")) {
+			mapTokens = this.getTokensPosArg(listArgKeywords);
+		}else {
+			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
+		}
+		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
+		
+		
+		String op = this.getClass().getSimpleName().replace("Parse", "");
+		System.out.println("\u001B[33m  ["+ op +"] "+mapTokens+"\u001B[0m");
+		return mapTokens;
+				
+	}
 }

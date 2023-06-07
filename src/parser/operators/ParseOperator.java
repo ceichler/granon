@@ -97,7 +97,6 @@ public abstract class ParseOperator {
 			}
 			
 			if (mapTokens.size() != listArgKeywords.size()) {
-				
 				String errorStr = new String("Missing arguments. [Syntax] " + 
 						this.getClass().getSimpleName().replace("Parse", "") +
 						"(");
@@ -287,7 +286,9 @@ public abstract class ParseOperator {
 			for (String dst:listDst) {
 			
 				if (listEdgeDst.contains(mapTokens.get(dst).get(2))) {
-					throw new SyntaxException(p + "'s destinaton cannot be " + mapTokens.get(dst).get(2));
+//					throw new SyntaxException(p + "'s destinaton cannot be " + mapTokens.get(dst).get(2));
+					String warning = "[Warning] Edge \""+p + "\"'s source and destination are both \"" + mapTokens.get(dst).get(2)+ "\". Rules can't be matched ";
+					System.err.println(warning);
 				}
 				
 			}

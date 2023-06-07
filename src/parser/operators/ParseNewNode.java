@@ -5,7 +5,7 @@ import java.util.*;
 import parser.exceptions.SyntaxException;
 import transformations.operators.NewNode;
 
-public class ParseNewNode extends ParseOperator{
+public class ParseNewNode extends ParseOperatorOpt{
 	
 	/**
 	 * list of keywords that represent the required arguments in operator
@@ -32,7 +32,7 @@ public class ParseNewNode extends ParseOperator{
 	public void execute() throws SyntaxException {
 		
 		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens = this.getTokensPosArg(listArgKeywords);
+		HashMap<String,ArrayList<String>> mapTokens = this.getArgs(listArgKeywords, parameterRequiredForm);
 		
 
 		String newNodeAtt = mapTokens.get("X").get(0);

@@ -31,17 +31,7 @@ public class ParseEdgeChordKeep extends ParseOperatorOpt{
 	
 	@Override
 	public void execute() throws SyntaxException {
-		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens;
-		
-		if (!command.contains("=")) {
-			mapTokens = this.getTokensPosArg(listArgKeywords);
-		}else {
-			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
-		}
-		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
-		
-		System.out.println("\u001B[33m [EdgeChordKeep]  "+mapTokens+"\u001B[0m");
+		HashMap<String,ArrayList<String>> mapTokens = this.getArgs(listArgKeywords, parameterRequiredForm);
 		
 		// Neither S nor O nor I can be the target of pi1 or pi2
 		ArrayList<String> listEdge = new ArrayList<String>(Arrays.asList("pi1","pi2"));

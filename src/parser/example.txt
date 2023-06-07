@@ -7,6 +7,10 @@
 -------------------------------
 
 
+NewNode("id108") | NewNode "id108"
+
+DeleteNode("id105",*,*)
+
 EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
 
 EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
@@ -49,13 +53,13 @@ ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn", pf="worksIn"
 ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn")
 
 "redundant argument"
-ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *,null)
+ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn","args")
 
 
 "pf form is Str, but pf=*"
 ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)
 
-
+2
 "Num but not num"
 LDP((*,"type","Person"),"name",(*,"isA","Name"),"k")
 
@@ -67,14 +71,14 @@ RandomTarget((*,"type","Person"),null,(*,"isA","Name"),(*,"isA","Name"))
 JoinSet ("hasQI",*) where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
 
 
-"Set at positon of _att"
+"Set at _att"
 ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", (*,null,null))
 
 
 
 
 
-////// Specific contrains ///////
+////// Specific constraint ///////
 
 
 
@@ -92,9 +96,12 @@ EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))                
 "pi is not a parameter's key in Edgehord"
 EdgeChord (S=(*,"type","Person"),pi="livesIn",pf="livesIn")
 
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), p="livesIn", pf="worksIn")
 
 "pf is required"
 EdgeChord (S=(*,"type","Person"),pi1="livesIn",pi2="inGroup")
+
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn")
 
 "Set at _att"
 EdgeChordKeep (pi1="livesIn",pi2="inGroup",pf=("livesIn",*,*))

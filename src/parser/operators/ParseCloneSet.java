@@ -30,17 +30,7 @@ public class ParseCloneSet extends ParseOperatorOpt{
 	
 	@Override
 	public void execute() throws SyntaxException {
-		// listTokens = {X=["new node's att"]}
-		HashMap<String,ArrayList<String>> mapTokens;
-		
-		if (!command.contains("=")) {
-			mapTokens = this.getTokensPosArg(listArgKeywords);
-		}else {
-			mapTokens = this.getKeywordArgs(command,listArgKeywords,parameterRequiredForm);
-		}
-		this.checkSyntax(mapTokens, parameterRequiredForm, listArgKeywords);
-		
-		System.out.println("\u001B[33m [CloneSet]  "+mapTokens+"\u001B[0m");
+		HashMap<String,ArrayList<String>> mapTokens = this.getArgs(listArgKeywords, parameterRequiredForm);
 		
 		// execute the operator
 		(new CloneSet(mapTokens)).execute();
