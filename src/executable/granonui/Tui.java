@@ -5,7 +5,6 @@ package executable.granonui;
 import java.util.Scanner;
 import utils.GraGraUtils;
 import utils.Grammar;
-import executable.HardCodedTests;
 import parser.Parser;
 
 /**
