@@ -108,7 +108,6 @@ public class Anatomization {
 		
 		(new DeleteNode("QI")).execute();
 
-		
 	}
 
 }
