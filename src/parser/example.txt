@@ -1,0 +1,111 @@
+********************************
+*******Normal Case:*************
+********************************
+
+-------------------------------
+---   Positional Arguments  ---
+-------------------------------
+
+
+NewNode("id108") | NewNode "id108"
+
+DeleteNode("id105",*,*)
+
+EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
+
+EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
+
+EdgeChord ((*,"type","Person"),"name",(*,null,null),"isA",(*,null,null),"hasA")
+
+ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn")
+
+
+
+-------------------------------
+---    Keyword Arguments    ---
+-------------------------------
+
+
+EdgeCopy (S=("id107",*,*),pi="knows",O=(*,"isA","Name"),pf="cousin")
+
+EdgeCut (S=("Paris",null,null),pi="type",O=(*,null,null),pf1="pi",interm="IntermNode",pf2="pf")
+EdgeCut (S=("Paris",null,null),pi="type",pf1="pi",interm="IntermNode",pf2="pf")
+
+EdgeChord (S=(*,"type","Person"),pi1="name",I=(*,null,null),pi2="isA",O=(*,null,null),pf="hasA")
+EdgeChord (S=pi1="name",pf="hasA",(*,"type","Person"),pi2="isA")
+
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn", pf="worksIn")
+
+
+
+
+********************************
+******* Exceptions *************
+********************************
+
+
+
+-------------------------------
+---   Positional Arguments  ---
+-------------------------------
+
+"Missing argument"
+ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn")
+
+"redundant argument"
+ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn","args")
+
+
+"pf form is Str, but pf=*"
+ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)
+
+2
+"Num but not num"
+LDP((*,"type","Person"),"name",(*,"isA","Name"),"k")
+
+
+" p form is * but p == null"
+RandomTarget((*,"type","Person"),null,(*,"isA","Name"),(*,"isA","Name"))      
+
+"problem with JoinSet"
+JoinSet ("hasQI",*) where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+
+
+"Set at _att"
+ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", (*,null,null))
+
+
+
+
+
+////// Specific constraint ///////
+
+
+
+ModifyEdge((*,"type","Person"),(*,*,"Johnson"), "name", "nom")				/// name's johnson
+
+EdgeCut (("Paris",null,null),"type",(*,*,"Person"),"pi","IntermNode","pf")                      //// The type's target cannot be Person
+
+
+EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))                                 //// The inGroup's target cannot be France
+
+-------------------------------
+---    Keyword Arguments    ---
+-------------------------------
+
+"pi is not a parameter's key in Edgehord"
+EdgeChord (S=(*,"type","Person"),pi="livesIn",pf="livesIn")
+
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), p="livesIn", pf="worksIn")
+
+"pf is required"
+EdgeChord (S=(*,"type","Person"),pi1="livesIn",pi2="inGroup")
+
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn")
+
+"Set at _att"
+EdgeChordKeep (pi1="livesIn",pi2="inGroup",pf=("livesIn",*,*))
+
+"_att at Set"
+EdgeChordKeep (pi1="livesIn",I=*,pi2="inGroup",pf="livesIn")
+

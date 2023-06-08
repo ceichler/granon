@@ -1,5 +1,8 @@
 package transformations.operators;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -25,6 +28,10 @@ public class NewNode extends Operator {
 		r = Grammar.newNode.getClone();
 		 this.arg = arg;
 		
+	}
+	
+	public NewNode(HashMap<String,String> map) {
+		this(map.get("X"));
 	}
 
 	@Override

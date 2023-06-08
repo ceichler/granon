@@ -1,6 +1,9 @@
 package transformations.operators;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import executable.granonui.Tui;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -32,6 +35,21 @@ public class CloneSet extends Operator {
 		map.put("C", C);
 		r = Grammar.cloneSet.getClone();
 
+	}
+	/**
+	 * Creates the operator creating a C for all src s.t. src--s-->S
+	 * @param map contains all needed parameters 
+	 */
+		
+	public CloneSet(HashMap<String,ArrayList<String>> mapTokens) {
+		r = Grammar.cloneSet.getClone();
+		map.put("s", mapTokens.get("S").get(1));
+		map.put("src", mapTokens.get("S").get(0));
+		map.put("S", mapTokens.get("S").get(2));
+		map.put("c", mapTokens.get("c").get(0));
+		map.put("C", mapTokens.get("C_att").get(0));
+		System.out.println("\u001B[36m [In EdgeChord] mapTokens = "+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeChord] map = "+map+"\u001B[0m");
 	}
 
 	@Override

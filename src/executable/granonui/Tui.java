@@ -5,7 +5,7 @@ package executable.granonui;
 import java.util.Scanner;
 import utils.GraGraUtils;
 import utils.Grammar;
-import executable.HardCodedTests;
+import parser.Parser;
 
 /**
  * @author ceichler
@@ -33,19 +33,10 @@ public class Tui {
 					quit = true;
 					break;
 				case 1:
-					System.out.println("Starting hardcoded test");
-					//HardCodedTests.testPostPreprocessing();
-					//HardCodedTests.testRandTransform();
-					//HardCodedTests.testCutEdge();
-					//HardCodedTests.testEdgeChord();
-					//HardCodedTests.testDelMultiple();
-					//HardCodedTests.testRandom();
-					//HardCodedTests.testModifyEdge();
-					//HardCodedTests.testLDP();
-					//HardCodedTests.testAnato();
-					//HardCodedTests.testEdgeReverse();
-					//HardCodedTests.testCloneSet();
-					HardCodedTests.testAnato();
+					System.out.println("Enter your command");
+					scan.nextLine(); // read the "\n" of last nextInt()
+					Parser.command = scan.nextLine();
+					Parser.execute();
 					break;
 				case 2:
 					GraGraUtils.print(grammar.getHostGraph());
@@ -66,8 +57,6 @@ public class Tui {
 					break;
 				case 6:
 					System.out.println("please enter a filename\n");
-					
-					break;
 				default:
 					System.out.println("Unknown command, please enter an integer between 0 and 9");
 			}
@@ -80,7 +69,7 @@ public class Tui {
 				"3 : save current graph \n" +
 				"4 : load a graph grammar \n" +
 				"5 : reset graph \n" +
-				"6 : load a graph NON FONCTIONNEL \n"
+				"6 : load a graph NON FONCTIONNEL"
 		);
 		return scan.nextInt();
 	}

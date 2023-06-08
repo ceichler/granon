@@ -1,5 +1,7 @@
 package transformations.procedures;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +25,12 @@ public class Anatomization {
 		this.e = identifiers;
 		this.q = qID;
 		this.p = sensitives;
+	}
+	
+	public Anatomization(HashMap<String,ArrayList<String>> mapTokens) {
+		this.e = mapTokens.get("idn");
+		this.q = mapTokens.get("qID");
+		this.p = mapTokens.get("sens");
 	}
 	
 	public void execute() {
@@ -100,7 +108,6 @@ public class Anatomization {
 		
 		(new DeleteNode("QI")).execute();
 
-		
 	}
 
 }

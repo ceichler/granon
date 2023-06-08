@@ -1,0 +1,194 @@
+Syntax: 	DeleteNode(X) 
+E.g 		DeleteNode(("id105",*,*)) , DeleteNode("id105",*,*)
+		DeleteNode(X=("id105",*,*))
+
+
+Syntax: 	NewNode(X_att) | NewNode X_att
+e.g 		NewNode("id108") | NewNode "id108"
+		NewNode(X_att="id108")
+
+
+Syntax:  	EdgeReverse((S,p,O)
+e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,null,null))
+		EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,null,null))
+
+
+Syntax:  	EdgeCut(S,pi,O,pf1,interm,pf2)
+e.g  		EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
+		EdgeCut (S=("Paris",null,null),pi="type",O=(*,null,null),pf1="pi",interm="IntermNode",pf2="pf")
+
+
+Syntax:	EdgeCopy(S, pi, O, pf)
+e.g 		EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
+		EdgeCopy (S=(*,*,*),pi="knows",O=(*,"isA","Name"),pf="cousin")
+
+
+Syntax: 	 EdgeChord(S, pi1 , I, pi2 , O, pf)
+e.g		 EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),"livesIn")
+		 EdgeChord ((*,"type","Person"),"name",(*,null,null),"isA",(*,null,null),"hasA")
+e.g		 EdgeChord (S=(*,"type","Person"),pi1="livesIn",I=(*,null,null),pi2="inGroup",O=(*,null,null),pf="livesIn")
+
+Syntax: 	 EdgeChordKeep(S, pi1 , I, pi2 , O, pf) 
+e.g		 EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,null,null),"livesIn")
+		 EdgeChordKeep (S=(*,"type","Person"),pi1="livesIn",I=(*,"type","city"),pi2="inGroup",O=(*,null,null),pf="livesIn") 
+		 EdgeChordKeep (pi="livesIn",M=(*,"type","city"),O=(*,null,null),pf="livesIn",S=(*,"type","Person"),po="inGroup")		   
+
+
+Syntax: 	ModifyEdge(S,O,pi,pf)
+e.g		ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn")
+		ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn", pf="worksIn")
+
+
+Syntax:  	RandomSource(S, p, O, T )
+e.g		RandomSource((*,"type","City"),"inGroup",(*,null,null),(*,"type","City"))
+		RandomSource(S=(*,"type","City"),p="inGroup",O=(*,null,null),T=(*,"type","City"))
+
+Syntax:	RandomTarget(S, p, O, T)
+e.g		RandomTarget((*,"type","Person"),"name",(*,"isA","Name"),(*,"isA","Name"))
+		RandomTarget(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),T=(*,"isA","Name"))
+
+
+Syntax:  	JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
+e.g 		JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
+		JoinSet ("hasQI","QI") where {(*,*,"Stuart"),(*,"livesIn","Paris")} except {(*,"knows",*)}
+
+
+Syntax:  	CloneSet (S,c,C_att)
+e.g 		CloneSet(("*", "type", "city"), "clone", "Clone")
+		CloneSet(S=("*", "type", "city"), c="clone", C_att="Clone")
+
+
+Syntax:	LDP(S,p,O,k)
+e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),"3")
+		LDP(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),k=3)
+
+
+Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
+e.g		Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
+		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
+		Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
+		
+		
+		
+	
+		
+Test Exception
+
+	LDP((*,"type","Person"),"name",(*,"isA","Name"),"k")	
+	LDP((*,"type","Person"),*,(*,"isA","Name"),"3") 
+		
+	ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", *)   /// pf=*
+	
+	
+	EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),*)   /// pf=*
+	
+	
+	EdgeChord ((*,"type","Person"),null,(*,"type","city"),"inGroup",(*,"type",*),*)    /// pi1==null
+	
+	RandomTarget((*,"type","Person"),null,(*,"isA","Name"),(*,"isA","Name"))       /// p == null
+		
+		
+	DeleteNode((null,*,*))	
+	
+	
+	
+	JoinSet (null,"QI") where {(*,"type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+	except\\s*\\{\\s*\\((.+?)\\)\\s*\\}|where\\s*\\{\\s*\\((.+?)\\)\\s*\\}|JoinSet\\s*\\((.+?)\\)
+	
+	JoinSet ("hasQI",*) where {("what","type","Person"),(*,"knows",*)} except {(*,"liveIn","Paris")}
+	Anatomization ( {"name"}, {"knows","*" }, {"livesIn"} )
+	
+	
+	
+	
+Specific contraints
+
+	ModifyEdge((*,"type","Person"),(*,*,"Johnson"), "name", "nom")				/// name's johnson
+
+	EdgeChord ((*,"type","Person"),"livesIn",(*,*,"London"),"inGroup",(*,"type",*),"livesIn")    /// cannot be London for liveIn
+	
+	EdgeCut (("Paris",null,null),"type",(*,*,"Person"),"pi","IntermNode","pf")                      //// The type's target cannot be Person
+	
+	EdgeReverse(("Paris","type","city"),"inGroup",(*,null,"France"))                                 //// The inGroup's target cannot be France
+	
+	EdgeCopy((*,"type","Person"),"name",(*,*,"Johnson"),"nom")					//// name's destinaton cannot be Johnson
+	
+		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"France"),"livesIn")             //// inGroup France
+		EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,*,"Europe not France"),"livesIn")  //// inGroup Europe not France
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+Test KeywordArgument
+
+
+DeleteNode(X=("id105",*,*))
+NewNode(X_att="id108")
+
+EdgeReverse(S = (*,"type","Person"),p="livesIn",O= (*,null,null))
+EdgeReverse(S = (*,"type","Person"),p="livesIn")
+
+
+EdgeCut (S=("Paris",null,null),pi="type",O=(*,null,null),pf1="pi",interm="IntermNode",pf2="pf")
+EdgeCut (S=("Paris",null,null),pi="type",pf1="pi",interm="IntermNode",pf2="pf")
+
+
+EdgeCopy (S=(*,null,null),pi="knows",O=(*,"isA","Name"),pf="cousin")
+EdgeCopy (pi="knows",O=(*,"isA","Name"),pf="cousin")
+
+
+
+
+EdgeChord (S=(*,"type","Person"),pi1="livesIn",I=(*,null,null),pi2="inGroup",O=(*,null,null),pf="livesIn")
+EdgeChord (S=(*,"type","Person"),pi1="livesIn",pi2="inGroup",pf="livesIn")
+
+
+
+
+EdgeChordKeep ((*,null,null),"livesIn",(*,"type","city"),(*,null,null),"livesIn",(*,"type","Person"),"inGroup")
+EdgeChordKeep (pi="livesIn",M=(*,"type","city"),O=(*,null,null),pf="livesIn",S=(*,"type","Person"),po="inGroup")
+EdgeChordKeep (pi="livesIn",M=(*,"type","city"),pf="livesIn",S=(*,"type","Person"),po="inGroup")
+
+EdgeChordKeep(S, pi1 , I, pi2 , O, pf) 
+EdgeChordKeep (S=(*,"type","Person"),pi1="livesIn",I=(*,"type","city"),pi2="inGroup",pf="livesIn")
+EdgeChordKeep (pi1="livesIn",I=(*,"type","city"),pi2="inGroup",pf="livesIn")
+EdgeChordKeep (pi1="livesIn",S=*,pi2="inGroup",pf="livesIn")
+EdgeChordKeep (pi1="livesIn",I=*,pi2="inGroup",pf="livesIn")
+
+
+ModifyEdge(S=(*,"type","Person"),O=(*,"type","city"), pi="livesIn", pf="worksIn")
+
+
+
+
+RandomSource(S=(*,"type","City"),p="inGroup",O=(*,null,null),T=(*,"type","City"))
+RandomSource(S=(*,"type","City"),p="inGroup",T=(*,"type","City"))
+
+
+
+RandomTarget(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),T=(*,"isA","Name"))
+
+
+
+CloneSet(S=("*", "type", "city"), c="clone", C_att="Clone")
+
+
+LDP(S=(*,"type","Person"),p="name",O=(*,"isA","Name"),k=3)
+
+
+	Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
+	
