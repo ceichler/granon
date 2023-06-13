@@ -43,6 +43,7 @@ public class MainJframe extends JFrame {
 	String listOp[] = listOperators.toArray(new String[listOperators.size()]);
 	
 	public HashMap<String,ArrayList<JComboBox>> mapComboBox = new HashMap<String,ArrayList<JComboBox>>();
+	public HashMap<String,JTextField> mapTextField = new HashMap<String,JTextField>();
 
 	/**
 	 * Create the frame.
@@ -124,15 +125,20 @@ public class MainJframe extends JFrame {
                 ComboBoxUtils.generateDynamicPanel(panel_2);
                 
                 
+                
                 for (int i=0;i<ComboBoxUtils.listPanel.size();i++) {
                 	if (requiredForm.get(i).equals("S") || requiredForm.get(i).equals("Set")) {
-                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(3, getAtt(grammar.getHostGraph()),getProp(grammar.getHostGraph()));
+                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(3, getAtt(grammar.getHostGraph()),getProp(grammar.getHostGraph()),true);
+                		mapComboBox.put(args.get(i), listComboBox);
+                		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                	}else if (!requiredForm.get(i).equals("Str")){
+                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(1, getAtt(grammar.getHostGraph()),getProp(grammar.getHostGraph()),true);
                 		mapComboBox.put(args.get(i), listComboBox);
                 		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
                 	}else {
-                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(1, getAtt(grammar.getHostGraph()),getProp(grammar.getHostGraph()));
-                		mapComboBox.put(args.get(i), listComboBox);
-                		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		JTextField txf = new JTextField();
+                		mapTextField.put(args.get(i), txf);
+                		ComboBoxUtils.generateDynamicTextField(ComboBoxUtils.listPanel.get(i), txf);
                 	}
                 }
              }

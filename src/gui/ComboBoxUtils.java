@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.JTextField;
 
 public class ComboBoxUtils {
 //	public static ArrayList<JComboBox<String>> listComboBox = new ArrayList<JComboBox<String>>();
@@ -50,8 +51,21 @@ public class ComboBoxUtils {
         panel.removeAll();
         // Generate and add the specified number of JComboBoxes to the panel
         for (JComboBox<String> cbox : listComboBox) {
+        	if (cbox == null) {
+        		continue;
+        	}
             panel.add(cbox);
         }
+
+        // Repaint the panel to reflect the changes
+        panel.revalidate();
+        panel.repaint();
+    }
+    
+    public static void generateDynamicTextField(JPanel panel, JTextField textField) {
+        // Clear the panel
+        panel.removeAll();        
+        panel.add(textField);
 
         // Repaint the panel to reflect the changes
         panel.revalidate();
@@ -64,11 +78,14 @@ public class ComboBoxUtils {
 //    	}
 //    }
     
-    public static ArrayList<JComboBox> createListBox(int numberOfComboBoxes, ArrayList<String> listAtt, ArrayList<String> listProp) {
+    public static ArrayList<JComboBox> createListBox(int numberOfComboBoxes, ArrayList<String> listAtt, ArrayList<String> listProp, boolean isStr) {
     	ArrayList<JComboBox> listComboBox = new ArrayList<JComboBox>();
-    	if (numberOfComboBoxes == 1) {
+    	if (numberOfComboBoxes == 1 && !isStr) {
     		JComboBox comboBox = new JComboBox(listProp.toArray());
             listComboBox.add(comboBox);
+    	}else if (numberOfComboBoxes == 1 && isStr) {
+    		// there are no combobox, must create a textfield here
+    		listComboBox.add(null);
     	}else if (numberOfComboBoxes == 3) {
     	
 	        // Generate and add the specified number of JComboBoxes to the panel
@@ -84,4 +101,13 @@ public class ComboBoxUtils {
     	}
         return listComboBox;
     }
+//    public static ArrayList<JTextField> createTextField(int numberOfComboBoxes, boolean isStr) {
+//    	ArrayList<JTextField> listField = new ArrayList<JTextField>();
+//    	if (numberOfComboBoxes == 1 && isStr) {
+//    		JTextField tfed = new JTextField();
+//    		listField.add(tfed);
+//    		return listField;
+//    	}
+//        return null;
+//    }
 }
