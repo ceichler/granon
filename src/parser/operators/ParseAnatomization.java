@@ -17,7 +17,7 @@ import transformations.procedures.Anatomization;
  */
 
 public class ParseAnatomization extends ParseOperatorOpt{
-	
+		
 	public ParseAnatomization(String command) {
 		super(command);
 	}

@@ -23,7 +23,7 @@ public class Parser {
 	/**
 	 * list of operators provided by the language
 	 */
-	private static final ArrayList<String> listOperators = new ArrayList<String>(Arrays.asList(
+	public static final ArrayList<String> listOperators = new ArrayList<String>(Arrays.asList(
 			
 				// operators
 				"NewNode",
@@ -53,7 +53,7 @@ public class Parser {
 	 * @return operator's name
 	 * @throws SyntaxException
 	 */
-	private static String getOperator() throws SyntaxException {
+	public static String getOperator() throws SyntaxException {
 		String[] operator;
         int index = command.indexOf("(");
         if (index >= 0) {        	
@@ -112,5 +112,24 @@ public class Parser {
 		
 	}
 	
+	public static void executeGui() throws Exception{
+		
+		String operator = getOperator();
+
+
+		// create the className of the operator
+		String className = "parser.operators.Parse"+operator;
+		
+		
+		// create the operator
+	    Class<?> myClass = Class.forName(className);
+	    Constructor<?> constructor = myClass.getConstructor(String.class);
+	    Object myObj = constructor.newInstance(command);
+	    // Use the object
+	    if (myObj instanceof ParseOperator) {
+	    	// execute the operator
+	        ((ParseOperator) myObj).execute();
+	    }
+	}
 	
 }
