@@ -25,32 +25,6 @@ public class GuiParse {
 	public ArrayList<String> getRequiredForm() {
 		return requiredForm;
 	}
-
-	
-
-//	public HashMap<String,String[]> listKeys = new HashMap<String, String[]>(){{
-//		// operateurs
-//		put("DeleteNode",			new String[]{"S"});
-//		put("NewNode",				new String[]{"S_att"});
-//		put("EdgeReverse",			new String[]{"S","p","O"});
-//		put("EdgeCut",				new String[]{"S","pi","O","pf1","interm","pf2"});
-//		put("EdgeCopy",				new String[]{"S","pi","O","pf"});
-//		put("EdgeChord",			new String[]{"S","pi1","I","pi2","O","pf"});
-//		put("EdgeChordKeep",		new String[]{"S","pi1","I","pi2","O","pf"});
-//		put("ModifyEdge",			new String[]{"S","O","pi","pf"});
-//		put("RandomTransformSource",new String[]{"S","pi","O","T","pf"});
-//		put("RandomTransformTarget",new String[]{"S","pi","O","T","pf"});
-//		put("CloneSet", 			new String[]{"S","c","C_att"});	
-//		put("JoinSet",				new String[]{"",						""});	
-//		
-//		
-//		// Procedure
-//		put("RandomSource", 		new String[]{"S","p","O","T"});
-//		put("RandomTarget", 		new String[]{"S","p","O","T"});
-//		put("LDP",					new String[]{"S","p","O","k"});
-//		put("Anatomization", 		new String[]{"idn","qID","sens"});
-//		
-//	}};
 	
 	public String getOperator() {
 		return operator;

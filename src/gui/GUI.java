@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.EventQueue;
 
+import executable.granonui.Tui;
+import utils.Grammar;
+
 public class GUI {
 	/**
 	 * Launch the application.
@@ -10,6 +13,7 @@ public class GUI {
 			EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Tui.grammar = new Grammar();
 					MainJframe frame = new MainJframe();
 					frame.setVisible(true);
 				} catch (Exception e) {

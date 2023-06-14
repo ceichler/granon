@@ -11,7 +11,8 @@ import javax.swing.border.Border;
 import javax.swing.JTextField;
 
 public class ComboBoxUtils {
-//	public static ArrayList<JComboBox<String>> listComboBox = new ArrayList<JComboBox<String>>();
+
+	// list all apenl that is created for getting arguments
 	public static ArrayList<JPanel> listPanel = new ArrayList<JPanel>();
 	
 	public static void generateDynamicPanel(JPanel panel) {
@@ -80,21 +81,42 @@ public class ComboBoxUtils {
     
     public static ArrayList<JComboBox> createListBox(int numberOfComboBoxes, ArrayList<String> listAtt, ArrayList<String> listProp, boolean isStr) {
     	ArrayList<JComboBox> listComboBox = new ArrayList<JComboBox>();
+    	
+    	// required form == Str
     	if (numberOfComboBoxes == 1 && !isStr) {
     		JComboBox comboBox = new JComboBox(listProp.toArray());
             listComboBox.add(comboBox);
-    	}else if (numberOfComboBoxes == 1 && isStr) {
+    	}
+    	// required form == str
+    	else if (numberOfComboBoxes == 1 && isStr) {
     		// there are no combobox, must create a textfield here
     		listComboBox.add(null);
-    	}else if (numberOfComboBoxes == 3) {
+    	}
+    	// for required form == S
+    	else if (numberOfComboBoxes == 3) {
     	
 	        // Generate and add the specified number of JComboBoxes to the panel
 	        for (int i = 0; i < numberOfComboBoxes; i++) {
-	        	if (i==2) {
-	        		JComboBox comboBox = new JComboBox(listAtt.toArray());
+	        	if (i==1) {
+	        		JComboBox comboBox = new JComboBox(listProp.toArray());
 	            	listComboBox.add(comboBox);
 	        	}else {
+	            	JComboBox comboBox = new JComboBox(listAtt.toArray());
+	            	listComboBox.add(comboBox);
+	        	}
+	        }
+	        
+    	}
+    	// for required form = Set
+    	else if (numberOfComboBoxes == 2) {
+    		listComboBox.add(new JComboBox(new String[]{"*"}));
+    		// Generate and add the specified number of JComboBoxes to the panel
+	        for (int i = 0; i < numberOfComboBoxes; i++) {
+	        	if (i==0) {
 	        		JComboBox comboBox = new JComboBox(listProp.toArray());
+	            	listComboBox.add(comboBox);
+	        	}else {
+	            	JComboBox comboBox = new JComboBox(listAtt.toArray());
 	            	listComboBox.add(comboBox);
 	        	}
 	        }

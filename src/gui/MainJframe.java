@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Node;
+import executable.granonui.Tui;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -35,10 +36,10 @@ public class MainJframe extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JButton clearButton;
+	private JComboBox comboBox ;
 	private GuiParse guiParse = new GuiParse();
-	public static Grammar grammar = new Grammar();
 	
-	String testStr = printGraph(grammar.getHostGraph());
+	String testStr = printGraph(Tui.grammar.getHostGraph());
 	ArrayList<String> listOperators = Parser.listOperators;
 	String listOp[] = listOperators.toArray(new String[listOperators.size()]);
 	
@@ -76,7 +77,7 @@ public class MainJframe extends JFrame {
 		JLabel lblNewLabel = new JLabel("GUI");
 		lblNewLabel.setFont(new Font("Arial",Font.PLAIN | Font.BOLD, 25));
 		lblNewLabel.setForeground(Color.BLUE);
-		lblNewLabel.setBounds(336, 12, 128, 53);
+		lblNewLabel.setBounds(477, 12, 128, 53);
 		panel.add(lblNewLabel);
 		
 		JLabel lblOperator = new JLabel("Operator");
@@ -102,7 +103,7 @@ public class MainJframe extends JFrame {
 		panel.add(panel_4);
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JComboBox comboBox = new JComboBox(listOp);
+		comboBox = new JComboBox(listOp);
 		comboBox.setSelectedItem("Choose");
 		comboBox.setBounds(110, 119, 185, 36);
 		panel.add(comboBox);
@@ -127,12 +128,17 @@ public class MainJframe extends JFrame {
                 
                 
                 for (int i=0;i<ComboBoxUtils.listPanel.size();i++) {
-                	if (requiredForm.get(i).equals("S") || requiredForm.get(i).equals("Set")) {
-                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(3, getAtt(grammar.getHostGraph()),getProp(grammar.getHostGraph()),true);
+                	if (requiredForm.get(i).equals("S") ) {
+                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(3, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
+                		mapComboBox.put(args.get(i), listComboBox);
+                		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                	}
+                	else if (requiredForm.get(i).equals("Set")) {
+                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(2, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
                 		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
                 	}else if (!requiredForm.get(i).equals("Str")){
-                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(1, getAtt(grammar.getHostGraph()),getProp(grammar.getHostGraph()),true);
+                		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(1, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
                 		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
                 	}else {
@@ -143,6 +149,46 @@ public class MainJframe extends JFrame {
                 }
              }
         });
+        
+        JButton btnExecute = new JButton("Execute");
+		btnExecute.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				execute(panel_3, textField.getText());
+			}
+		});
+		// btnExecute.setBounds(651, 63, 113, 36);
+		panel_4.add(btnExecute);
+		
+		JButton btnDropdownexec = new JButton("DropDownExec");
+		btnDropdownexec.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dropdownExec();
+			}
+		});
+		panel_4.add(btnDropdownexec);
+		
+		
+		JButton btnDrawGraph = new JButton("Display");
+		btnDrawGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				drawGraph();
+			}
+		});
+		// btnDrawText.setBounds(651, 109, 113, 36);
+		panel_4.add(btnDrawGraph);
+		
+		clearButton = new JButton("Clear");
+		clearButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_1.clearText();
+				panel_2.removeAll();
+				panel_2.repaint();
+				panel_3.clearText();
+				
+			}
+		});
+		// clearButton.setBounds(651, 229, 113, 25);
+		panel_4.add(clearButton);
 		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
@@ -152,35 +198,7 @@ public class MainJframe extends JFrame {
 		});
 		btnQuit.setBounds(651, 168, 113, 36);
 		panel_4.add(btnQuit);
-		
-		
-		clearButton = new JButton("Clear");
-		clearButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_1.clearText();
-				panel_3.clearText();
-			}
-		});
-		clearButton.setBounds(651, 229, 113, 25);
-		panel_4.add(clearButton);
-       
-		JButton btnExecute = new JButton("Execute");
-		btnExecute.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				execute(panel_3, textField.getText());
-			}
-		});
-		btnExecute.setBounds(651, 63, 113, 36);
-		panel_4.add(btnExecute);
-		
-		JButton btnDrawText = new JButton("Display");
-		btnDrawText.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				drawText();
-			}
-		});
-		btnDrawText.setBounds(651, 109, 113, 36);
-		panel_4.add(btnDrawText);
+	
 		
 	}
 	
@@ -194,8 +212,8 @@ public class MainJframe extends JFrame {
 		}
 	}
 	
-	public void drawText() {
-		String text = printGraph(grammar.getHostGraph());
+	public void drawGraph() {
+		String text = printGraph(Tui.grammar.getHostGraph());
 		SwingUtilities.invokeLater(() -> {
             new ScrollableTextPane(text).setVisible(true);
         });
@@ -212,12 +230,16 @@ public class MainJframe extends JFrame {
 	
 	public ArrayList<String> getAtt(Graph graph){
 		ArrayList<String> listAtt = new ArrayList<String> ();
+		listAtt.add("default");
 		listAtt.add("*");
 		listAtt.add("null");
 		for (Node n : graph.getNodesSet()) {
 			// Get node name
 			String nodeName = n.getAttribute().getValueAsString(1);
 			nodeName = nodeName.replace("\"", "");
+			if (listAtt.contains(nodeName)) {
+				continue;
+			}
 			listAtt.add(nodeName);
 		}
 		return listAtt;
@@ -225,6 +247,7 @@ public class MainJframe extends JFrame {
 	
 	public ArrayList<String> getProp(Graph graph){
 		ArrayList<String> listProp = new ArrayList<String> ();
+		listProp.add("default");
 		listProp.add("*");
 		listProp.add("null");
 		for (Arc a : graph.getArcsSet()) {
@@ -232,9 +255,81 @@ public class MainJframe extends JFrame {
 			// Get arc name
 			String arcName = a.getAttribute().getValueAsString(1);
 			arcName = arcName.replace("\"", "");
+			if (listProp.contains(arcName)) {
+				continue;
+			}
 			listProp.add(arcName);
 		}
 		return listProp;
+	}
+	
+	public void dropdownExec() {
+		String command = generateCommand();
+		System.out.println(command);
+		Parser.command = command;
+		Parser.execute();
+	}
+	
+	public String generateCommand() {
+		ArrayList<String> args = guiParse.getArgs();
+        ArrayList<String> requiredForm = guiParse.getRequiredForm();
+		HashMap<String,ArrayList<String>> mapArgs = getHashMapInfo();
+		
+		for (String key:mapArgs.keySet()) {
+			if (mapArgs.get(key).size() == 3) {
+				int index = args.indexOf(key);
+				if (requiredForm.get(index).equals("S") || requiredForm.get(index).equals("Set")) {
+					mapArgs.replace(key, new ArrayList<String>(Arrays.asList("*",null,null)));
+				}
+			}
+			else if (mapArgs.get(key).get(0).equals("default")) {
+				int index = args.indexOf(key);
+				if (requiredForm.get(index).equals("*")) {
+					mapArgs.replace(key, new ArrayList<String>(Arrays.asList("*")));
+				}else if (requiredForm.get(index).equals("null")) {
+					mapArgs.replace(key, new ArrayList<String>(Arrays.asList(null)));
+				}
+			}
+		}
+		System.out.println(mapArgs);
+		System.out.println(comboBox.getSelectedItem());
+		String command = new String((String) comboBox.getSelectedItem());
+		command += "(";
+		for (String key:mapArgs.keySet()) {
+			command = command + key + "=";
+			if (mapArgs.get(key).size()==1) {
+				command = command + "\"" + mapArgs.get(key).get(0).replace("[", "\"") + "\"" + ",";
+			}else {
+				command += "(";
+				for (String valA:mapArgs.get(key)) {
+					command = command + valA + ","; 
+				}
+				command = command.substring(0, command.length()-1);
+				command += "),";
+			}
+		}
+		command = command.substring(0, command.length()-1) + ")";
+		System.out.println(command);
+		return command;
+	}
+	
+	public HashMap<String, ArrayList<String>> getHashMapInfo(){
+		HashMap<String,ArrayList<String>> mapArgs = new HashMap<String,ArrayList<String>>();
+		for (String key:mapComboBox.keySet()) {
+			ArrayList<String> val = new ArrayList<String>();
+			for (int i=0;i<mapComboBox.get(key).size();i++) {
+				String value = (String) mapComboBox.get(key).get(i).getSelectedItem();
+				val.add(value);
+			}
+			mapArgs.put(key, val);
+		}
+		for (String key:mapTextField.keySet()) {
+			ArrayList<String> val = new ArrayList<String>();
+			val.add(mapTextField.get(key).getText());
+			mapArgs.put(key, val);
+		}
+		
+		return mapArgs;
 	}
 	
 	public String printGraph(Graph graph) {
