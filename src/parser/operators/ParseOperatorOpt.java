@@ -40,7 +40,7 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 	
 	public HashMap<String,ArrayList<String>> handleKeywordArgs(String comd) {
 		HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-		comd = comd.replace(" ", "");
+		// comd = comd.replace(" ", "");
 		/**
 		 * match all strings of the form "keyword = value"
 		 */
