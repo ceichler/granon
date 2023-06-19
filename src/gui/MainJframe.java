@@ -39,7 +39,7 @@ public class MainJframe extends JFrame {
 	private JComboBox comboBox ;
 	private GuiParse guiParse = new GuiParse();
 	
-	String testStr = printGraph(Tui.grammar.getHostGraph());
+	String testStr = graphToString(Tui.grammar.getHostGraph());
 	ArrayList<String> listOperators = Parser.listOperators;
 	String listOp[] = listOperators.toArray(new String[listOperators.size()]);
 	
@@ -51,7 +51,6 @@ public class MainJframe extends JFrame {
 	 */
 	public MainJframe() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setBounds(100, 100, 800, 550);
 		setBounds(100, 100, 1021, 739);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,7 +59,6 @@ public class MainJframe extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-//		panel.setBounds(12, -15, 776, 516);
 		panel.setBounds(12, -15, 997, 705);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -150,32 +148,52 @@ public class MainJframe extends JFrame {
              }
         });
         
+        // Execute button (Execute command on JTextPanel)
         JButton btnExecute = new JButton("Execute");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				execute(panel_3, textField.getText());
 			}
 		});
-		// btnExecute.setBounds(651, 63, 113, 36);
 		panel_4.add(btnExecute);
 		
+		// Execute command constructed by JComboBox
 		JButton btnDropdownexec = new JButton("DropDownExec");
 		btnDropdownexec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dropdownExec();
+				try {
+					dropdownExec();
+					String msg = Parser.command + " successfully executed";
+					drawTextToPanel(panel_3, msg , Color.BLUE);
+					panel_2.removeAll();
+					panel_2.repaint();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					drawTextToPanel(panel_3, e.getMessage(), Color.RED);
+				}
 			}
 		});
 		panel_4.add(btnDropdownexec);
 		
-		
+		// Display the current graph button
 		JButton btnDrawGraph = new JButton("Display");
 		btnDrawGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drawGraph();
 			}
 		});
-		// btnDrawText.setBounds(651, 109, 113, 36);
 		panel_4.add(btnDrawGraph);
+		
+		JButton btnLoadGraph = new JButton("Load Graph");
+		btnLoadGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				Tui.grammar = new Grammar();
+//				Tui.grammar = new Grammar("input ggx");
+			}
+		});
+		panel_4.add(btnLoadGraph);
+		
 		
 		clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener() {
@@ -187,21 +205,23 @@ public class MainJframe extends JFrame {
 				
 			}
 		});
-		// clearButton.setBounds(651, 229, 113, 25);
 		panel_4.add(clearButton);
 		
+		// Quit GUI button
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
 		});
-		btnQuit.setBounds(651, 168, 113, 36);
+//		btnQuit.setBounds(651, 168, 113, 36);
 		panel_4.add(btnQuit);
 	
 		
 	}
 	
+	
+	// function for executing the command in the JTextPanel
 	public void execute(DrawTextPanel panel_3, String text) {
 		
 		try {
@@ -212,22 +232,34 @@ public class MainJframe extends JFrame {
 		}
 	}
 	
+	// Display the current graph on a new pop up windows
 	public void drawGraph() {
-		String text = printGraph(Tui.grammar.getHostGraph());
+		String text = graphToString(Tui.grammar.getHostGraph());
 		SwingUtilities.invokeLater(() -> {
             new ScrollableTextPane(text).setVisible(true);
         });
 	}
 	
+	// print text into status board
 	public void drawTextToPanel(DrawTextPanel panel, String text, Color color) {
 		panel.setTextToDraw(text);
 		panel.setTextColor(color);
 	}
 	
+//	public void drawExceptionToPanel(DrawTextPanel panel, StackTraceElement[] exception, Color color) {
+//		String[] except = new String[exception.length];
+//		for (int i=0;i<exception.length;i++) {
+//			except[i] = exception[i].toString();
+//		}
+//		panel.drawMultipleLine(except,1);
+//	}
+	
+	// write down the command's syntax
 	public void writeCommand(DrawTextPanel panel_1, String text) {
 		drawTextToPanel(panel_1, text, Color.MAGENTA);
 	}
 	
+	// get all att of nodes in the current graph
 	public ArrayList<String> getAtt(Graph graph){
 		ArrayList<String> listAtt = new ArrayList<String> ();
 		listAtt.add("default");
@@ -245,6 +277,7 @@ public class MainJframe extends JFrame {
 		return listAtt;
 	}
 	
+	// get all prop of edges in current graph
 	public ArrayList<String> getProp(Graph graph){
 		ArrayList<String> listProp = new ArrayList<String> ();
 		listProp.add("default");
@@ -263,23 +296,29 @@ public class MainJframe extends JFrame {
 		return listProp;
 	}
 	
-	public void dropdownExec() {
+	// execute the command entered by DropDown JComboBox
+	public void dropdownExec() throws Exception {
 		String command = generateCommand();
-		System.out.println(command);
+//		System.out.println("\u001B[32m"+command+"\u001B[0m");
 		Parser.command = command;
-		Parser.execute();
+		System.out.println("\u001B[32m"+Parser.command+"\u001B[0m");
+		Parser.executeGui();
 	}
 	
+	// Construct the command string from selected value in JComboBox
 	public String generateCommand() {
 		ArrayList<String> args = guiParse.getArgs();
         ArrayList<String> requiredForm = guiParse.getRequiredForm();
 		HashMap<String,ArrayList<String>> mapArgs = getHashMapInfo();
 		
+		// generate command for default parameter value
 		for (String key:mapArgs.keySet()) {
 			if (mapArgs.get(key).size() == 3) {
-				int index = args.indexOf(key);
-				if (requiredForm.get(index).equals("S") || requiredForm.get(index).equals("Set")) {
-					mapArgs.replace(key, new ArrayList<String>(Arrays.asList("*",null,null)));
+				if (mapArgs.get(key).get(0).equals("default") && mapArgs.get(key).get(1).equals("default")) {
+					int index = args.indexOf(key);
+					if (requiredForm.get(index).equals("S") || requiredForm.get(index).equals("Set")) {
+						mapArgs.replace(key, new ArrayList<String>(Arrays.asList("*",null,null)));
+					}
 				}
 			}
 			else if (mapArgs.get(key).get(0).equals("default")) {
@@ -291,8 +330,8 @@ public class MainJframe extends JFrame {
 				}
 			}
 		}
-		System.out.println(mapArgs);
-		System.out.println(comboBox.getSelectedItem());
+		
+		// generate command
 		String command = new String((String) comboBox.getSelectedItem());
 		command += "(";
 		for (String key:mapArgs.keySet()) {
@@ -303,16 +342,25 @@ public class MainJframe extends JFrame {
 				command += "(";
 				for (String valA:mapArgs.get(key)) {
 					command = command + valA + ","; 
+					
 				}
 				command = command.substring(0, command.length()-1);
 				command += "),";
+				
 			}
 		}
-		command = command.substring(0, command.length()-1) + ")";
-		System.out.println(command);
+		// if the last character in command is "(" ===> this user'command don't contain any argument 
+		if (command.substring(command.length()-1, command.length()).equals("(")) {
+			
+			command = command + ")";
+		}
+		else {
+			command = command.substring(0, command.length()-1) + ")";
+		}
 		return command;
 	}
 	
+	// Get HashMap information for executing the command
 	public HashMap<String, ArrayList<String>> getHashMapInfo(){
 		HashMap<String,ArrayList<String>> mapArgs = new HashMap<String,ArrayList<String>>();
 		for (String key:mapComboBox.keySet()) {
@@ -328,11 +376,13 @@ public class MainJframe extends JFrame {
 			val.add(mapTextField.get(key).getText());
 			mapArgs.put(key, val);
 		}
-		
+//		System.out.println("\u001B[32m"+mapArgs+"\u001B[0m");
 		return mapArgs;
 	}
 	
-	public String printGraph(Graph graph) {
+	
+	// get the current graph in String form
+	public String graphToString(Graph graph) {
 		StringBuilder display = new StringBuilder();
 
 		// Display graph infos

@@ -40,7 +40,7 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 	
 	public HashMap<String,ArrayList<String>> handleKeywordArgs(String comd) {
 		HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-		comd = comd.replace(" ", "");
+//		comd = comd.replace(" ", "");
 		/**
 		 * match all strings of the form "keyword = value"
 		 */
@@ -103,6 +103,11 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 				syntax = syntax.substring(0, syntax.length()-1);
 				syntax = syntax + ")";
 				throw new SyntaxException(keyword + " is not the keywork for this operator [Syntax] "+syntax);
+			}
+			System.out.println(result);
+			if (result.get(keyword).size() == 0) {
+				String err = "["+keyword+"] required argument";
+				throw new SyntaxException(err);
 			}
 			if (result.get(keyword).get(0).equals("")) {
 				throw new SyntaxException(keyword + " has no value");

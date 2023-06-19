@@ -120,7 +120,6 @@ public class Parser {
 		// create the className of the operator
 		String className = "parser.operators.Parse"+operator;
 		
-		
 		// create the operator
 	    Class<?> myClass = Class.forName(className);
 	    Constructor<?> constructor = myClass.getConstructor(String.class);
