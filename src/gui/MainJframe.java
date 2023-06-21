@@ -31,6 +31,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.awt.GridLayout;
 import utils.GraGraUtils;
 import utils.Grammar;
@@ -162,6 +166,8 @@ public class MainJframe extends JFrame {
         JButton btnHelp = new JButton("?");
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String selectedItem = (String)comboBox.getSelectedItem();
+				displayGuide(selectedItem);
 			}
 		});
 		btnHelp.setBounds(310, 118, 30, 37);
@@ -518,6 +524,37 @@ public class MainJframe extends JFrame {
 			     GraGraUtils.save(filePath, Grammar.graphGrammar);
 		  }
 		
+	}
+	
+	public void displayGuide(String linePrefix) {
+		 String filePath = "src/gui/guide.txt";
+	        String delimiter = "#########";
+//	        String linePrefix = "NewNode";
+
+	        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+	            String line;
+	            boolean isContentSection = false;
+
+	            while ((line = reader.readLine()) != null) {
+	                if (line.contains(delimiter)) {
+	                    isContentSection = true;
+	                    continue;
+	                }
+
+	                if (isContentSection && line.startsWith(linePrefix)) {
+	                	String[] text = new String[] {""};
+	                	while (!(line = reader.readLine()).contains(delimiter)) {
+	                		System.out.println(line);
+	                		text[0] = text[0] + line + "\n";
+	                	}
+	                	SwingUtilities.invokeLater(() -> {
+                            new ScrollableTextPane(text[0]).setVisible(true);
+                        });
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 	}
 	
 }

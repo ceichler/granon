@@ -1,0 +1,202 @@
+########################################################################################################################################
+DeleteNode
+Syntax: DeleteNode(X_att,p,O_att)
+e.g DeleteNode("id105",*,*)
+Description:	
+
+DeleteNode(X_att,p,O_att) matches all nodes matching (X_att,p,O_att) and deletes them.
+
+(X_att, p, O_att) can be called a set denote the node.s labelled X_att with edges p 
+heading to nodes labelled O_att
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+		
+########################################################################################################################################
+NewNode
+Syntax: NewNode(X_att)
+e.g  NewNode("id108")
+Description:	NewNode(X_att) creates a new node labelled X_att
+########################################################################################################################################
+EdgeReverse
+Syntax:  	EdgeReverse((S,p,O)
+e.g 		EdgeReverse((*,"type","Person"),"livesIn",(*,null,null))
+Description:	inversion of edge p. At first p goes from S to O, after using this 
+		operator p will go from O to S
+
+S and O are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+p the prop of the edge
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+########################################################################################################################################
+EdgeCut
+Syntax: EdgeCut(S,pi,O,pf1,interm,pf2)
+e.g   EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
+Description:	Matches pairs of source nodes matching S and destination nodes matching O, where there 
+is an edge from the source to the destination labelled pi.
+
+Whenever it does, it creates a new intermediary node of label interm.
+ 
+Then, it creates an edge labelled pf1 from the source to the intermediary, an edge labelled 
+pf2 from the intermediary to the destination, and finally it deletes the edge p from 
+the source to the destination.
+
+
+S and O are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+pi,pf1,pf2 the props of the edges
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+
+
+########################################################################################################################################
+EdgeCopy
+Syntax: EdgeCopy(S, pi, O, pf)
+e.g  EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
+Description:	Matches couples of source nodes matching S and destination
+nodes matching O, where there is an edge from the source to the destination labelled
+pi. When it does, it creates an edge labelled pf from the source to the destination.
+
+S and O are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+pi,pf the props of the edges
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+########################################################################################################################################
+EdgeChord
+Syntax: EdgeChord(S, pi1 , I, pi2 , O, pf)
+e.g EdgeChord ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,"type",*),"livesIn")
+    EdgeChord ((*,"type","Person"),"name",(*,null,null),"isA",(*,null,null),"hasA")
+Description:	 Matches triplets of source nodes matching S, intermediary nodes matching I and 
+destination nodes matching O where there is an edge from the source to the intermediary labelled pi1
+and there is an edge from the intermediary to the destination labelled pi2 .
+When it does, it creates an edge labelled pf from the source to the destination. (and delete pi1, pi2)
+
+S,O,I are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+pi1,pi2,pf the props of the edges
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+
+########################################################################################################################################
+EdgeChordKeep
+Syntax:  EdgeChordKeep(S, pi1 , I, pi2 , O, pf) 
+e.g  EdgeChordKeep ((*,"type","Person"),"livesIn",(*,"type","city"),"inGroup",(*,null,null),"livesIn")
+Description:     Matches triplets of source nodes matching S, intermediary nodes matching I and 
+destination nodes matching O where there is an edge from the source to the intermediary labelled pi1
+and there is an edge from the intermediary to the destination labelled pi2 .
+When it does, it creates an edge labelled pf from the source to the destination. (keep pi1, pi2)
+
+S,O,I are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+pi1,pi2,pf the props of the edges
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+
+########################################################################################################################################
+ModifyEdge
+Syntax:  ModifyEdge(S,O,pi,pf)
+e.g  ModifyEdge((*,"type","Person"),(*,"type","city"), "livesIn", "worksIn")
+Description:	Match prop pi of the edge whose source is S destination is O. 
+		When it matched, replace pi with pf
+		
+S,O are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+pi,pf the props of the edges
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either		
+		
+########################################################################################################################################
+RandomSource
+Syntax:  RandomSource(S, p, O, T )
+e.g  RandomSource((*,"type","City"),"inGroup",(*,null,null),(*,"type","City"))
+Description:	Matches all edges labelled p between a source matching 
+S and a destination matching O, and it reroutes this edge by picking a new source
+uniformly among nodes matching T.
+
+S,O,T are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+p the prop of the edge
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either	
+
+########################################################################################################################################
+RandomTarget
+Syntax:  RandomTarget(S, p, O, T)
+e.g  RandomTarget((*,"type","Person"),"name",(*,"isA","Name"),(*,"isA","Name"))
+Description:	Matches all edges labelled p between a source matching 
+S and a destination matching O, and it reroutes this edge by picking a new target
+uniformly among nodes matching T .
+
+S,O,T are the triple which have the form (S_att,p,O_att). 
+The triple (S_att,p,O_att) can be called a set denote the node.s labelled S_att with 
+edges p heading to nodes labelled O_att
+
+p the prop of the edge
+
+We note that we can specify two special value in this set:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either
+
+########################################################################################################################################
+JoinSet
+Syntax:  	JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
+e.g 		JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
+		JoinSet ("hasQI","QI") where {(*,*,"Stuart"),(*,"livesIn","Paris")} except {(*,"knows",*)}
+Description:
+########################################################################################################################################
+CloneSet
+Syntax:  	CloneSet (S,c,C_att)
+e.g 		CloneSet(("*", "type", "city"), "clone", "Clone")
+Description:
+########################################################################################################################################
+LDP
+Syntax:	LDP(S,p,O,k)
+e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),"3")
+Description:
+########################################################################################################################################
+Anatomization
+Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
+e.g		Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
+		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
+Description:
+########################################################################################################################################

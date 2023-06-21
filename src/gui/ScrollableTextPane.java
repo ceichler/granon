@@ -25,7 +25,7 @@ public class ScrollableTextPane extends JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);
 
         // Set the preferred size of the scroll pane
-        scrollPane.setPreferredSize(new Dimension(400, 350));
+        scrollPane.setPreferredSize(new Dimension(600, 350));
 
         // Add the scroll pane to the frame
         add(scrollPane);
