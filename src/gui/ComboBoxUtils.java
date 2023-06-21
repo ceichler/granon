@@ -37,9 +37,9 @@ public class ComboBoxUtils {
         for (int i = 0; i < requiredForm.size(); i++) {
         	JPanel npanel;
         	if (requiredForm.get(i).equals("S") || requiredForm.get(i).equals("Set")) {
-        		npanel = new JPanel(new GridLayout(0, 3, 0, 0));
+        		npanel = new JPanel(new GridLayout(3, 0, 0, 0));
         	}else {
-        		npanel = new JPanel(new GridLayout(0, 1, 0, 0));
+        		npanel = new JPanel(new GridLayout(1, 0, 0, 0));
         	}
         	Border blackline = BorderFactory.createLineBorder(Color.ORANGE);
         	npanel.setBorder(blackline);

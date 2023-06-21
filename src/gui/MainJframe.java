@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -15,18 +16,22 @@ import agg.xt_basis.Node;
 import executable.granonui.Tui;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.GridLayout;
-import java.util.Scanner;
 import utils.GraGraUtils;
 import utils.Grammar;
 import parser.Parser;
@@ -51,7 +56,7 @@ public class MainJframe extends JFrame {
 	 */
 	public MainJframe() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1021, 739);
+		setBounds(100, 100, 1421, 739);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -59,7 +64,7 @@ public class MainJframe extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(12, -15, 997, 705);
+		panel.setBounds(12, -15, 1400, 705);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -68,14 +73,14 @@ public class MainJframe extends JFrame {
 		panel.add(lblCommand);
 		
 		textField = new JTextField();
-		textField.setBounds(110, 64, 708, 36);
+		textField.setBounds(110, 64, 1100, 36);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("GUI");
 		lblNewLabel.setFont(new Font("Arial",Font.PLAIN | Font.BOLD, 25));
 		lblNewLabel.setForeground(Color.BLUE);
-		lblNewLabel.setBounds(477, 12, 128, 53);
+		lblNewLabel.setBounds(677, 12, 128, 53);
 		panel.add(lblNewLabel);
 		
 		JLabel lblOperator = new JLabel("Operator");
@@ -83,21 +88,21 @@ public class MainJframe extends JFrame {
 		panel.add(lblOperator);
 		
 		DrawTextPanel panel_1 = new DrawTextPanel();
-		panel_1.setBounds(307, 109, 511, 41);
+		panel_1.setBounds(407, 109, 811, 41);
 		panel.add(panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(120, 167, 698, 120);
+		panel_2.setBounds(114, 167, 1100, 305);
 		panel.add(panel_2);
-		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_2.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		DrawTextPanel panel_3 = new DrawTextPanel();
-		panel_3.setBounds(114, 299, 704, 376);
+		panel_3.setBounds(114, 484, 1404, 191);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(830, 46, 155, 239);
+		panel_4.setBounds(1230, 46, 155, 239);
 		panel.add(panel_4);
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -130,15 +135,21 @@ public class MainJframe extends JFrame {
                 		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(3, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
                 		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		listComboBox.get(0).setSelectedItem("*");
+                		listComboBox.get(1).setSelectedItem("null");
+                		listComboBox.get(2).setSelectedItem("null");
                 	}
                 	else if (requiredForm.get(i).equals("Set")) {
                 		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(2, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
                 		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		listComboBox.get(1).setSelectedItem("null");
+                		listComboBox.get(2).setSelectedItem("null");
                 	}else if (!requiredForm.get(i).equals("Str")){
                 		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(1, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
                 		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		
                 	}else {
                 		JTextField txf = new JTextField();
                 		mapTextField.put(args.get(i), txf);
@@ -147,6 +158,14 @@ public class MainJframe extends JFrame {
                 }
              }
         });
+        
+        JButton btnHelp = new JButton("?");
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnHelp.setBounds(310, 118, 30, 37);
+		panel.add(btnHelp);
         
         // Execute button (Execute command on JTextPanel)
         JButton btnExecute = new JButton("Execute");
@@ -184,15 +203,30 @@ public class MainJframe extends JFrame {
 			}
 		});
 		panel_4.add(btnDrawGraph);
-		
-		JButton btnLoadGraph = new JButton("Load Graph");
-		btnLoadGraph.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-//				Tui.grammar = new Grammar();
-//				Tui.grammar = new Grammar("input ggx");
-			}
-		});
-		panel_4.add(btnLoadGraph);
+				
+		// Create the "Load Graph" button
+        JButton loadGraphButton = new JButton("Load Graph");
+        panel_4.add(loadGraphButton);
+
+        // Add action listener to the "Load Graph" button
+        loadGraphButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	loadSaveGraphFromFile(1, panel_3); 
+            }
+        });
+        
+        // Create the "Save Graph" button
+        JButton saveGraphButton = new JButton("Save Graph");
+        panel_4.add(saveGraphButton);
+
+        // Add action listener to the "Load Graph" button
+        saveGraphButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	loadSaveGraphFromFile(0, panel_3); 
+            }
+        });
 		
 		
 		clearButton = new JButton("Clear");
@@ -260,9 +294,10 @@ public class MainJframe extends JFrame {
 	}
 	
 	// get all att of nodes in the current graph
+	// code == 1 --> default value is *
+	// code ==0  --> default value is null
 	public ArrayList<String> getAtt(Graph graph){
 		ArrayList<String> listAtt = new ArrayList<String> ();
-		listAtt.add("default");
 		listAtt.add("*");
 		listAtt.add("null");
 		for (Node n : graph.getNodesSet()) {
@@ -280,7 +315,7 @@ public class MainJframe extends JFrame {
 	// get all prop of edges in current graph
 	public ArrayList<String> getProp(Graph graph){
 		ArrayList<String> listProp = new ArrayList<String> ();
-		listProp.add("default");
+//		listProp.add("default");
 		listProp.add("*");
 		listProp.add("null");
 		for (Arc a : graph.getArcsSet()) {
@@ -310,26 +345,6 @@ public class MainJframe extends JFrame {
 		ArrayList<String> args = guiParse.getArgs();
         ArrayList<String> requiredForm = guiParse.getRequiredForm();
 		HashMap<String,ArrayList<String>> mapArgs = getHashMapInfo();
-		
-		// generate command for default parameter value
-		for (String key:mapArgs.keySet()) {
-			if (mapArgs.get(key).size() == 3) {
-				if (mapArgs.get(key).get(0).equals("default") && mapArgs.get(key).get(1).equals("default")) {
-					int index = args.indexOf(key);
-					if (requiredForm.get(index).equals("S") || requiredForm.get(index).equals("Set")) {
-						mapArgs.replace(key, new ArrayList<String>(Arrays.asList("*",null,null)));
-					}
-				}
-			}
-			else if (mapArgs.get(key).get(0).equals("default")) {
-				int index = args.indexOf(key);
-				if (requiredForm.get(index).equals("*")) {
-					mapArgs.replace(key, new ArrayList<String>(Arrays.asList("*")));
-				}else if (requiredForm.get(index).equals("null")) {
-					mapArgs.replace(key, new ArrayList<String>(Arrays.asList(null)));
-				}
-			}
-		}
 		
 		// generate command
 		String command = new String((String) comboBox.getSelectedItem());
@@ -423,6 +438,109 @@ public class MainJframe extends JFrame {
 		}
 
 		return display.toString();
+	}
+	
+	/**
+	 * selectFile for this class
+	 */
+	public String selectFile() {
+		JFileChooser fileChooser = new JFileChooser();
+//		fileChooser.setCurrentDirectory(new File(System.getProperty("java.class.path")));
+		fileChooser.setCurrentDirectory(new File("."));
+		int result = fileChooser.showOpenDialog(this);
+		File selectedFile = null;
+		if (result == JFileChooser.APPROVE_OPTION) {
+		    selectedFile = fileChooser.getSelectedFile();
+		    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+		}
+		return selectedFile.getAbsolutePath();
+	}
+	
+	public String saveToFile() {
+        // Create a file chooser dialog
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String directoryPath = fileChooser.getSelectedFile().getAbsolutePath();
+
+            // Get the file name from user input
+            String fileName = JOptionPane.showInputDialog(this, "Enter the file name:");
+
+           System.out.println("Saved file "+directoryPath+"  "+fileName);
+           return directoryPath+"/"+fileName;
+        }
+        return null;
+    }
+	
+	// pop up window to get file name
+	// choice == 1 ===> load
+	// choice == 0 ===> save
+	public void loadSaveGraphFromFile(int choice, DrawTextPanel panel) {
+			if (choice != 0 && choice != 1) {
+				return;
+			}
+			
+			
+		    if (choice==1) {
+				String filePath = selectFile();
+				panel.setTextColor(Color.BLUE);
+				panel.setTextToDraw("Loaded file: " + filePath);
+//				System.out.println("Loaded file: " + filePath);
+				Tui.grammar = new Grammar(filePath);
+		    } else if (choice==0) {
+			     String filePath = saveToFile();
+//			     System.out.println("Saved to file: " + filePath+"ggx");
+			     panel.setTextColor(Color.BLUE);
+			     panel.setTextToDraw("Saved to file: " + filePath+".ggx");
+			     GraGraUtils.save(filePath, Grammar.graphGrammar);
+		  }
+		
+//		// Create the pop-up window
+//        JFrame popupFrame = new JFrame("Pop-up Window");
+//        popupFrame.setSize(300, 200);
+//
+//        // Create the panel for the pop-up window
+//        JPanel popupPanel = new JPanel();
+//        popupPanel.setLayout(new BorderLayout());
+//
+//        // Create the JTextPane
+//        JTextPane textPane = new JTextPane();
+//        popupPanel.add(textPane, BorderLayout.CENTER);
+//
+//        // Create the "Save Load" button
+//        JButton getFileButton;
+//        if (choice == 1) {
+//        	getFileButton = new JButton("Load File");
+//        }else if (choice == 0) {
+//        	getFileButton = new JButton("Save File");
+//        }else{
+//        	getFileButton = new JButton("OK");
+//        }
+//        popupPanel.add(getFileButton, BorderLayout.SOUTH);
+//
+//        // Add action listener to the "Get File" button
+//        getFileButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String enteredText = textPane.getText();
+//                System.out.println("Loaded file: " + enteredText);
+//                if (choice==1) {
+//                	Tui.grammar = new Grammar(enteredText);
+//                } else if (choice==0) {
+//                	GraGraUtils.save(enteredText, Grammar.graphGrammar);
+//                }
+//                popupFrame.dispose();
+//            }
+//        });
+//
+//        // Add the panel to the pop-up frame
+//        popupFrame.add(popupPanel);
+//
+//        // Set the pop-up frame to be visible
+//        popupFrame.setVisible(true);
 	}
 	
 }

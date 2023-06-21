@@ -23,28 +23,37 @@ public class BenchSentiment {
 		int nbIter = 100;
 		long start, end;
 		File outputFile = null;
+		
 
 		for(Integer nbT : nbTweets) {
-			// SentimentBuilder.parse(600, nbT);
-			//GraGraUtils.print(grammar.getHostGraph());
+			SentimentBuilder newBuilder = new SentimentBuilder();
+			newBuilder.parse(600, nbT);
+			System.out.println("\u001B[32m"+nbT);
+			System.out.println("\u001B[0m");
+//			GraGraUtils.print(grammar.getHostGraph());
+			
+			
 			Tui.grammar = grammar;
 			outputFile =new File("benchLDP_sentiment_"+nbT);
-			prepareFile(nbT, grammar.getHostGraph().getNodesCount(), grammar.getHostGraph().getArcsCount(), outputFile);
+//			prepareFile(nbT, grammar.getHostGraph().getNodesCount(), grammar.getHostGraph().getArcsCount(), outputFile);
 			System.out.println("done loading");
 			for(int i=0;i<nbIter;i++) {
 				start=System.currentTimeMillis();
-				(new LDP("rdf:Type", "tweetType", "rdf:Type", "emotionType", "hasEmotion", 2)).execute();
+//				(new LDP("rdf:Type", "tweetType", "rdf:Type", "emotionType", "hasEmotion", 2)).execute();
 				end=System.currentTimeMillis();
 				try{
-					FileWriter fileWriter=new FileWriter(outputFile,true);
-					fileWriter.write(end-start + "\t");
-					fileWriter.close();
+//					FileWriter fileWriter=new FileWriter(outputFile,true);
+//					fileWriter.write(end-start + "\t");
+//					fileWriter.close();
 				}
 				catch(Exception e) {
 					e.printStackTrace();
 				}
-				//GraGraUtils.print(grammar.getHostGraph());
+//				GraGraUtils.print(grammar.getHostGraph());
+				
 			}
+			GraGraUtils.save("tweet_"+nbT, Grammar.graphGrammar);
+//			GraGraUtils.print(grammar.getHostGraph());
 		}
 	}
 
