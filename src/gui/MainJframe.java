@@ -107,7 +107,7 @@ public class MainJframe extends JFrame {
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		comboBox = new JComboBox(listOp);
-		comboBox.setSelectedItem("Choose");
+//		comboBox.setSelectedItem("Choose");
 		comboBox.setBounds(110, 119, 185, 36);
 		panel.add(comboBox);
 		
@@ -117,7 +117,7 @@ public class MainJframe extends JFrame {
 			public void actionPerformed(ActionEvent e) {
                 // Clear the dynamic panel
                 panel_3.removeAll();
-                
+                textField.setText("");
                 guiParse.setOperator((String)comboBox.getSelectedItem());
                 
                 drawTextToPanel(panel_1, guiParse.getSyntax() , Color.MAGENTA);
@@ -171,29 +171,47 @@ public class MainJframe extends JFrame {
         JButton btnExecute = new JButton("Execute");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				execute(panel_3, textField.getText());
+				String textCommand = textField.getText();
+				if (!textCommand.equals("")) {
+					writeCommand(panel_1, "");
+					panel_2.removeAll();
+					panel_2.repaint();
+					execute(panel_3, textCommand);
+				}else {
+					try {
+						dropdownExec();
+						String msg = Parser.command + " successfully executed";
+						drawTextToPanel(panel_3, msg , Color.BLUE);
+						panel_2.removeAll();
+						panel_2.repaint();
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+						drawTextToPanel(panel_3, e.getMessage(), Color.RED);
+					}
+				}
 			}
 		});
 		panel_4.add(btnExecute);
 		
-		// Execute command constructed by JComboBox
-		JButton btnDropdownexec = new JButton("DropDownExec");
-		btnDropdownexec.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					dropdownExec();
-					String msg = Parser.command + " successfully executed";
-					drawTextToPanel(panel_3, msg , Color.BLUE);
-					panel_2.removeAll();
-					panel_2.repaint();
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-					drawTextToPanel(panel_3, e.getMessage(), Color.RED);
-				}
-			}
-		});
-		panel_4.add(btnDropdownexec);
+//		// Execute command constructed by JComboBox
+//		JButton btnDropdownexec = new JButton("DropDownExec");
+//		btnDropdownexec.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				try {
+//					dropdownExec();
+//					String msg = Parser.command + " successfully executed";
+//					drawTextToPanel(panel_3, msg , Color.BLUE);
+//					panel_2.removeAll();
+//					panel_2.repaint();
+//					
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					drawTextToPanel(panel_3, e.getMessage(), Color.RED);
+//				}
+//			}
+//		});
+//		panel_4.add(btnDropdownexec);
 		
 		// Display the current graph button
 		JButton btnDrawGraph = new JButton("Display");
@@ -263,6 +281,8 @@ public class MainJframe extends JFrame {
 			Parser.executeGui();
 		}catch (Exception e){
 			drawTextToPanel(panel_3, e.getMessage(), Color.RED);
+//			panel_3.setTextColor(Color.RED);
+//			panel_3.setTextToDraw(e.getMessage());
 		}
 	}
 	
@@ -498,49 +518,6 @@ public class MainJframe extends JFrame {
 			     GraGraUtils.save(filePath, Grammar.graphGrammar);
 		  }
 		
-//		// Create the pop-up window
-//        JFrame popupFrame = new JFrame("Pop-up Window");
-//        popupFrame.setSize(300, 200);
-//
-//        // Create the panel for the pop-up window
-//        JPanel popupPanel = new JPanel();
-//        popupPanel.setLayout(new BorderLayout());
-//
-//        // Create the JTextPane
-//        JTextPane textPane = new JTextPane();
-//        popupPanel.add(textPane, BorderLayout.CENTER);
-//
-//        // Create the "Save Load" button
-//        JButton getFileButton;
-//        if (choice == 1) {
-//        	getFileButton = new JButton("Load File");
-//        }else if (choice == 0) {
-//        	getFileButton = new JButton("Save File");
-//        }else{
-//        	getFileButton = new JButton("OK");
-//        }
-//        popupPanel.add(getFileButton, BorderLayout.SOUTH);
-//
-//        // Add action listener to the "Get File" button
-//        getFileButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String enteredText = textPane.getText();
-//                System.out.println("Loaded file: " + enteredText);
-//                if (choice==1) {
-//                	Tui.grammar = new Grammar(enteredText);
-//                } else if (choice==0) {
-//                	GraGraUtils.save(enteredText, Grammar.graphGrammar);
-//                }
-//                popupFrame.dispose();
-//            }
-//        });
-//
-//        // Add the panel to the pop-up frame
-//        popupFrame.add(popupPanel);
-//
-//        // Set the pop-up frame to be visible
-//        popupFrame.setVisible(true);
 	}
 	
 }
