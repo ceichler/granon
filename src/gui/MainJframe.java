@@ -96,12 +96,12 @@ public class MainJframe extends JFrame {
 		panel.add(panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(114, 167, 1100, 305);
+		panel_2.setBounds(114, 167, 1100, 105);
 		panel.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		DrawTextPanel panel_3 = new DrawTextPanel();
-		panel_3.setBounds(114, 484, 1404, 191);
+		panel_3.setBounds(114, 376, 1404, 291); // 114, 376, 704, 299 || 114, 484, 1404, 191
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		

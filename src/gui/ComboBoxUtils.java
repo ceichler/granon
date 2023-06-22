@@ -84,7 +84,8 @@ public class ComboBoxUtils {
     	
     	// required form == Str
     	if (numberOfComboBoxes == 1 && !isStr) {
-    		JComboBox comboBox = new JComboBox(listProp.toArray());
+    		JComboBox comboBox = new AutoCompleteJComboBox(listProp.toArray());
+//    		AutoCompleteDecorator.decorate(comboBox);
             listComboBox.add(comboBox);
     	}
     	// required form == str
@@ -98,10 +99,10 @@ public class ComboBoxUtils {
 	        // Generate and add the specified number of JComboBoxes to the panel
 	        for (int i = 0; i < numberOfComboBoxes; i++) {
 	        	if (i==1) {
-	        		JComboBox comboBox = new JComboBox(listProp.toArray());
+	        		JComboBox comboBox = new AutoCompleteJComboBox(listProp.toArray());
 	            	listComboBox.add(comboBox);
 	        	}else {
-	            	JComboBox comboBox = new JComboBox(listAtt.toArray());
+	            	JComboBox comboBox = new AutoCompleteJComboBox(listAtt.toArray());
 	            	listComboBox.add(comboBox);
 	        	}
 	        }
@@ -109,14 +110,14 @@ public class ComboBoxUtils {
     	}
     	// for required form = Set
     	else if (numberOfComboBoxes == 2) {
-    		listComboBox.add(new JComboBox(new String[]{"*"}));
+    		listComboBox.add(new AutoCompleteJComboBox(new String[]{"*"}));
     		// Generate and add the specified number of JComboBoxes to the panel
 	        for (int i = 0; i < numberOfComboBoxes; i++) {
 	        	if (i==0) {
-	        		JComboBox comboBox = new JComboBox(listProp.toArray());
+	        		JComboBox comboBox = new AutoCompleteJComboBox(listProp.toArray());
 	            	listComboBox.add(comboBox);
 	        	}else {
-	            	JComboBox comboBox = new JComboBox(listAtt.toArray());
+	            	JComboBox comboBox = new AutoCompleteJComboBox(listAtt.toArray());
 	            	listComboBox.add(comboBox);
 	        	}
 	        }
