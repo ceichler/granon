@@ -20,7 +20,7 @@ e.g  		EdgeCut (("Paris",null,null),"type",(*,null,null),"pi","IntermNode","pf")
 
 Syntax:	EdgeCopy(S, pi, O, pf)
 e.g 		EdgeCopy (("id107",*,*),"knows",(*,"isA","Name"),"cousin")
-		EdgeCopy (S=(*,*,*),pi="knows",O=(*,"isA","Name"),pf="cousin")
+		EdgeCopy (pi="knows",O=(*,"isA","Name"),pf="cousin",S=(*,*,*))
 
 
 Syntax: 	 EdgeChord(S, pi1 , I, pi2 , O, pf)

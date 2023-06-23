@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -81,7 +82,9 @@ public class ComboBoxUtils {
     
     public static ArrayList<JComboBox> createListBox(int numberOfComboBoxes, ArrayList<String> listAtt, ArrayList<String> listProp, boolean isStr) {
     	ArrayList<JComboBox> listComboBox = new ArrayList<JComboBox>();
-    	
+    	// sort the arraylist in alphabetical order
+//    	listAtt.sort(String::compareToIgnoreCase);
+//    	listProp.sort(String::compareToIgnoreCase);
     	// required form == Str
     	if (numberOfComboBoxes == 1 && !isStr) {
     		JComboBox comboBox = new AutoCompleteJComboBox(listProp.toArray());
@@ -101,8 +104,15 @@ public class ComboBoxUtils {
 	        	if (i==1) {
 	        		JComboBox comboBox = new AutoCompleteJComboBox(listProp.toArray());
 	            	listComboBox.add(comboBox);
+	        	}else if (i==0){
+	        		// S or X cannot be null
+	        		ArrayList<String> listAtt_noNull = new ArrayList<>();
+	        		listAtt_noNull.addAll(listAtt);
+	        		listAtt_noNull.remove("null");
+	            	JComboBox comboBox = new AutoCompleteJComboBox(listAtt_noNull.toArray());
+	            	listComboBox.add(comboBox);
 	        	}else {
-	            	JComboBox comboBox = new AutoCompleteJComboBox(listAtt.toArray());
+	        		JComboBox comboBox = new AutoCompleteJComboBox(listAtt.toArray());
 	            	listComboBox.add(comboBox);
 	        	}
 	        }

@@ -324,8 +324,6 @@ public class MainJframe extends JFrame {
 	// code ==0  --> default value is null
 	public ArrayList<String> getAtt(Graph graph){
 		ArrayList<String> listAtt = new ArrayList<String> ();
-		listAtt.add("*");
-		listAtt.add("null");
 		for (Node n : graph.getNodesSet()) {
 			// Get node name
 			String nodeName = n.getAttribute().getValueAsString(1);
@@ -335,6 +333,11 @@ public class MainJframe extends JFrame {
 			}
 			listAtt.add(nodeName);
 		}
+		// sort the arraylist in alphabetical order
+    	listAtt.sort(String::compareToIgnoreCase);
+    	listAtt.add(0,"*");
+		listAtt.add(0,"null");
+//    	System.out.println(listAtt);
 		return listAtt;
 	}
 	
@@ -342,8 +345,8 @@ public class MainJframe extends JFrame {
 	public ArrayList<String> getProp(Graph graph){
 		ArrayList<String> listProp = new ArrayList<String> ();
 //		listProp.add("default");
-		listProp.add("*");
-		listProp.add("null");
+//		listProp.add("*");
+//		listProp.add("null");
 		for (Arc a : graph.getArcsSet()) {
 
 			// Get arc name
@@ -354,6 +357,9 @@ public class MainJframe extends JFrame {
 			}
 			listProp.add(arcName);
 		}
+		listProp.sort(String::compareToIgnoreCase);
+    	listProp.add(0,"*");
+		listProp.add(0,"null");
 		return listProp;
 	}
 	
