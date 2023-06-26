@@ -183,11 +183,10 @@ public class MainJframe extends JFrame {
 					panel_2.removeAll();
 					panel_2.repaint();
 					execute(panel_3, textCommand);
+					
 				}else {
 					try {
 						dropdownExec();
-						String msg = Parser.command + " successfully executed";
-						drawTextToPanel(panel_3, msg , Color.BLUE);
 						panel_2.removeAll();
 						panel_2.repaint();
 						
@@ -196,28 +195,11 @@ public class MainJframe extends JFrame {
 						drawTextToPanel(panel_3, e.getMessage(), Color.RED);
 					}
 				}
+				String msg = Parser.command + " successfully executed";
+				drawTextToPanel(panel_3, msg , Color.BLUE);
 			}
 		});
 		panel_4.add(btnExecute);
-		
-//		// Execute command constructed by JComboBox
-//		JButton btnDropdownexec = new JButton("DropDownExec");
-//		btnDropdownexec.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				try {
-//					dropdownExec();
-//					String msg = Parser.command + " successfully executed";
-//					drawTextToPanel(panel_3, msg , Color.BLUE);
-//					panel_2.removeAll();
-//					panel_2.repaint();
-//					
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					drawTextToPanel(panel_3, e.getMessage(), Color.RED);
-//				}
-//			}
-//		});
-//		panel_4.add(btnDropdownexec);
 		
 		// Display the current graph button
 		JButton btnDrawGraph = new JButton("Display");
@@ -279,20 +261,24 @@ public class MainJframe extends JFrame {
 	}
 	
 	
-	// function for executing the command in the JTextPanel
-	public void execute(DrawTextPanel panel_3, String text) {
+	/**
+	 * Execute the command entered in JTextField
+	 * @param panel_3 status panel
+	 * @param command command string
+	 */
+	public void execute(DrawTextPanel panel_3, String command) {
 		
 		try {
-			Parser.command = text;
+			Parser.command = command;
 			Parser.executeGui();
 		}catch (Exception e){
 			drawTextToPanel(panel_3, e.getMessage(), Color.RED);
-//			panel_3.setTextColor(Color.RED);
-//			panel_3.setTextToDraw(e.getMessage());
 		}
 	}
 	
-	// Display the current graph on a new pop up windows
+	/**
+	 *  Display the current graph on a new pop up windows
+	 */
 	public void drawGraph() {
 		String text = graphToString(Tui.grammar.getHostGraph());
 		SwingUtilities.invokeLater(() -> {
@@ -300,29 +286,29 @@ public class MainJframe extends JFrame {
         });
 	}
 	
-	// print text into status board
+	/**
+	 *  Display the message on provided panel
+	 * @param panel panel that will display the message
+	 * @param text the message string
+	 * @param color color of message
+	 */
 	public void drawTextToPanel(DrawTextPanel panel, String text, Color color) {
 		panel.setTextToDraw(text);
 		panel.setTextColor(color);
 	}
 	
-//	public void drawExceptionToPanel(DrawTextPanel panel, StackTraceElement[] exception, Color color) {
-//		String[] except = new String[exception.length];
-//		for (int i=0;i<exception.length;i++) {
-//			except[i] = exception[i].toString();
-//		}
-//		panel.drawMultipleLine(except,1);
-//	}
 	
-	// write down the command's syntax
+	/**
+	 *  write down the command's syntax
+	 * @param panel_1 the panel to display the command's syntax
+	 * @param text the command's syntax
+	 */
 	public void writeCommand(DrawTextPanel panel_1, String text) {
 		drawTextToPanel(panel_1, text, Color.MAGENTA);
 	}
 	
-	// get all att of nodes in the current graph
-	// code == 1 --> default value is *
-	// code ==0  --> default value is null
-	public ArrayList<String> getAtt(Graph graph){
+
+	private ArrayList<String> getAtt(Graph graph){
 		ArrayList<String> listAtt = new ArrayList<String> ();
 		for (Node n : graph.getNodesSet()) {
 			// Get node name
@@ -342,11 +328,8 @@ public class MainJframe extends JFrame {
 	}
 	
 	// get all prop of edges in current graph
-	public ArrayList<String> getProp(Graph graph){
+	private ArrayList<String> getProp(Graph graph){
 		ArrayList<String> listProp = new ArrayList<String> ();
-//		listProp.add("default");
-//		listProp.add("*");
-//		listProp.add("null");
 		for (Arc a : graph.getArcsSet()) {
 
 			// Get arc name
@@ -363,23 +346,69 @@ public class MainJframe extends JFrame {
 		return listProp;
 	}
 	
-	// execute the command entered by DropDown JComboBox
+	/**
+	 *  execute the command entered by DropDown JComboBox
+	 * @throws Exception
+	 */
 	public void dropdownExec() throws Exception {
 		String command = generateCommand();
-//		System.out.println("\u001B[32m"+command+"\u001B[0m");
 		Parser.command = command;
 		System.out.println("\u001B[32m"+Parser.command+"\u001B[0m");
 		Parser.executeGui();
 	}
 	
-	// Construct the command string from selected value in JComboBox
+	
+	
+	/**
+	 *  Construct the command string from selected value in JComboBox
+	 * @return String command string for parser 
+	 */
 	public String generateCommand() {
 		ArrayList<String> args = guiParse.getArgs();
         ArrayList<String> requiredForm = guiParse.getRequiredForm();
 		HashMap<String,ArrayList<String>> mapArgs = getHashMapInfo();
+
 		
 		// generate command
+		
+		// get operator
 		String command = new String((String) comboBox.getSelectedItem());
+		
+		// Anatomization ( idn={"name"}, qID={"knows" }, sens={"livesIn"} )
+		if (command.equals("Anatomization")) {
+			command += "(";
+			for (String key:mapArgs.keySet()) {
+				command = command + key + "=";
+				command += "{";
+				for (String value:mapArgs.get(key).get(0).split(",")) {
+					value = value.replace(" ", "");
+					command = command + value + ",";
+				}
+				command = command.substring(0, command.length()-1);
+				command += "},";
+			}
+			command = command.substring(0, command.length()-1);
+			command += ")";
+			return command;
+		}else if (command.equals("JoinSet")) {
+			command = command + "(" + mapArgs.get("x").get(0) + "," + mapArgs.get("X_att").get(0) + ") ";
+			for (String key:mapArgs.keySet()) {
+				if (key.equals("x") || key.equals("X_att")) {
+					continue;
+				}
+				command = command + key + "{";
+				String[] parts = mapArgs.get(key).get(0).split("(?<=\\))\\s*,\\s*");
+				for (String part: parts) {
+					command = command + part + ",";
+				}
+				command = command.substring(0, command.length()-1);
+				command += "} ";
+				
+			}
+			return command;
+		}
+		
+		
 		command += "(";
 		for (String key:mapArgs.keySet()) {
 			command = command + key + "=";
@@ -407,7 +436,11 @@ public class MainJframe extends JFrame {
 		return command;
 	}
 	
-	// Get HashMap information for executing the command
+	/**
+	 *  Extract data from JCOmboBox
+	 *  
+	 * @return HashMap extracted data
+	 */
 	public HashMap<String, ArrayList<String>> getHashMapInfo(){
 		HashMap<String,ArrayList<String>> mapArgs = new HashMap<String,ArrayList<String>>();
 		for (String key:mapComboBox.keySet()) {
@@ -429,7 +462,7 @@ public class MainJframe extends JFrame {
 	
 	
 	// get the current graph in String form
-	public String graphToString(Graph graph) {
+	private String graphToString(Graph graph) {
 		StringBuilder display = new StringBuilder();
 
 		// Display graph infos
@@ -473,11 +506,10 @@ public class MainJframe extends JFrame {
 	}
 	
 	/**
-	 * selectFile for this class
+	 * Select file for this class
 	 */
-	public String selectFile() {
+	private String selectFile() {
 		JFileChooser fileChooser = new JFileChooser();
-//		fileChooser.setCurrentDirectory(new File(System.getProperty("java.class.path")));
 		fileChooser.setCurrentDirectory(new File("."));
 		int result = fileChooser.showOpenDialog(this);
 		File selectedFile = null;
@@ -488,6 +520,10 @@ public class MainJframe extends JFrame {
 		return selectedFile.getAbsolutePath();
 	}
 	
+	/**
+	 * Get the path absolute chosen by user 
+	 * @return String path absolute of file
+	 */
 	public String saveToFile() {
         // Create a file chooser dialog
         JFileChooser fileChooser = new JFileChooser();
@@ -510,6 +546,11 @@ public class MainJframe extends JFrame {
 	// pop up window to get file name
 	// choice == 1 ===> load
 	// choice == 0 ===> save
+	/**
+	 * Load or save graph from an absolute path of a file
+	 * @param choice if choice=1 this function will load the graph from a file, if choice=0 this function will save the graph to a file  
+	 * @param panel panel for displaying the message
+	 */
 	public void loadSaveGraphFromFile(int choice, DrawTextPanel panel) {
 			if (choice != 0 && choice != 1) {
 				return;
@@ -532,7 +573,11 @@ public class MainJframe extends JFrame {
 		
 	}
 	
-	public void displayGuide(String linePrefix) {
+	/**
+	 * Display the description of an operator or procedure
+	 * @param operator_linePrefix operator name is always at the beginning of the paragraph
+	 */
+	public void displayGuide(String operator_linePrefix) {
 		 String filePath = "src/gui/guide.txt";
 	        String delimiter = "#########";
 //	        String linePrefix = "NewNode";
@@ -547,10 +592,10 @@ public class MainJframe extends JFrame {
 	                    continue;
 	                }
 
-	                if (isContentSection && line.startsWith(linePrefix)) {
+	                if (isContentSection && line.startsWith(operator_linePrefix)) {
 	                	String[] text = new String[] {""};
 	                	while (!(line = reader.readLine()).contains(delimiter)) {
-	                		System.out.println(line);
+//	                		System.out.println(line);
 	                		text[0] = text[0] + line + "\n";
 	                	}
 	                	SwingUtilities.invokeLater(() -> {

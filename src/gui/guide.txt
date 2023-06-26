@@ -179,9 +179,15 @@ not necessary either
 
 ########################################################################################################################################
 JoinSet
-Syntax:  	JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
-e.g 		JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
-		JoinSet ("hasQI","QI") where {(*,*,"Stuart"),(*,"livesIn","Paris")} except {(*,"knows",*)}
+Syntax:	JoinSet (p,O_att)  where {X1,X2,X3,...} except {Y1,Y2,Y3,..}
+e.g 	JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
+	JoinSet ("hasQI","QI") where {(*,*,"Stuart"),(*,"livesIn","Paris")} except {(*,"knows",*)}
+	
+	In GUI, suppose that [] is a JTextField
+	
+	[hasQI] [QI] [(*,*,Stuart),(*,"livesIn","Paris")] [(*,"knows",*)]  ==== 
+	JoinSet ("hasQI","QI") where {(*,*,"Stuart"),(*,"livesIn","Paris")} except {(*,"knows",*)}
+		
 Description:
 ########################################################################################################################################
 CloneSet

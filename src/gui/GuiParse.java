@@ -62,8 +62,8 @@ public class GuiParse {
         	args = new ArrayList<String> (Arrays.asList("idn","qID","sens"));
         	requiredForm = new ArrayList<String> (Arrays.asList("Str","Str","Str"));
         }else if (className.equals("parser.operators.ParseJoinSet")) {
-        	args = new ArrayList<String> (Arrays.asList("x","X_att","Where","Except"));
-        	requiredForm = new ArrayList<String> (Arrays.asList("Str","Str","S","S"));
+        	args = new ArrayList<String> (Arrays.asList("x","X_att","where","except"));
+        	requiredForm = new ArrayList<String> (Arrays.asList("Str","Str","Str","Str"));
         }
 	}
 	
@@ -72,7 +72,12 @@ public class GuiParse {
 	}
 		
 	public String getSyntax(){
+		
 		String syntax = new String(operator);
+		
+		if (syntax.equals("JoinSet")) {
+			return "JoinSet(x,X_att) where{X1,X2,...} except{X1,X2,...}";
+		}
 		
 		syntax += "(";
 		for (String key: this.args) {
