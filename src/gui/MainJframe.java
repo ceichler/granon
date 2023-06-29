@@ -14,6 +14,7 @@ import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Node;
 import executable.granonui.Tui;
+import graphVisu.MyGraph;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -138,7 +140,7 @@ public class MainJframe extends JFrame {
                 	if (requiredForm.get(i).equals("S") ) {
                 		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(3, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
-                		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		ComboBoxUtils.addListComboBoxesToPanel(ComboBoxUtils.listPanel.get(i), listComboBox);
                 		listComboBox.get(0).setSelectedItem("*");
                 		listComboBox.get(1).setSelectedItem("null");
                 		listComboBox.get(2).setSelectedItem("null");
@@ -146,18 +148,18 @@ public class MainJframe extends JFrame {
                 	else if (requiredForm.get(i).equals("Set")) {
                 		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(2, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
-                		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		ComboBoxUtils.addListComboBoxesToPanel(ComboBoxUtils.listPanel.get(i), listComboBox);
                 		listComboBox.get(1).setSelectedItem("null");
                 		listComboBox.get(2).setSelectedItem("null");
                 	}else if (!requiredForm.get(i).equals("Str")){
                 		ArrayList<JComboBox> listComboBox = ComboBoxUtils.createListBox(1, getAtt(Tui.grammar.getHostGraph()),getProp(Tui.grammar.getHostGraph()),false);
                 		mapComboBox.put(args.get(i), listComboBox);
-                		ComboBoxUtils.generateDynamicComboBoxes(ComboBoxUtils.listPanel.get(i), listComboBox);
+                		ComboBoxUtils.addListComboBoxesToPanel(ComboBoxUtils.listPanel.get(i), listComboBox);
                 		
                 	}else {
                 		JTextField txf = new JTextField();
                 		mapTextField.put(args.get(i), txf);
-                		ComboBoxUtils.generateDynamicTextField(ComboBoxUtils.listPanel.get(i), txf);
+                		ComboBoxUtils.addTextFieldToPanel(ComboBoxUtils.listPanel.get(i), txf);
                 	}
                 }
              }
@@ -279,11 +281,43 @@ public class MainJframe extends JFrame {
 	/**
 	 *  Display the current graph on a new pop up windows
 	 */
+//	public void drawGraph() {
+//		String text = graphToString(Tui.grammar.getHostGraph());
+//		SwingUtilities.invokeLater(() -> {
+//            new ScrollableTextPane(text).setVisible(true);
+//        });
+//	}
 	public void drawGraph() {
-		String text = graphToString(Tui.grammar.getHostGraph());
-		SwingUtilities.invokeLater(() -> {
-            new ScrollableTextPane(text).setVisible(true);
-        });
+		HashSet<String> nodes = new HashSet<String>();
+		HashSet<ArrayList<String>> edges = new HashSet<ArrayList<String>>();
+				
+		for (agg.xt_basis.Node node:Tui.grammar.getHostGraph().getNodesSet()) {
+			String att = node.getAttribute().getValueAsString(1).replace("\"", "");
+			nodes.add(att);
+		}
+		
+		int count_edge = 0;
+		for (agg.xt_basis.Arc edge:Tui.grammar.getHostGraph().getArcsSet()) {
+			ArrayList<String> edgeStr = new ArrayList<String>();
+			
+			String prop = edge.getAttribute().getValueAsString(1).replace("\"", "")+"$_"+count_edge;
+			count_edge++;
+			// Arc and Nodes share a common superclass GraphObject
+			agg.xt_basis.Node src = (agg.xt_basis.Node) edge.getSource();
+			agg.xt_basis.Node dst = (agg.xt_basis.Node) edge.getTarget();
+
+			// Get node values
+			String srcName = src.getAttribute().getValueAsString(1).replace("\"", "");
+			String dstName = dst.getAttribute().getValueAsString(1).replace("\"", "");
+			
+			edgeStr.add(prop);
+			edgeStr.add(srcName);
+			edgeStr.add(dstName);
+			edges.add(edgeStr);
+		}
+		
+		MyGraph mygraph = new MyGraph(nodes,edges);
+		mygraph.getGraph().display();
 	}
 	
 	/**
@@ -595,7 +629,6 @@ public class MainJframe extends JFrame {
 	                if (isContentSection && line.startsWith(operator_linePrefix)) {
 	                	String[] text = new String[] {""};
 	                	while (!(line = reader.readLine()).contains(delimiter)) {
-//	                		System.out.println(line);
 	                		text[0] = text[0] + line + "\n";
 	                	}
 	                	SwingUtilities.invokeLater(() -> {

@@ -3,6 +3,11 @@ package gui;
 import javax.swing.JPanel;
 import java.awt.*;
 
+/**
+ * custom panel to draw and clear easily the text 
+ * @author khai
+ *
+ */
 public class DrawTextPanel extends JPanel {
 	private String textToDraw = "";
     private Color textColor = Color.BLACK;
@@ -27,6 +32,10 @@ public class DrawTextPanel extends JPanel {
         g2d.drawString(textToDraw, x, y + font.getSize());
     }
     
+    /**
+     * Draw the provided text to panel
+     * @param text
+     */
     public void setTextToDraw(String text) {
         // Update the text to be drawn
         textToDraw = text;
@@ -35,6 +44,10 @@ public class DrawTextPanel extends JPanel {
         repaint();
     }
     
+    /**
+     * change the color of text
+     * @param color
+     */
     public void setTextColor(Color color) {
         // Update the text color
         textColor = color;
@@ -43,6 +56,9 @@ public class DrawTextPanel extends JPanel {
         repaint();
     }
     
+    /**
+     * clear the panel
+     */
     public void clearText() {
     	// Update the text to ""
     	textToDraw = "";

@@ -10,11 +10,22 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.JTextField;
 
+/**
+ * utils related ti JComboBox
+ * @author khai
+ *
+ */
 public class ComboBoxUtils {
 
-	// list all apenl that is created for getting arguments
+	/**
+	 *  list all apenl that is created for getting arguments
+	 */
 	public static ArrayList<JPanel> listPanel = new ArrayList<JPanel>();
 	
+	/**
+	 * generate automatically multiple panel based on the selected operator (number of parameters)
+	 * @param panel the panel that will contain all the sub-jpanel
+	 */
 	public static void generateDynamicPanel(JPanel panel) {
         // Clear the panel
         panel.removeAll();
@@ -27,7 +38,11 @@ public class ComboBoxUtils {
         panel.revalidate();
         panel.repaint();
     }
-	    
+	
+	/**
+	 * Create a list of sub panel to contain the JComboBoxs
+	 * @param requiredForm
+	 */
     public static void createListPanel(ArrayList<String> requiredForm) {
     	if (listPanel != null) {
     		listPanel.removeAll(listPanel);
@@ -46,8 +61,12 @@ public class ComboBoxUtils {
             listPanel.add(npanel);
         }
     }
-    
-    public static void generateDynamicComboBoxes(JPanel panel, ArrayList<JComboBox> listComboBox) {
+    /**
+     * add a list of combobox that allow us to choose the arguments to the provided panel
+     * @param panel panel that will contain call JCOmboBox
+     * @param listComboBox
+     */
+    public static void addListComboBoxesToPanel(JPanel panel, ArrayList<JComboBox> listComboBox) {
         // Clear the panel
         panel.removeAll();
         // Generate and add the specified number of JComboBoxes to the panel
@@ -63,7 +82,12 @@ public class ComboBoxUtils {
         panel.repaint();
     }
     
-    public static void generateDynamicTextField(JPanel panel, JTextField textField) {
+    /**
+     * add TextFiled to provided panel
+     * @param panel
+     * @param textField
+     */
+    public static void addTextFieldToPanel(JPanel panel, JTextField textField) {
         // Clear the panel
         panel.removeAll();        
         panel.add(textField);
@@ -79,6 +103,14 @@ public class ComboBoxUtils {
 //    	}
 //    }
     
+    /**
+     * Create a list of JcomboBox
+     * @param numberOfComboBoxes equals to the number of operator's parameters
+     * @param listAtt list att of node in graph
+     * @param listProp list prop of edge in graph
+     * @param isStr if type is string or not
+     * @return
+     */
     public static ArrayList<JComboBox> createListBox(int numberOfComboBoxes, ArrayList<String> listAtt, ArrayList<String> listProp, boolean isStr) {
     	ArrayList<JComboBox> listComboBox = new ArrayList<JComboBox>();
     	// sort the arraylist in alphabetical order

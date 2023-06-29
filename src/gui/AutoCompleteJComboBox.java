@@ -13,16 +13,21 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 
+/**
+ * 
+ * Create an autocomplete JComboBox (based on its item list)
+ *
+ */
 //Implementtion of AutoCompleteComboBox
 @SuppressWarnings("rawtypes")
 class AutoCompleteJComboBox extends JComboBox {
 	private static final long serialVersionUID = 1L;
+	
+	
 	public int caretPos = 0;
 	public JTextField tfield = null;
-//	private ArrayList<String> listItems;
 	
 	@SuppressWarnings("unchecked")
-	
 	public AutoCompleteJComboBox(Object[] objects) {
 	   super(objects);
 	   this.setBorder(new LineBorder(Color.ORANGE));
@@ -30,6 +35,10 @@ class AutoCompleteJComboBox extends JComboBox {
 	   setEditable(true);
 	}
 	
+	/**
+	 * set the selected item by providing its index
+	 * @param index the index of the item that we want to select
+	 */
 	public void setSelectedIndex(int index) {
 	   super.setSelectedIndex(index);
 	   tfield.setText(getItemAt(index).toString());
@@ -37,11 +46,14 @@ class AutoCompleteJComboBox extends JComboBox {
 	   tfield.moveCaretPosition(caretPos);
 	}
 	
+	/**
+	 * Sets a custom editor used to paint and edit the selected item in the JComboBox field.
+	 * @param editor the custom editor
+	 */
 	public void setEditor(ComboBoxEditor editor) {
 		
 		
 	   super.setEditor(editor);
-//	   ArrayList<String> listItems = new ArrayList<String>();
 	   if(editor.getEditorComponent() instanceof JTextField) {
 	      tfield = (JTextField) editor.getEditorComponent();
 	      tfield.addKeyListener(new KeyAdapter() {
@@ -62,14 +74,10 @@ class AutoCompleteJComboBox extends JComboBox {
 	               if (element.startsWith(text)) {
 	                  setSelectedIndex(i);
 	                  return;
-//	            	  listItems.add(element); 
 	               }
 	            }
 	            
 	         }
-	         
-	         
-	         
 	         
 	      });
 	   }

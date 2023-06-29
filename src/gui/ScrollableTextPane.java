@@ -3,6 +3,11 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * a scrollable text pane to display the large text
+ * @author khai
+ *
+ */
 public class ScrollableTextPane extends JFrame {
 
     public ScrollableTextPane(String text) {
