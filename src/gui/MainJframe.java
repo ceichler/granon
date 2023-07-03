@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.graphstream.ui.view.Viewer;
+
 import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Node;
@@ -191,14 +193,14 @@ public class MainJframe extends JFrame {
 						dropdownExec();
 						panel_2.removeAll();
 						panel_2.repaint();
+						String msg = Parser.command + " successfully executed";
+						drawTextToPanel(panel_3, msg , Color.BLUE);
 						
 					} catch (Exception e) {
 						e.printStackTrace();
 						drawTextToPanel(panel_3, e.getMessage(), Color.RED);
 					}
 				}
-				String msg = Parser.command + " successfully executed";
-				drawTextToPanel(panel_3, msg , Color.BLUE);
 			}
 		});
 		panel_4.add(btnExecute);
@@ -317,7 +319,9 @@ public class MainJframe extends JFrame {
 		}
 		
 		MyGraph mygraph = new MyGraph(nodes,edges);
-		mygraph.getGraph().display();
+		Viewer viewer = mygraph.display(true);
+		viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
+		
 	}
 	
 	/**

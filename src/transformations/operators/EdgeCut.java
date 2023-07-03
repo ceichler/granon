@@ -64,8 +64,8 @@ public class EdgeCut extends Operator {
 		map.put("pf1",mapTokens.get("pf1").get(0));
 		map.put("pf2",mapTokens.get("pf2").get(0));
 		map.put("interm", mapTokens.get("interm").get(0));
-		System.out.println("\u001B[36m [In EdgeChord] mapTokens = "+mapTokens+"\u001B[0m");
-		System.out.println("\u001B[36m [In EdgeChord] map = "+map+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeCut] mapTokens = "+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeCut] map = "+map+"\u001B[0m");
 	}
 	
 	@Override

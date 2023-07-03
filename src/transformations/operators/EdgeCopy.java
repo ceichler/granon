@@ -76,8 +76,8 @@ public class EdgeCopy extends Operator {
 		map.put("O",mapTokens.get("O").get(2));
 		map.put("pi",mapTokens.get("pi").get(0));
 		map.put("pf",mapTokens.get("pf").get(0));
-		System.out.println("\u001B[36m [In EdgeChord] mapTokens = "+mapTokens+"\u001B[0m");
-		System.out.println("\u001B[36m [In EdgeChord] map = "+map+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeCopy] mapTokens = "+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeCopy] map = "+map+"\u001B[0m");
 	}
 
 	@Override

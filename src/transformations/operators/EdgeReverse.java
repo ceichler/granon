@@ -55,8 +55,8 @@ public class EdgeReverse extends Operator {
 		map.put("o",mapTokens.get("O").get(1));
 		map.put("O",mapTokens.get("O").get(2));
 		map.put("p",mapTokens.get("p").get(0));
-		System.out.println("\u001B[36m [In EdgeChord] mapTokens = "+mapTokens+"\u001B[0m");
-		System.out.println("\u001B[36m [In EdgeChord] map = "+map+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeReverse] mapTokens = "+mapTokens+"\u001B[0m");
+		System.out.println("\u001B[36m [In EdgeReverse] map = "+map+"\u001B[0m");
 	}
 	
 	@Override

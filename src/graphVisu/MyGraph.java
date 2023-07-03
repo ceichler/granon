@@ -6,7 +6,9 @@ import java.util.HashSet;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
 
 
 public class MyGraph {
@@ -41,7 +43,8 @@ public class MyGraph {
 					"}";
 	
 	public MyGraph(HashSet<String> nodes, HashSet<ArrayList<String>> edges) {
-		graph = new SingleGraph("Graph "+MyGraph.graphID);
+//		graph = new SingleGraph("Graph "+MyGraph.graphID);
+		graph = new MultiGraph("Graph "+MyGraph.graphID);
 		graph.addAttribute("ui.stylesheet", styleSheet);
 		MyGraph.graphID++;
 		for (String nodeEle:nodes) {
@@ -50,8 +53,6 @@ public class MyGraph {
 		for (ArrayList<String> edgeEle: edges) {
 			graph.addEdge(edgeEle.get(0), edgeEle.get(1), edgeEle.get(2),true);
 		}
-		setNodeLabel();
-		setEdgeLabel();
 		
 	}
 	
@@ -75,6 +76,14 @@ public class MyGraph {
 
 	public void setGraph(Graph graph) {
 		this.graph = graph;
+	}
+	
+	public Viewer display(boolean displayLabel) {
+		if (displayLabel) {
+			setNodeLabel();
+			setEdgeLabel();
+		}
+		return graph.display();
 	}
 		
 }
