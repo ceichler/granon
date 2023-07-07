@@ -104,7 +104,7 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 				syntax = syntax + ")";
 				throw new SyntaxException(keyword + " is not the keywork for this operator [Syntax] "+syntax);
 			}
-			System.out.println(result);
+//			System.out.println(result);
 			if (result.get(keyword).size() == 0) {
 				String err = "["+keyword+"] required argument";
 				throw new SyntaxException(err);

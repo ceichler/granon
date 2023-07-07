@@ -124,6 +124,9 @@ public class MainJframe extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 // Clear the dynamic panel
+				
+				mapComboBox = new HashMap<String,ArrayList<JComboBox>>();
+				mapTextField = new HashMap<String,JTextField>();
                 panel_3.removeAll();
                 textField.setText("");
                 guiParse.setOperator((String)comboBox.getSelectedItem());
@@ -186,7 +189,11 @@ public class MainJframe extends JFrame {
 					writeCommand(panel_1, "");
 					panel_2.removeAll();
 					panel_2.repaint();
-					execute(panel_3, textCommand);
+					boolean success = execute(panel_3, textCommand);
+					if (success) {
+						String msg = Parser.command + " successfully executed";
+						drawTextToPanel(panel_3, msg , Color.BLUE);
+					}
 					
 				}else {
 					try {
@@ -270,13 +277,15 @@ public class MainJframe extends JFrame {
 	 * @param panel_3 status panel
 	 * @param command command string
 	 */
-	public void execute(DrawTextPanel panel_3, String command) {
+	public boolean execute(DrawTextPanel panel_3, String command) {
 		
 		try {
 			Parser.command = command;
 			Parser.executeGui();
+			return true; 
 		}catch (Exception e){
 			drawTextToPanel(panel_3, e.getMessage(), Color.RED);
+			return false;
 		}
 	}
 	
@@ -598,7 +607,9 @@ public class MainJframe extends JFrame {
 		    if (choice==1) {
 				String filePath = selectFile();
 				panel.setTextColor(Color.BLUE);
-				panel.setTextToDraw("Loaded file: " + filePath);
+				if (filePath != null) {
+					panel.setTextToDraw("Loaded file: " + filePath);
+				}
 //				System.out.println("Loaded file: " + filePath);
 				Tui.grammar = new Grammar(filePath);
 		    } else if (choice==0) {

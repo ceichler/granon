@@ -191,18 +191,61 @@ e.g 	JoinSet ("hasQI","QI") where {(*,*,"Stuart")} except {(*,"knows",*)}
 Description:
 ########################################################################################################################################
 CloneSet
-Syntax:  	CloneSet (S,c,C_att)
-e.g 		CloneSet(("*", "type", "city"), "clone", "Clone")
-Description:
+Syntax: CloneSet (S,c,C_att) 		S=(x,s,S_att)
+e.g  CloneSet(("*", "type", "city"), "clone", "Clone")
+Description:  Creates a "clone" node for all nodes in a set (i.e. forall x s.t. x--s-->S_att, creates x---c--->C_att)
+
+
+We note that we can specify two special value:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either	
 ########################################################################################################################################
 LDP
 Syntax:	LDP(S,p,O,k)
 e.g		LDP((*,"type","Person"),"name",(*,"isA","Name"),"3")
-Description:
+Description: [---Algorithm 1 Procedure LDP(S,p,O,k)---]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for i from 1 to K − 1 do
+	NewNode("Dummy")
+end for
+	JoinSet(o, O_att)Where{("Dummy", ∗, ∗)} Except{}
+	EdgeCut(S_att, p,O_att, pI ,"Intermediary", pO)
+	EdgeCopy((∗, null, null),pO,(∗, null, null),pN)
+	RandomTarget((∗, null, null),pN,(X_O,o,O_att),(∗,o,O_att))
+	EdgeChord(S,pI,(∗,pN,"Dummy"),pO,O_att,p)
+	EdgeChord(S,pI,(∗, null, null), pN , O_att, p)
+	DeleteNode(Dummy, ∗, ∗)
+	DeleteNode("Intermediary", ∗, ∗)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+We note that we can specify two special value:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either	
 ########################################################################################################################################
 Anatomization
 Syntax:	Anatomization ( {e1,e2,...,en}, {q1,q2,...,qm}, {p1,p2,...,pk} )
 e.g		Anatomization ( {"name"}, {"knows","type" }, {"livesIn"} )
 		Anatomization ( {"name"}, {"knows" }, {"livesIn"} )
-Description:
+Description: Anatomization ({e1,e2,...,en},{q1,q2,...,qm},{p1,p2,...,pk})
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+DeleteEdge((∗, null, null),ei,(∗, null, null)) for all ei
+NewNode("QI")
+JoinSet("hasQI", "QI") Where{(∗,qj,∗)} Except{} for all qj
+EdgeChord((∗, "hasQI", "QI"),pi,(∗,null,null),"inGroup",(∗, null, null), pi' ) for all pi
+DeleteEdge((∗,"hasQI","QI"),pi,(∗,null,null)) for all pi
+EdgeCopy((∗,null,null), pi',(∗,null,null),pi) for all pi
+DeleteEdge((∗, null, null),pi',(∗, null, null)) for all pi
+DeleteNode("QI", null, null)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+We note that we can specify two special value:
+– * corresponds to any label we want
+– null corresponds to no expectation, i.e.not only any label but the existence is 
+not necessary either	
 ########################################################################################################################################

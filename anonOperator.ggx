@@ -15,6 +15,7 @@
         <TaggedValue Tag="ruleSequence" TagValue="true"/>
         <TaggedValue Tag="breakAllLayer" TagValue="true"/>
         <TaggedValue Tag="showGraphAfterStep" TagValue="true"/>
+        <TaggedValue Tag="GACs" TagValue="true"/>
         <TaggedValue Tag="TypeGraphLevel" TagValue="DISABLED"/>
         <Types>
             <NodeType ID="I2" abstract="false" name="node%:RECT:java.awt.Color[r=0,g=0,b=0]:[NODE]:">
@@ -37,7 +38,7 @@
                         <string>Person</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="360" Y="73"/>
+                <NodeLayout X="556" Y="150"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I18" type="I2">
@@ -46,7 +47,7 @@
                         <string>Paris</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="931" Y="252"/>
+                <NodeLayout X="896" Y="564"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I21" type="I2">
@@ -55,7 +56,7 @@
                         <string>city</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="837" Y="553"/>
+                <NodeLayout X="1280" Y="637"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I24" type="I2">
@@ -64,7 +65,7 @@
                         <string>London</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="744" Y="130"/>
+                <NodeLayout X="847" Y="31"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I27" type="I2">
@@ -73,7 +74,7 @@
                         <string>Berlin</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="690" Y="275"/>
+                <NodeLayout X="850" Y="180"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I30" type="I2">
@@ -82,7 +83,7 @@
                         <string>id105</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="538" Y="165"/>
+                <NodeLayout X="437" Y="30"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I33" type="I2">
@@ -91,7 +92,7 @@
                         <string>id106</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="203" Y="57"/>
+                <NodeLayout X="130" Y="24"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I36" type="I2">
@@ -100,7 +101,7 @@
                         <string>id110</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="528" Y="262"/>
+                <NodeLayout X="388" Y="283"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I39" type="I2">
@@ -109,7 +110,7 @@
                         <string>Miller</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="139" Y="175"/>
+                <NodeLayout X="33" Y="70"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I42" type="I2">
@@ -118,7 +119,7 @@
                         <string>Stuart</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="264" Y="234"/>
+                <NodeLayout X="53" Y="594"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I45" type="I2">
@@ -127,7 +128,7 @@
                         <string>Johnson</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="160" Y="449"/>
+                <NodeLayout X="851" Y="409"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I48" type="I2">
@@ -136,7 +137,7 @@
                         <string>id107</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="432" Y="455"/>
+                <NodeLayout X="421" Y="625"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I51" type="I2">
@@ -145,7 +146,7 @@
                         <string>Name</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="64" Y="292"/>
+                <NodeLayout X="324" Y="441"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I54" type="I2">
@@ -154,7 +155,7 @@
                         <string>Brest</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="1097" Y="336"/>
+                <NodeLayout X="1269" Y="391"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Node ID="I57" type="I2">
@@ -172,7 +173,7 @@
                         <string>Europe not France</string>
                     </Value>
                 </Attribute>
-                <NodeLayout X="1093" Y="109"/>
+                <NodeLayout X="1236" Y="30"/>
                 <additionalLayout age="0" force="10" frozen="true" zone="50"/>
             </Node>
             <Edge ID="I63" source="I18" target="I21" type="I8">
@@ -307,7 +308,7 @@
                         <string>isA</string>
                     </Value>
                 </Attribute>
-                <EdgeLayout bendX="103" bendY="230" textOffsetX="0" textOffsetY="-22"/>
+                <EdgeLayout bendX="183" bendY="250" textOffsetX="0" textOffsetY="-22"/>
                 <additionalLayout aktlength="200" force="10" preflength="200"/>
             </Edge>
             <Edge ID="I108" source="I42" target="I51" type="I8">
@@ -370,7 +371,7 @@
                         <string>inGroup</string>
                     </Value>
                 </Attribute>
-                <EdgeLayout bendX="1042" bendY="152" textOffsetX="0" textOffsetY="-22"/>
+                <EdgeLayout bendX="1030" bendY="293" textOffsetX="0" textOffsetY="-22"/>
                 <additionalLayout aktlength="200" force="10" preflength="200"/>
             </Edge>
             <Edge ID="I129" source="I54" target="I57" type="I8">
@@ -1066,7 +1067,9 @@
             <Parameter name="C" type="String"/>
             <Parameter name="s" type="String"/>
             <Parameter name="S" type="String"/>
-            <Graph ID="I337" kind="LHS" name="Left">
+            <Parameter name="X" type="String"/>
+            <Parameter name="x" type="String"/>
+            <Graph ID="I337" kind="LHS" name="LeftOf_CloneSet">
                 <Node ID="I338" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
@@ -1074,10 +1077,10 @@
                         </Value>
                     </Attribute>
                     <NodeLayout X="144" Y="138"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
             </Graph>
-            <Graph ID="I341" kind="RHS" name="Right">
+            <Graph ID="I341" kind="RHS" name="RightOf_CloneSet">
                 <Node ID="I342" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
@@ -1085,7 +1088,7 @@
                         </Value>
                     </Attribute>
                     <NodeLayout X="91" Y="149"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
                 <Node ID="I345" type="I2">
                     <Attribute type="I4" variable="true">
@@ -1094,7 +1097,7 @@
                         </Value>
                     </Attribute>
                     <NodeLayout X="181" Y="98"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
                 <Edge ID="I348" source="I342" target="I345" type="I8">
                     <Attribute type="I10" variable="true">
@@ -1106,7 +1109,7 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Morphism name="CloneSet">
+            <Morphism comment="Formula: true" name="CloneSet">
                 <Mapping image="I342" orig="I338"/>
             </Morphism>
             <ApplCondition>
@@ -1115,7 +1118,7 @@
                         <Node ID="I352" type="I2">
                             <NodeLayout X="91" Y="149"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Node ID="I354" type="I2">
                             <Attribute type="I4" variable="true">
@@ -1125,7 +1128,7 @@
                             </Attribute>
                             <NodeLayout X="181" Y="98"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Edge ID="I357" source="I352" target="I354" type="I8">
                             <Attribute type="I10" variable="true">
@@ -1152,7 +1155,7 @@
                             </Attribute>
                             <NodeLayout X="144" Y="138"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Node ID="I364" type="I2">
                             <Attribute type="I4" variable="true">
@@ -1162,7 +1165,7 @@
                             </Attribute>
                             <NodeLayout X="120" Y="59"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Edge ID="I367" source="I361" target="I364" type="I8">
                             <Attribute type="I10" variable="true">
@@ -1398,7 +1401,7 @@
             <Parameter name="S" type="String"/>
             <Parameter name="s" type="String"/>
             <Parameter name="p" type="String"/>
-            <Graph ID="I433" kind="LHS" name="Left">
+            <Graph ID="I433" kind="LHS" name="LeftOf_EdgeReverse">
                 <Node ID="I434" type="I2">
                     <Attribute type="I4" variable="true">
                         <Value>
@@ -1406,11 +1409,11 @@
                         </Value>
                     </Attribute>
                     <NodeLayout X="73" Y="149"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
                 <Node ID="I437" type="I2">
                     <NodeLayout X="251" Y="167"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
                 <Edge ID="I439" source="I434" target="I437" type="I8">
                     <Attribute type="I10" variable="true">
@@ -1422,14 +1425,14 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Graph ID="I442" kind="RHS" name="Right">
+            <Graph ID="I442" kind="RHS" name="RightOf_EdgeReverse">
                 <Node ID="I443" type="I2">
                     <NodeLayout X="48" Y="121"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
                 <Node ID="I445" type="I2">
                     <NodeLayout X="407" Y="132"/>
-                    <additionalLayout age="0" force="10" frozen="false" zone="50"/>
+                    <additionalLayout age="0" force="10" frozen="true" zone="50"/>
                 </Node>
                 <Edge ID="I447" source="I445" target="I443" type="I8">
                     <Attribute type="I10" variable="true">
@@ -1441,7 +1444,7 @@
                     <additionalLayout aktlength="200" force="10" preflength="200"/>
                 </Edge>
             </Graph>
-            <Morphism name="EdgeReverse">
+            <Morphism comment="Formula: true" name="EdgeReverse">
                 <Mapping image="I443" orig="I434"/>
                 <Mapping image="I445" orig="I437"/>
             </Morphism>
@@ -1456,7 +1459,7 @@
                             </Attribute>
                             <NodeLayout X="73" Y="149"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Node ID="I454" type="I2">
                             <Attribute type="I4" variable="true">
@@ -1466,7 +1469,7 @@
                             </Attribute>
                             <NodeLayout X="60" Y="253"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Edge ID="I457" source="I451" target="I454" type="I8">
                             <Attribute type="I10" variable="true">
@@ -1488,7 +1491,7 @@
                         <Node ID="I461" type="I2">
                             <NodeLayout X="120" Y="129"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Node ID="I463" type="I2">
                             <Attribute type="I4" variable="true">
@@ -1498,7 +1501,7 @@
                             </Attribute>
                             <NodeLayout X="111" Y="214"/>
                             <additionalLayout age="0" force="10"
-                                frozen="false" zone="50"/>
+                                frozen="true" zone="50"/>
                         </Node>
                         <Edge ID="I466" source="I461" target="I463" type="I8">
                             <Attribute type="I10" variable="true">
