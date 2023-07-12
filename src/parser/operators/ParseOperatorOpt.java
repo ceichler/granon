@@ -40,7 +40,6 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 	
 	public HashMap<String,ArrayList<String>> handleKeywordArgs(String comd) {
 		HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
-//		comd = comd.replace(" ", "");
 		/**
 		 * match all strings of the form "keyword = value"
 		 */
@@ -65,6 +64,7 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 	 */
 	public ArrayList<String> handleSet(String paramsStr){
 		
+		// remove the redundant characters, (e.g. (*,*,*)---> *,*,* , "someEdge"---->someEdge)
 		paramsStr = paramsStr.replace("(", "").replace(")", "").replace("\"", "");
         String[] afterSplit = paramsStr.split(","); 
         // trim all elements in set
@@ -74,6 +74,7 @@ public abstract class ParseOperatorOpt extends ParseOperator{
         
         ArrayList<String> temp = new ArrayList<String>(Arrays.asList(afterSplit));
         
+        // replace the String "null" ny value null
         for (int i = 0;i < temp.size();i++) {
         	if (temp.get(i).equals("null")) {
         		temp.set(i, null);
@@ -92,10 +93,15 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 	 * @throws SyntaxException 
 	*/
 	public HashMap<String,ArrayList<String>> getKeywordArgs(String comd, ArrayList<String> listArgKeywords, ArrayList<String> parameterRequiredForm) throws SyntaxException {
+		
+		// generate a HashMap that contains all the extracted key=value from user's command
 		HashMap<String,ArrayList<String>> result = handleKeywordArgs(comd);
 		
+		// loop through all the key inside extracted HashMap
 		for (String keyword:result.keySet()) {
+			// if there are some key that's not part of Syntax ===> throw the exception
 			if (!listArgKeywords.contains(keyword)) {
+				// get the operator's name form class name Parse[Operator]
 				String syntax = this.getClass().getSimpleName().replace("Parse", "")+"(";
 				for (String key:listArgKeywords) {
 					syntax = syntax + key + ",";
@@ -104,31 +110,40 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 				syntax = syntax + ")";
 				throw new SyntaxException(keyword + " is not the keywork for this operator [Syntax] "+syntax);
 			}
-//			System.out.println(result);
+			// throw exeception if the user don't enter the arguments
 			if (result.get(keyword).size() == 0) {
 				String err = "["+keyword+"] required argument";
 				throw new SyntaxException(err);
 			}
+			
+			// blank 
 			if (result.get(keyword).get(0).equals("")) {
 				throw new SyntaxException(keyword + " has no value");
 			}
 		}
 		
+		// This piece of code this for adding default value of the optional arguments
 		for (String keyword:listArgKeywords) {
+			// if result (the HashMap that contains the extarcted arguments) contains this key ===> just continue
 			if (result.keySet().contains(keyword)) {continue;}
 			
 			String keyForm = parameterRequiredForm.get(listArgKeywords.indexOf(keyword));
 			
+			// if an arguments type "Str" is not privided ===> missing required arguments ===> exception
 			if (keyForm.equals("Str")) {
 				throw new SyntaxException("["+keyword+"] required argument");
+			// required form is * ===> default keyForm is *
 			} else if (keyForm.equals("*")) {
 				result.put(keyword, new ArrayList<String>(Arrays.asList("*")));
+				// required form is null ===> default keyForm is null	
 			} else if (keyForm.equals("null")) {
 				ArrayList<String> nullArg = new ArrayList<>();
 				nullArg.add(null);
 				result.put(keyword, nullArg);
+			// default value for S and Set is (*,null,null)
 			} else if (keyForm.equals("S") || keyForm.equals("Set")) {
 				result.put(keyword, new ArrayList<String>(Arrays.asList("*",null,null)));
+			// num is required
 			}  else if (keyForm.equals("Num")) {
 				throw new SyntaxException("["+keyword+"] required argument");
 			} 
@@ -138,6 +153,13 @@ public abstract class ParseOperatorOpt extends ParseOperator{
 		return result;
 	}
 	
+	/**
+	 * This method is for chosing the version (keyword arguments or positional arguments) for user's command
+	 * @param listArgKeywords list keyword for the matching rules
+	 * @param parameterRequiredForm required form of arguments
+	 * @return HashMap extracted arguments
+	 * @throws SyntaxException
+	 */
 	public HashMap<String,ArrayList<String>> getArgs(ArrayList<String> listArgKeywords, ArrayList<String> parameterRequiredForm) throws SyntaxException{
 		HashMap<String,ArrayList<String>> mapTokens;
 		

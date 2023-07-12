@@ -18,7 +18,7 @@ import parser.exceptions.SyntaxException;
 public abstract class ParseOperator {
 	
 	/**
-	 * command that entered by user. 
+	 * command entered by user. 
 	 */
 	protected String command;
 	/**
@@ -26,7 +26,10 @@ public abstract class ParseOperator {
 	 */
 	final String regex = "(\\([^\\\\)\\\\(]+\\))|(\\\"[^\\\"]+\\\")|(\\*)|(null)";
 	
-	
+	/**
+	 * create Parse class with the user's command
+	 * @param command user's command
+	 */
 	public ParseOperator(String command) {
 		this.command = command;
 	}
@@ -60,7 +63,7 @@ public abstract class ParseOperator {
 		        int count = 0;
 		        while (matcher.find()) {
 		        	
-		        	
+		        	 // because count starts at 0
 		        	 if (count >= listArgKeywords.size()) {
 		        		 String errorStr = new String("Redundant arguments. [Syntax] " + 
 		 						this.getClass().getSimpleName().replace("Parse", "") +
@@ -70,32 +73,38 @@ public abstract class ParseOperator {
 		 				}
 		 				errorStr = errorStr.substring(0, errorStr.length()-1);
 		 				errorStr = errorStr + ")";
+		 				
+		 				// throws exception:  Redundant arguments. [Syntax] <Operator>(key1,key2,key3,...)
 		 				throw new SyntaxException(errorStr);
 					}
 		        	
 		        	
 		            String paramsStr = matcher.group(0);
-		            // remove unnecessary characters
+		            // remove unnecessary characters (')' and '"')
 		            paramsStr = paramsStr.replace("(", "").replace(")", "").replace("\"", "");
 		            String[] afterSplit = paramsStr.split(","); 
-		            // trim all elements in set
+		            // trim all elements in set (to remove extra white spaces from the beginning and end of the input string)
 		            for (int compt = 0; compt<afterSplit.length;compt++) {
 		            	afterSplit[compt] = afterSplit[compt].trim();
 		            }
 		            
+		            // arraylist of all arguments after split and trim
 		            ArrayList<String> temp = new ArrayList<String>(Arrays.asList(afterSplit));
 		            
+		            // replace all String "null" by null 
 		            for (int i = 0;i < temp.size();i++) {
 		            	if (temp.get(i).equals("null")) {
 		            		temp.set(i, null);
 		            	}
 		            }
 		            
+		            // put all arguments into map 
 		            mapTokens.put(listArgKeywords.get(count), temp);
 		            count++;
 		        }
 			}
 			
+			// check if there are some missing arguments exceptions
 			if (mapTokens.size() != listArgKeywords.size()) {
 				String errorStr = new String("Missing arguments. [Syntax] " + 
 						this.getClass().getSimpleName().replace("Parse", "") +
@@ -120,11 +129,13 @@ public abstract class ParseOperator {
 	 */
 	public void checkSet(String setFormCode, ArrayList<String> setVal) throws SyntaxException {
 		
+		// this is the method that will verify the syntax of Set. Set is the triplet (x,s,S) which represent a set of node
 		
-		// The number of elements in a Set is extractly 3
+		// The number of elements in a Set is exactly 3, if the provided ArrayList size if not 3 ===> it's not a Set ==> exception
 		if (setVal.size()!=3) {
 			String error = new String("(");
 			for (String ele:setVal) {error += "\""+ele+"\","; }
+			// This statement is important, although it is not standardized but temporary nodes or edges are created as ".$+timestamp()" in granon (e.g. LDP)
 			error = error.replaceAll(".$", ")");
 			error +=  " is not a Set. The number of elements in the Set must be 3";
 			throw new SyntaxException(error);
@@ -134,20 +145,27 @@ public abstract class ParseOperator {
 		// We has two setFormCode, they are "S and "Set". "S" for set's form (x,s,S) and "Set" for set's form (*,o,O)
 		ArrayList<String> setForm ;
 		if (setFormCode.equals("S")) {
+			// "*" accept * and Str
 			setForm = new ArrayList<>(Arrays.asList("*",null,null));
 		} else if (setFormCode.equals("Set")) {
+			// "**" only accept "*" 
 			setForm = new ArrayList<>(Arrays.asList("**",null,null));
 		} else {
+			// This exception occurs very rarely, if it does, check setFormCode or parameterRequiredFrom of Parse[Operator] respectively.
+			// It's to say that all the Set in this language have form S=(*,null,null) or Set=(**,null,null)
+			// if another Set structure is added, add a new  "if" condition for it
 			throw new SyntaxException("Invalid setFormCode. " + setFormCode+ " ?");
 		}
 		
-		
+		// now we loop through this Set's form (that was generated in the code above (*,null,null) or (**,null,null))
+		// if there are new Set's form is added into the language, please update this for loop
 		for (int i =0; i<setForm.size();i++) {
 			
+			// if the actual form is null ===> It accepts both Str,* and null ===> continue 
 			if(setForm.get(i)==null) {continue;}
 			
+			// if we have null in the command but the form is not null ==> invalid syntax. E.g Command: (*,null,*), form: (*,*,*) ==> invalid
 			if (setVal.get(i) == null && setForm.get(i)!=null) {
-				// if we have null in the command but the form is not null ==> invalid syntax. E.g Command: (*,null,*), form: (*,*,*) ==> invalid
 				throw new SyntaxException(setVal.toString() + " " + setFormCode + "["+i+ "] null is not allowed");
 			}
 			
@@ -189,12 +207,16 @@ public abstract class ParseOperator {
 			// e.g: map = {S=[x,s,S], O=[*,o,O],...} map.get("S).size() = [x,s,S].size() = 3
 			if (localMap.get(listKeys.get(i)).size() == 3) {
 				if (setForm.get(i).equals("S")) {
+					// if this form of set is S ==> checkSet for S
 					checkSet("S",localMap.get(listKeys.get(i)));
 				}else if (setForm.get(i).equals("Set")) {
+					// if this form of set is Set ==> checkSet for Set
 					checkSet("Set",localMap.get(listKeys.get(i)));
 				}else {
 					
-					/*syntax syntax attendu*/
+					// a Set entered corresponds to a key that does not accept Set
+					// e.g. in ModifyEdge(pf="a label for new edge"), the user try to enter ModifyEdge(pf=(*,*,*))
+					// in this example pf only accept Str but the user entered a Set ===> throw this acception
 					throw new SyntaxException(
 							"Cannot identify this Set: " 
 							+ localMap.get(listKeys.get(i))
@@ -248,13 +270,16 @@ public abstract class ParseOperator {
 	 * @param prop  the Edge's "prop" that we want to get the destination
 	 */
 	public ArrayList<String> getEdgeDst(Graph graph, String prop) {
+		// ArrayList contains all label of the destination nodes of "String prop"
 		ArrayList<String> dstsName = new ArrayList<String>();
+		// loop through all the edges of the graph
 		for (Arc a : graph.getArcsSet()) {
 			// Get arc "prop"
 			String arcProp = a.getAttribute().getValueAsString(1).replace("\"", "");
 			if (arcProp.equals(prop)) {
 				// Get source node and destination node
 				Node dst = (Node) a.getTarget();
+				// the label from getValueAsString is in the form "label" so we need to replace '"' by ''
 				String dstName = dst.getAttribute().getValueAsString(1).replace("\"", ""); // att inside the graph appears as "att" ===> must remove the ""
 				dstsName.add(dstName);
 			}
@@ -286,7 +311,6 @@ public abstract class ParseOperator {
 			for (String dst:listDst) {
 			
 				if (listEdgeDst.contains(mapTokens.get(dst).get(2))) {
-//					throw new SyntaxException(p + "'s destinaton cannot be " + mapTokens.get(dst).get(2));
 					String warning = "[Warning] Edge \""+p + "\"'s source and destination are both \"" + mapTokens.get(dst).get(2)+ "\". Rules can't be matched ";
 					System.err.println(warning);
 				}

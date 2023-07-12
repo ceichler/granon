@@ -610,11 +610,9 @@ public class MainJframe extends JFrame {
 				if (filePath != null) {
 					panel.setTextToDraw("Loaded file: " + filePath);
 				}
-//				System.out.println("Loaded file: " + filePath);
 				Tui.grammar = new Grammar(filePath);
 		    } else if (choice==0) {
 			     String filePath = saveToFile();
-//			     System.out.println("Saved to file: " + filePath+"ggx");
 			     panel.setTextColor(Color.BLUE);
 			     panel.setTextToDraw("Saved to file: " + filePath+".ggx");
 			     GraGraUtils.save(filePath, Grammar.graphGrammar);
