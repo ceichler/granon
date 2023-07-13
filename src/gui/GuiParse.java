@@ -14,14 +14,24 @@ import java.util.Arrays;
  *
  */
 public class GuiParse {
+	
 	private String operator;
 	private ArrayList<String> args;
 	private ArrayList<String> requiredForm;
 	
+	
+	/**
+	 *  get list actual arguments
+	 * @return
+	 */
 	public ArrayList<String> getArgs() {
 		return args;
 	}
 	
+	/**
+	 *  get required form
+	 * @return
+	 */
 	public ArrayList<String> getRequiredForm() {
 		return requiredForm;
 	}
@@ -34,13 +44,21 @@ public class GuiParse {
 		setArgs();
 	}
 	
+	/**
+	 *  set Args and Required Form of current operator
+	 */
 	public void setArgs() {
-		// create the className of the operator
+		// generate the className of the operator from the current operator
 		String className = "parser.operators.Parse"+operator;
         String attributeName1 = "listArgKeywords";
         String attributeName2 = "parameterRequiredForm";
         
+        
+        // joinset and anto have different syntax from the other operator
         if (!className.equals("parser.operators.ParseAnatomization") && !className.equals("parser.operators.ParseJoinSet")) {
+        	
+        	// create an Object from ParseOperator
+        	
 	        try {
 	        	// create the operator
 			    Class<?> clazz = Class.forName(className);
@@ -52,6 +70,7 @@ public class GuiParse {
 		        field1.setAccessible(true);
 		        args = (ArrayList<String>) field1.get(object);
 		        
+		       // Use reflection to get the value of the attribute
 		        Field field2 = clazz.getDeclaredField(attributeName2);
 		        field2.setAccessible(true);
 		        requiredForm = (ArrayList<String>) field2.get(object);
@@ -70,7 +89,12 @@ public class GuiParse {
 	public int getNumArg(){
 		return args.size();
 	}
-		
+	
+	
+	/**
+	 * generate the syntax of operator to display in display panel
+	 * return String syntax of current operator
+	 */
 	public String getSyntax(){
 		
 		String syntax = new String(operator);

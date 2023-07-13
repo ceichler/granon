@@ -43,7 +43,6 @@ public class MyGraph {
 					"}";
 	
 	public MyGraph(HashSet<String> nodes, HashSet<ArrayList<String>> edges) {
-//		graph = new SingleGraph("Graph "+MyGraph.graphID);
 		graph = new MultiGraph("Graph "+MyGraph.graphID);
 		graph.addAttribute("ui.stylesheet", styleSheet);
 		MyGraph.graphID++;
